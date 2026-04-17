@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTML Vault</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, sans-serif; background: #0d1117; color: #e6edf3; min-height: 100vh; padding: 3rem 1.5rem; }
+    .container { max-width: 640px; margin: 0 auto; }
+    header { margin-bottom: 2rem; }
+    h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: .4rem; }
+    .subtitle { color: #8b949e; font-size: .9rem; }
+    #list { display: flex; flex-direction: column; gap: .5rem; }
+    #list a {
+      display: flex; align-items: center; gap: .75rem;
+      padding: .85rem 1.2rem; background: #161b22;
+      border: 1px solid #30363d; border-radius: 8px;
+      color: #58a6ff; text-decoration: none; font-size: .95rem;
+      transition: background .15s, border-color .15s;
+    }
+    #list a:hover { background: #1f2937; border-color: #58a6ff; }
+    #list a::before { content: "📄"; font-size: 1rem; }
+    .loading { color: #8b949e; padding: 1rem 0; }
+    .count { font-size: .8rem; color: #8b949e; margin-bottom: 1rem; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>📦 HTML Vault</h1>
+      <p class="subtitle">pages 폴더의 HTML 파일 자동 목록</p>
+    </header>
+    <p class="count" id="count"></p>
+    <div id="list"><p class="loading">불러오는 중...</p></div>
+  </div>
+  <script>
+    var USER = "DielK1618", REPO = "html-vault", FOLDER = "pages";
+    fetch("https://api.github.com/repos/" + USER + "/" + REPO + "/contents/" + FOLDER)
+      .then(function(r) { return r.json(); })
+      .then(function(files) {
+        var list = document.getElementById("list");
+        var html = files.filter(function(f) { return f.name.slice(-5) === ".html"; });
+        document.getElementById("count").textContent = "총 " + html.length + "개 파일";
+        list.innerHTML = "";
+        html.forEach(function(f) {
+          fetch(f.download_url).then(function(r) { return r.text(); }).then(function(t) {
+            var m = t.match(/<title>([^<]*)<\/title>/i);
+            var a = document.createElement("a");
+            a.href = "./" + FOLDER + "/" + f.name;
+            a.textContent = m ? m[1] : f.name.replace(".html", "");
+            list.appendChild(a);
+          });
+        });
+      })
+      .catch(function() {
+        document.getElementById("list").textContent = "불러오기 실패";
+      });
+  </script>
+</body>
+</html>
