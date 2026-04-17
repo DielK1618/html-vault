@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>이스라엘 분열왕국 연대표</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR','Apple SD Gothic Neo',sans-serif;background:#f8fafc;color:#1e293b;height:100dvh;display:flex;flex-direction:column;overflow:hidden;}
+.ns::-webkit-scrollbar{display:none;}.ns{-ms-overflow-style:none;scrollbar-width:none;}
+.hdr{background:#fff;border-bottom:1px solid #e2e8f0;padding:10px 14px;flex-shrink:0;box-shadow:0 1px 4px rgba(0,0,0,.06);z-index:50;}
+.hdr-r1{display:flex;justify-content:space-between;align-items:center;gap:8px;}
+.htitle{font-size:clamp(13px,3.5vw,19px);font-weight:900;color:#1e293b;display:flex;align-items:center;gap:6px;}
+.home-btn{display:flex;align-items:center;gap:6px;padding:7px 14px;background:linear-gradient(135deg,#1e293b,#334155);color:#fff;border-radius:20px;text-decoration:none;font-size:12px;font-weight:700;letter-spacing:.3px;box-shadow:0 2px 8px rgba(0,0,0,.18);transition:all .18s;flex-shrink:0;}
+.home-btn:hover{background:linear-gradient(135deg,#334155,#475569);box-shadow:0 4px 14px rgba(0,0,0,.25);transform:translateY(-1px);}
+.home-btn svg{width:13px;height:13px;fill:#fff;flex-shrink:0;}
+
+.lgd{display:flex;flex-wrap:wrap;gap:4px 10px;margin-top:6px;font-size:10px;color:#64748b;}
+.ldi{display:flex;align-items:center;gap:3px;}
+.ldd{width:10px;height:10px;border-radius:2px;flex-shrink:0;}
+.lds{width:18px;height:10px;border-radius:2px;background:repeating-linear-gradient(45deg,#fca5a5,#fca5a5 3px,#fecaca 3px,#fecaca 6px);}
+.hkw{display:flex;justify-content:center;gap:12px;margin-top:5px;font-size:10px;font-weight:700;flex-wrap:wrap;}
+.main{flex:1;overflow:hidden;display:flex;}
+.sarea{flex:1;overflow-y:scroll;overflow-x:hidden;background:#f8fafc;}
+.tlc{display:flex;position:relative;max-width:900px;margin:0 auto;}
+.cs{flex:1;position:relative;min-width:0;overflow:visible;}
+.cax{width:76px;flex-shrink:0;background:#fff;border-left:1px solid #e2e8f0;border-right:1px solid #e2e8f0;position:relative;}
+.cn{flex:1;position:relative;min-width:0;overflow:visible;}
+.krow{position:absolute;left:0;right:0;padding:0 3px;overflow:visible;}
+.krow.s{display:flex;justify-content:flex-end;}
+.krow.n{display:flex;justify-content:flex-start;}
+.kbar{
+  width:calc(100% - 2px);max-width:138px;
+  border:2px solid transparent;border-radius:8px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  padding:2px 4px;position:relative;overflow:visible;
+  transition:box-shadow .18s,transform .12s;
+  box-shadow:0 1px 3px rgba(0,0,0,.08);
+}
+.kbar:hover{transform:translateY(-1px);box-shadow:0 4px 10px rgba(0,0,0,.13);z-index:15;}
+.kbar.sel{
+  transform:translateY(-1px);
+  box-shadow:0 0 0 3px rgba(245,158,11,.5),0 4px 16px rgba(245,158,11,.22),0 2px 6px rgba(0,0,0,.1);
+  z-index:20;
+}
+.bname{font-size:clamp(9px,1.3vw,12px);font-weight:900;text-align:center;line-height:1.2;pointer-events:none;position:relative;z-index:1;}
+.cosp{position:absolute;top:0;left:0;right:0;background:repeating-linear-gradient(45deg,rgba(255,255,255,.45),rgba(255,255,255,.45) 5px,transparent 5px,transparent 10px);pointer-events:none;border-radius:6px 6px 0 0;}
+.g0{background:#d1fae5;border-color:#10b981;color:#065f46;}
+.g1{background:#e0f2fe;border-color:#38bdf8;color:#0c4a6e;}
+.g2{background:#ffedd5;border-color:#fb923c;color:#7c2d12;}
+.g3{background:#ffe4e6;border-color:#f43f5e;color:#881337;}
+.g4{background:#f3e8ff;border-color:#a855f7;color:#581c87;}
+.axtk{position:absolute;left:0;right:0;border-top:1px dashed #e2e8f0;display:flex;align-items:center;justify-content:center;font-size:9px;color:#94a3b8;font-weight:700;pointer-events:none;}
+.axtk span{background:#fff;padding:0 2px;}
+.axyr-s{position:absolute;font-size:11px;font-weight:900;color:#2563eb;background:#fff;padding:0 3px;line-height:1;pointer-events:none;white-space:nowrap;}
+.axyr-n{position:absolute;font-size:11px;font-weight:900;color:#dc2626;background:#fff;padding:0 3px;line-height:1;pointer-events:none;white-space:nowrap;}
+.fbdg{position:absolute;font-size:8px;font-weight:900;color:#fff;background:#ef4444;padding:2px 4px;border-radius:3px;transform:translateY(-50%);white-space:nowrap;pointer-events:none;z-index:10;}
+.ovl{display:none;position:fixed;inset:0;background:rgba(0,0,0,.22);z-index:90;}
+.ovl.open{display:block;}
+.dpanel{position:fixed;top:0;right:0;bottom:0;width:min(440px,100vw);background:#fff;border-left:1px solid #e2e8f0;box-shadow:-4px 0 24px rgba(0,0,0,.12);transform:translateX(100%);transition:transform .28s cubic-bezier(.4,0,.2,1);z-index:100;display:flex;flex-direction:column;overflow:hidden;}
+.dpanel.open{transform:translateX(0);}
+.pstic{background:#fff;border-bottom:1px solid #f1f5f9;padding:13px 15px 9px;flex-shrink:0;}
+.pcls{background:none;border:none;width:30px;height:30px;border-radius:50%;background:#f1f5f9;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;color:#64748b;flex-shrink:0;}
+.pcls:hover{background:#e2e8f0;}
+.phrow{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;}
+.pkw{font-size:10px;font-weight:700;padding:2px 8px;border-radius:999px;display:inline-block;margin-bottom:5px;}
+.pnm{font-size:clamp(18px,5vw,26px);font-weight:900;line-height:1.1;}
+.pyr{font-size:14px;font-weight:700;color:#ef4444;margin-top:2px;}
+.pbdg{display:flex;flex-wrap:wrap;gap:4px;margin-top:7px;}
+.bdg{display:inline-flex;align-items:center;font-size:10px;font-weight:700;padding:2px 8px;border-radius:999px;}
+.pscr{flex:1;overflow-y:auto;padding:12px 15px;}
+.pscr::-webkit-scrollbar{width:3px;}
+.pscr::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:2px;}
+.ic{border:1px solid #e2e8f0;border-radius:9px;padding:11px;margin-bottom:9px;background:#fff;}
+.ic.ac{border-left:4px solid #f59e0b;background:#fffbeb;}
+.ic.ind{background:#eef2ff;border-color:#c7d2fe;}
+.stt{font-size:9px;font-weight:900;letter-spacing:.07em;color:#94a3b8;text-transform:uppercase;margin-bottom:6px;}
+.igrd{display:grid;grid-template-columns:1fr 1fr;gap:5px 8px;}
+.icell span{font-size:9px;color:#94a3b8;display:block;}
+.icell b{font-size:11px;color:#1e293b;}
+.icell.fu{grid-column:1/-1;}
+.alist{list-style:disc;padding-left:15px;}
+.alist li{font-size:11px;color:#374151;line-height:1.65;margin-bottom:4px;}
+.pnav{padding:9px 15px;border-top:1px solid #f1f5f9;display:flex;gap:7px;flex-shrink:0;}
+.nvb{flex:1;padding:7px;border:1px solid #e2e8f0;background:#f8fafc;border-radius:6px;font-size:11px;cursor:pointer;font-family:inherit;font-weight:700;color:#475569;}
+.nvb:hover{background:#e2e8f0;}
+
+
+/* Very short king thin stripe */
+.kbar.thin{border-radius:3px;}
+
+/* Floating name badge for short kings
+   Lives INSIDE .kbar (overflow:visible), centered on the stripe.
+   bar is a flex container (align-items:center justify-content:center)
+   so position:static + auto margins work perfectly. */
+.short-badge{
+  position:relative;
+  /* No absolute needed — flex centering from parent bar handles it */
+  font-size:10px;font-weight:900;
+  white-space:nowrap;
+  padding:2px 8px;
+  border-radius:5px;
+  border:1.5px solid #94a3b8;
+  background:#fff;
+  cursor:pointer;
+  z-index:20;
+  box-shadow:0 2px 6px rgba(0,0,0,.12);
+  transition:box-shadow .15s,transform .12s;
+  pointer-events:all;
+  flex-shrink:0;
+}
+.short-badge:hover{
+  box-shadow:0 4px 12px rgba(0,0,0,.18);
+  transform:translateY(-1px);
+}
+</style>
+</head>
+<body>
+<div class="hdr">
+  <div class="hdr-r1">
+    <div class="htitle">📜이스라엘 분열왕국 연대표</div>
+    <a class="home-btn" href="https://dielk1618.github.io/html-vault/index.html">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+      목록으로
+    </a>
+  </div>
+  <div class="lgd">
+    <div class="ldi"><div class="ldd" style="background:#d1fae5;border:1px solid #10b981"></div>선한 왕</div>
+    <div class="ldi"><div class="ldd" style="background:#e0f2fe;border:1px solid #38bdf8"></div>부분 선</div>
+    <div class="ldi"><div class="ldd" style="background:#ffedd5;border:1px solid #fb923c"></div>악한 왕</div>
+    <div class="ldi"><div class="ldd" style="background:#ffe4e6;border:1px solid #f43f5e"></div>극악한 왕</div>
+    <div class="ldi"><div class="ldd" style="background:#f3e8ff;border:1px solid #a855f7"></div>여왕</div>
+    <div class="ldi"><div class="lds"></div>사선=섭정</div>
+  </div>
+  <div class="hkw">
+    <span style="color:#2563eb">← 남유다 (20명, BC 931–586)</span>
+    <span style="background:#f1f5f9;padding:1px 8px;border-radius:4px;color:#64748b">BC 연도</span>
+    <span style="color:#dc2626">북이스라엘 (19명, BC 931–722) →</span>
+  </div>
+</div>
+<div class="main">
+  <div class="sarea ns" id="sarea">
+    <div class="tlc" id="tlc">
+      <div class="cs" id="cs"></div>
+      <div class="cax" id="cax"></div>
+      <div class="cn" id="cn"></div>
+    </div>
+  </div>
+</div>
+<div class="ovl" id="ovl" onclick="closePanel()"></div>
+<div class="dpanel" id="dpanel">
+  <div class="pstic">
+    <div class="phrow">
+      <div>
+        <span class="pkw" id="pkw"></span>
+        <div class="pnm" id="pnm"></div>
+        <div class="pyr" id="pyr"></div>
+      </div>
+      <button class="pcls" onclick="closePanel()">✕</button>
+    </div>
+    <div class="pbdg" id="pbdg"></div>
+  </div>
+  <div class="pscr" id="pcont"></div>
+  <div class="pnav">
+    <button class="nvb" onclick="navPanel(-1)">◀ 이전</button>
+    <button class="nvb" onclick="navPanel(1)">다음 ▶</button>
+  </div>
+</div>
+<script>
+const SY=945;let ppy=30;let selBar=null,curK=null,curSide=null;
+const southKings = [
+  {
+    id:'s0', name:'르호보암', start:931, end:913, rating:2,
+    mother:'나아마 (암몬 여인)', age:41, duration:'17년', death:'자연사',
+    refs:['왕상 12:1-14:31','대하 10:1-12:16'],
+    eval:'여호와 보시기에 악을 행하여 조상들이 행한 모든 것보다 더 격동시킴(왕상 14:22)',
+    grade:'악',
+    summary:'솔로몬의 아들로 왕국 분열의 직접적 원인 제공자.',
+    acts:[
+      '원로들의 조언을 무시하고 가혹한 세금 정책을 고수하여 북 10지파가 여로보암을 따라 분리됨(왕상 12:8-16)',
+      '애굽 왕 시삭(쇼솅크 1세)의 침공을 받아 예루살렘 성전과 왕궁의 보물을 모두 빼앗김(왕상 14:25-26)',
+      '유다와 베냐민 지파에 산당, 우상, 아세라 목상을 세우고 남창까지 두었음(왕상 14:23-24)',
+      '선지자 스마야의 말을 듣고 북이스라엘과의 전쟁을 일단 멈춤(왕상 12:22-24)',
+      '재위 5년 시삭 침공 직전 선지자 스마야를 통해 일시 회개하여 완전 멸망은 면함(대하 12:5-8)'
+    ],
+    prophets:['스마야'],
+    foreign:'애굽(시삭), 여로보암의 북이스라엘',
+    coregency: null
+  },
+  {
+    id:'s1', name:'아비야(아비얌)', start:913, end:911, rating:2,
+    mother:'마아가 (아브살롬의 딸/손녀)', age:null, duration:'3년', death:'자연사',
+    refs:['왕상 15:1-8','대하 13:1-22'],
+    eval:'부친의 모든 죄를 행하고 마음이 온전히 여호와께 향하지 아니함(왕상 15:3)',
+    grade:'악',
+    summary:'짧은 재위 동안 북이스라엘 여로보암과 대규모 전투에서 승리.',
+    acts:[
+      '여로보암의 80만 군대에 맞서 40만으로 싸워 하나님을 의지한 결과 50만 명을 무찌르는 대승(대하 13:3-20)',
+      '벧엘·여사나·에브론 등 에브라임 성읍들을 빼앗음(대하 13:19)',
+      '아버지 르호보암의 우상 숭배를 그대로 이어받음(왕상 15:3)',
+      '14명의 아내와 22아들 16딸을 둠(대하 13:21)'
+    ],
+    prophets:[],
+    foreign:'북이스라엘(여로보암)',
+    coregency: null
+  },
+  {
+    id:'s2', name:'아사', start:911, end:870, rating:0,
+    mother:'마아가 (아비살롬의 딸 — 태후로서 폐위됨)', age:null, duration:'41년', death:'발의 병으로 사망',
+    refs:['왕상 15:9-24','대하 14:1-16:14'],
+    eval:'아사가 그의 조상 다윗 같이 여호와 보시기에 정직하게 행하여(왕상 15:11)',
+    grade:'선',
+    summary:'남유다 최초의 본격적 종교개혁자. 대내외적으로 나라를 안정시킨 의로운 왕.',
+    acts:[
+      '태후 마아가를 아세라 목상 때문에 폐위하고 목상을 찍어 기드론 시내에서 불태움(왕상 15:13)',
+      '에티오피아(구스) 왕 세라의 100만 군대를 기도 한마디로 격파(대하 14:9-15)',
+      '선지자 아사랴의 격려를 듣고 가증한 우상을 유다와 베냐민과 에브라임 빼앗은 성읍에서 제거(대하 15:8)',
+      '전 백성과 언약을 맺어 여호와를 구하지 않는 자는 죽이기로 함(대하 15:12-13)',
+      '말년에 아람을 의지하여 북이스라엘을 막으려다 선지자 하나니에게 책망받고 옥에 가둠(대하 16:7-10)',
+      '심한 발병에도 하나님이 아닌 의사만 의지하다 사망(대하 16:12)'
+    ],
+    prophets:['아사랴','하나니'],
+    foreign:'에티오피아(세라), 아람(벤하닷), 북이스라엘(바아사)',
+    coregency: null
+  },
+  {
+    id:'s3', name:'여호사밧', start:873, end:848, rating:0,
+    mother:'아수바 (실히의 딸)', age:35, duration:'25년', death:'자연사',
+    refs:['왕상 22:41-50','대하 17:1-20:37'],
+    eval:'그의 조상 아사의 모든 길로 행하여 돌이키지 아니하고 여호와 보시기에 정직하게 행하였으나(왕상 22:43)',
+    grade:'선',
+    summary:'유다 왕 중 가장 체계적인 말씀 교육과 사법 개혁을 단행한 의로운 왕.',
+    acts:[
+      '레위 사람 교사들을 전국에 파견하여 율법책으로 백성 교육 실시(대하 17:7-9)',
+      '암몬·모압·세일 연합군의 침공 때 노래 부르는 자들을 앞세워 전진, 적이 서로 죽이는 기적 체험(대하 20:21-23)',
+      '사법 개혁: 예루살렘에 재판소 설치, 레위인·제사장·족장들로 구성된 대법원 운영(대하 19:5-11)',
+      '아합 왕과의 혼인 동맹(아들 여호람과 아달랴)으로 후에 유다에 큰 화근이 됨(대하 18:1)',
+      '아합과 연합하여 라못 길르앗을 공격하다 간신히 목숨을 건짐(대하 18:31)',
+      '다시스 배를 만들었으나 하나님의 징계로 파선됨(왕상 22:48-49)'
+    ],
+    prophets:['예후(하나니의 아들)','미가야','야하시엘'],
+    foreign:'북이스라엘(아합), 암몬·모압·세일 연합',
+    coregency: {start:873, end:870, with:'아사'}
+  },
+  {
+    id:'s4', name:'여호람', start:853, end:841, rating:3,
+    mother:'미상', age:32, duration:'8년', death:'창자병(장기 궤양)',
+    refs:['왕하 8:16-24','대하 21:1-20'],
+    eval:'아합의 집 길로 행하였으니 이는 아합의 딸이 그의 아내가 되었음이라(왕하 8:18)',
+    grade:'극악',
+    summary:'아합의 사위로서 바알 숭배를 유다에 이식시킨 악한 왕. 형제들을 모두 살해함.',
+    acts:[
+      '왕위에 오르자마자 칼로 형제 여섯 명과 여러 방백들을 살해(대하 21:4)',
+      '아합의 딸 아달랴와의 결혼으로 바알 숭배 유다에 도입(대하 21:6)',
+      '선지자 엘리야의 편지로 창자병 심판 예고를 받음(대하 21:12-15)',
+      '에돔이 유다의 지배에서 독립, 립나도 이반함(왕하 8:22)',
+      '블레셋과 아라비아의 침공으로 왕궁 보물과 아내들, 막내아들(여호아하스=아하시야)을 제외한 모든 아들을 빼앗김(대하 21:16-17)',
+      '창자가 매일 빠져나오는 2년간의 고통 끝에 사망, 백성이 슬퍼하지 않았고 열왕의 묘에 장사되지 못함(대하 21:19-20)'
+    ],
+    prophets:['엘리야'],
+    foreign:'에돔, 블레셋, 아라비아',
+    coregency: {start:853, end:848, with:'여호사밧'}
+  },
+  {
+    id:'s5', name:'아하시야', start:841, end:841, rating:3,
+    mother:'아달랴 (아합의 딸/오므리의 손녀)', age:22, duration:'1년', death:'예후에게 피살',
+    refs:['왕하 8:25-29','대하 22:1-9'],
+    eval:'아합의 집 길로 행하여 여호와 보시기에 악을 행하였으니(왕하 8:27)',
+    grade:'극악',
+    summary:'어머니 아달랴의 조종 하에 아합 가문처럼 행동하다 예후의 쿠데타로 제거됨.',
+    acts:[
+      '어머니와 외조부 아합 가문의 조언을 따라 정치·종교 정책 수립(대하 22:3-4)',
+      '북이스라엘 요람과 연합하여 아람과 전투 후 부상당한 요람을 방문하러 이스르엘에 갔다가 예후를 만남(왕하 9:21-28)',
+      '므깃도 근처에서 예후에게 화살을 맞고 이스르엘로 도망하다 사망(왕하 9:27)',
+      '역대하에서는 "하나님께로부터 아하시야의 패망이 이른 것"으로 평가(대하 22:7)'
+    ],
+    prophets:[],
+    foreign:'아람(하사엘), 북이스라엘(요람·예후)',
+    coregency: null
+  },
+  {
+    id:'s6', name:'아달랴', start:841, end:835, rating:4,
+    mother:'이세벨 (시돈 왕의 딸, 추정)', age:null, duration:'6년', death:'성전 마당 밖에서 처형',
+    refs:['왕하 11:1-20','대하 22:10-23:21'],
+    eval:'아달랴가 나라를 다스리니라(왕하 11:3) — 바알 숭배로 나라를 오염시킴',
+    grade:'극악',
+    summary:'다윗 왕조를 뿌리뽑으려 한 유다의 유일한 여왕. 아합·이세벨의 딸.',
+    acts:[
+      '아들 아하시야가 죽자 왕족 씨를 다 멸하려 했으나 여호야다 제사장의 아내 여호세바가 아하시야의 아들 요아스를 숨겨 살림(왕하 11:1-3)',
+      '6년간 성전에서 바알 숭배 강행(왕하 11:18)',
+      '여호야다 제사장이 요아스를 7세에 왕으로 세우는 쿠데타 주도(왕하 11:4-12)',
+      '"반역이로다! 반역이로다!" 외치며 성전으로 들어왔으나 체포되어 말 문 어귀에서 처형(왕하 11:14-16)',
+      '다윗 왕조 530여년 역사 중 유일하게 단절될 뻔한 위기의 주역'
+    ],
+    prophets:['여호야다(제사장)'],
+    foreign:'북이스라엘(아합 가문과의 연대)',
+    coregency: null
+  },
+  {
+    id:'s7', name:'요아스', start:835, end:796, rating:1,
+    mother:'시비아 (브엘세바 출신)', age:7, duration:'40년', death:'신하들에게 피살',
+    refs:['왕하 11:21-12:21','대하 24:1-27'],
+    eval:'제사장 여호야다가 가르치는 모든 날에 여호와 보시기에 정직하게 행하였으나(왕하 12:2)',
+    grade:'부분선',
+    summary:'7세에 즉위한 왕. 여호야다 생존 시 성전 수리 등 개혁했으나 말년에 심각하게 배교함.',
+    acts:[
+      '성전 수리를 위한 헌금 제도를 정비하여 체계적으로 성전 보수 완료(왕하 12:4-16)',
+      '제사장 여호야다 사망 후 방백들의 설득에 넘어가 아세라 목상과 우상을 섬김(대하 24:17-18)',
+      '선지자 스가랴(여호야다의 아들)가 죄를 책망하자 성전 뜰에서 돌로 쳐 죽임(대하 24:20-22)',
+      '아람 왕 하사엘이 소규모 군대로 침공하자 성전과 왕궁 보물을 주어 퇴각시킴(왕하 12:17-18)',
+      '신하들이 "스가랴를 죽인 원수를 갚는다"며 침상에서 암살함(왕하 12:20-21)'
+    ],
+    prophets:['여호야다(제사장)','스가랴(여호야다의 아들)'],
+    foreign:'아람(하사엘)',
+    coregency: null
+  },
+  {
+    id:'s8', name:'아마샤', start:796, end:767, rating:1,
+    mother:'여호앗단 (예루살렘 출신)', age:25, duration:'29년', death:'라기스에서 피살',
+    refs:['왕하 14:1-20','대하 25:1-28'],
+    eval:'여호와 보시기에 정직하게 행하였으나 온전한 마음으로 행하지 아니함(대하 25:2)',
+    grade:'부분선',
+    summary:'에돔 정복 후 교만해져 에돔 신상을 섬기고 북이스라엘에 도전하다 처참히 패배.',
+    acts:[
+      '부왕을 암살한 자들을 처형하되 율법에 따라 그 자녀는 죽이지 않음(왕하 14:5-6)',
+      '에돔 전쟁: 소금 골짜기에서 에돔 1만 명을 죽이고 셀라(페트라)를 점령(왕하 14:7)',
+      '에돔 신상을 가져와 자기 신으로 경배하다 선지자에게 책망받음(대하 25:14-15)',
+      '북이스라엘 요아스에게 싸움을 걸었다가 벧세메스에서 대패, 성벽 180m가 허물어지고 성전 보물 약탈당함(왕하 14:13-14)',
+      '반역이 일어나 라기스로 도망갔다가 자객에게 암살당하고 예루살렘에 장사됨(왕하 14:19-20)'
+    ],
+    prophets:['이름 모를 선지자(대하 25:15-16)'],
+    foreign:'에돔, 북이스라엘(요아스)',
+    coregency: null
+  },
+  {
+    id:'s9', name:'웃시야(아사랴)', start:791, end:739, rating:1,
+    mother:'여골리야 (예루살렘 출신)', age:16, duration:'52년', death:'나병으로 사망(별궁 거주)',
+    refs:['왕하 15:1-7','대하 26:1-23'],
+    eval:'여호와 보시기에 정직하게 행하여... 하나님의 묵시 스가랴가 살아있는 날에는 하나님을 구하였더니(대하 26:4-5)',
+    grade:'부분선',
+    summary:'남유다 중흥기를 이끈 강력한 왕. 그러나 말년에 교만하여 나병 심판을 받음.',
+    acts:[
+      '군대 개편: 장군 아사랴 아래 2,600명의 군지휘관과 30만 7,500명의 정예군 구성(대하 26:12-13)',
+      '블레셋·아라비아·므우님을 정복하고 성벽 망대에 발석기와 궁전 설치(대하 26:6-15)',
+      '농업 진흥: 산지·평지에 농부와 포도원 지기를 두어 경작 장려(대하 26:10)',
+      '교만해져 성전에서 분향하려다 제사장 아사랴의 만류에도 강행하자 이마에 나병이 발생(대하 26:16-20)',
+      '나병으로 별궁에 격리되어 아들 요담이 섭정, 나병인으로 죽어 왕묘 근처에 장사됨(왕하 15:5)'
+    ],
+    prophets:['스가랴(하나님의 묵시자)','이사야(말년 동시대)','아모스','호세아'],
+    foreign:'블레셋, 아라비아, 므우님, 암몬',
+    coregency: {start:791, end:767, with:'아마샤'}
+  },
+  {
+    id:'s10', name:'요담', start:750, end:732, rating:0,
+    mother:'여루사 (사독의 딸)', age:25, duration:'16년', death:'자연사',
+    refs:['왕하 15:32-38','대하 27:1-9'],
+    eval:'여호와 보시기에 정직하게 행하여 아버지 웃시야의 모든 행위대로 행하였으되 성전에는 들어가지 아니하였더라(왕하 15:34)',
+    grade:'선',
+    summary:'아버지의 실수를 반복하지 않은 의로운 왕. 군사·건축에서도 탁월한 업적.',
+    acts:[
+      '성전 윗문을 건축하고 오벨 성벽을 광범위하게 수축함(대하 27:3)',
+      '암몬 왕을 쳐서 굴복시키고 3년간 은 100달란트·밀 1만 석·보리 1만 석의 조공을 받음(대하 27:5)',
+      '여호와 앞에 자기 길을 견고히 하여 강성해짐(대하 27:6)',
+      '그러나 백성은 여전히 패역하게 행함(대하 27:2)',
+      '이 시기 아람 왕 르신과 북이스라엘 베가가 유다를 공격하기 시작(왕하 15:37)'
+    ],
+    prophets:['이사야','미가','호세아'],
+    foreign:'암몬, 아람(르신), 북이스라엘(베가)',
+    coregency: {start:750, end:739, with:'웃시야'}
+  },
+  {
+    id:'s11', name:'아하스', start:735, end:715, rating:3,
+    mother:'미상', age:20, duration:'16년', death:'자연사(열왕 묘에 장사 못함)',
+    refs:['왕하 16','대하 28','사 7장'],
+    eval:'이스라엘 왕들의 길로 행하며 또 여호와께서 이스라엘 자손 앞에서 쫓아내신 이방 사람의 가증한 일을 따름(왕하 16:3)',
+    grade:'극악',
+    summary:'자녀를 불 가운데 지나가게 하고 앗수르에 굴복하여 이방 제단을 도입한 극악한 왕.',
+    acts:[
+      '자기 아들을 불 가운데 지나가게 함(힌놈 골짜기 몰렉 숭배, 왕하 16:3)',
+      '아람(르신)과 북이스라엘(베가)의 협공 위기에 이사야의 경고를 무시하고 앗수르 디글랏빌레셀에게 도움 요청, 성전·왕궁 보물 헌납(왕하 16:7-8)',
+      '다메섹에서 이방 제단을 보고 본떠 예루살렘에 만들어 제사를 드림(왕하 16:10-13)',
+      '성전 문을 닫고 예루살렘 각 모퉁이에 제단 설치, 각 성읍마다 산당을 세움(대하 28:24-25)',
+      '에돔이 침입하여 포로를 잡고 블레셋이 성읍들을 점령하는 등 사면이 압박받음(대하 28:17-18)',
+      '이사야 선지자가 임마누엘 예언을 이 시기에 선포함(사 7:14)'
+    ],
+    prophets:['이사야','미가'],
+    foreign:'앗수르(디글랏빌레셀), 아람(르신), 북이스라엘(베가), 에돔, 블레셋',
+    coregency: null
+  },
+  {
+    id:'s12', name:'히스기야', start:715, end:686, rating:0,
+    mother:'아비 (스가랴의 딸)', age:25, duration:'29년', death:'자연사',
+    refs:['왕하 18-20','대하 29-32','사 36-39'],
+    eval:'그가 이스라엘 하나님 여호와를 신뢰하였는지라 그 전후 유다 여러 왕 중에 그러한 자가 없었더라(왕하 18:5)',
+    grade:'선',
+    summary:'유다 왕 중 신앙 면에서 최고 평가를 받은 개혁 군주. 앗수르 위기를 기도로 극복.',
+    acts:[
+      '성전 문을 열고 레위인들을 불러 1개월에 걸친 대대적 성전 정화와 성별 작업 실시(대하 29:3-19)',
+      '북이스라엘 멸망 후 살아있는 이스라엘 백성들까지 초청하여 역사적인 유월절 거행(대하 30:1-27)',
+      '전국의 산당·우상·놋뱀(느후스단) 제거, 레위인 봉직 체계 재정비(왕하 18:4)',
+      '앗수르 산헤립의 침공 시 이사야와 함께 기도, 하룻밤 사이에 앗수르 군 18만 5천 명 사망(왕하 19:35)',
+      '죽을병에서 기도로 15년을 연장받고 해시계 그림자가 10도 되돌아가는 기적 체험(왕하 20:1-11)',
+      '바벨론 사신 므로닥발라단에게 왕궁과 보물창고를 모두 보여주어 이사야에게 바벨론 포로 예언을 받음(왕하 20:12-18)',
+      '기혼 샘물을 실로암 연못으로 끌어들이는 히스기야 터널 굴착(대하 32:30)'
+    ],
+    prophets:['이사야','미가'],
+    foreign:'앗수르(산헤립), 바벨론(므로닥발라단)',
+    coregency: {start:715, end:697, with:'므낫세'}
+  },
+  {
+    id:'s13', name:'므낫세', start:697, end:642, rating:3,
+    mother:'헵시바', age:12, duration:'55년(유다 최장)', death:'자연사',
+    refs:['왕하 21:1-18','대하 33:1-20'],
+    eval:'그가 여호와 보시기에 악을 행하여 여호와께서 이스라엘 자손 앞에서 쫓아내신 이방 사람의 가증한 일을 따랐으며... 이스라엘을 범죄하게 한 죄보다 더 심히 악행하였더라(왕하 21:2,11)',
+    grade:'극악',
+    summary:'유다 역대 최악의 왕이자 최장기 통치자. 그러나 바벨론 포로 후 말년에 회개.',
+    acts:[
+      '아버지 히스기야가 제거한 모든 산당·바알 제단·아세라 목상을 재건, 일월성신 숭배(왕하 21:3)',
+      '성전 두 뜰에 하늘의 모든 군대를 위한 제단 설치(왕하 21:5)',
+      '자녀를 불 가운데 지나가게 하고 점술·사술·신접한 자·박수를 두는 등 극도의 혼합 종교 장려(왕하 21:6)',
+      '"무죄한 자의 피를 심히 많이 흘려 예루살렘 이 끝에서 저 끝까지 채움"(왕하 21:16) — 전통적으로 이사야를 톱으로 켜 순교시켰다고 전해짐',
+      '앗수르 왕에게 사로잡혀 바벨론으로 끌려갔다가 회개하자 예루살렘으로 귀환, 이방 신상 제거(대하 33:11-17)',
+      '유다 멸망의 신학적 원인으로 직접 지목됨(왕하 23:26-27)'
+    ],
+    prophets:['이사야(순교 추정)','나훔'],
+    foreign:'앗수르(에살핫돈·아수르바니팔)',
+    coregency: {start:697, end:686, with:'히스기야'}
+  },
+  {
+    id:'s14', name:'아몬', start:642, end:640, rating:3,
+    mother:'므술레멧 (욧바 출신 하루스의 딸)', age:22, duration:'2년', death:'신하들에게 피살',
+    refs:['왕하 21:19-26','대하 33:21-25'],
+    eval:'여호와 보시기에 악을 행하여 아버지 므낫세가 행함 같이 행하되 아버지가 회개한 것을 본받지 않음(대하 33:22-23)',
+    grade:'극악',
+    summary:'므낫세의 악행만 답습하고 말년의 회개는 전혀 따르지 않아 2년 만에 암살당함.',
+    acts:[
+      '아버지 므낫세가 세운 모든 아로새긴 우상에게 제사하고 섬김(대하 33:22)',
+      '므낫세의 말년 회개와 달리 스스로를 낮추는 일이 없었음(대하 33:23)',
+      '신하들의 음모로 궁중에서 암살당함(왕하 21:23)',
+      '백성이 암살 모의한 자들을 처형하고 아들 요시야를 왕으로 세움(왕하 21:24)'
+    ],
+    prophets:[],
+    foreign:'앗수르',
+    coregency: null
+  },
+  {
+    id:'s15', name:'요시야', start:640, end:609, rating:0,
+    mother:'여디다 (보스갓 아다야의 딸)', age:8, duration:'31년', death:'므깃도 전투에서 전사',
+    refs:['왕하 22-23','대하 34-35'],
+    eval:'여호와 보시기에 정직하게 행하여 그 조상 다윗의 길로 행하고 좌우로 치우치지 아니하였더라(왕하 22:2) + 왕하 23:25에 전무후무한 최고 평가',
+    grade:'선',
+    summary:'성경이 가장 높이 평가한 개혁 군주. 율법책 발견 후 철저한 개혁으로 유다 신앙 부흥.',
+    acts:[
+      '율법책 발견: 성전 수리 중 모세의 율법책이 발견되어 왕이 듣고 옷을 찢으며 회개(왕하 22:8-11)',
+      '여선지자 훌다를 통해 유다의 멸망은 불가피하지만 요시야는 평안히 죽을 것이라는 예언을 받음(왕하 22:15-20)',
+      '전 백성과 언약을 맺고 성전·예루살렘·유다 전역의 산당·우상·일월성신 제단 모두 제거(왕하 23:1-20)',
+      '옛 벧엘 산당(여로보암이 세운)까지 헐고 선지자 뼈를 불살라 영구히 제거(왕하 23:15-16)',
+      '히스기야 이후 처음으로 유월절을 사사 시대 이래 전례 없는 규모로 거행(왕하 23:22-23)',
+      '이집트 바로 느고가 앗수르를 지원하러 북상할 때 므깃도에서 막으려다 전사(왕하 23:29-30)',
+      '예레미야가 요시야를 위해 애가를 지음(대하 35:25)'
+    ],
+    prophets:['예레미야','스바냐','나훔','훌다(여선지자)'],
+    foreign:'이집트(바로 느고), 앗수르(멸망기), 바벨론(부상)',
+    coregency: null
+  },
+  {
+    id:'s16', name:'여호아하스(살룸)', start:609, end:609, rating:2,
+    mother:'하무탈 (립나 예레미야의 딸)', age:23, duration:'3개월', death:'이집트 포로로 사망',
+    refs:['왕하 23:31-34','대하 36:1-4','렘 22:11-12'],
+    eval:'여호와 보시기에 악을 행하되 그의 조상들이 행한 모든 대로 행하였더라(왕하 23:32)',
+    grade:'악',
+    summary:'이집트 느고에 의해 3개월 만에 폐위되어 애굽으로 끌려간 비운의 왕.',
+    acts:[
+      '요시야 사망 후 백성이 직접 왕으로 세운 인물(왕하 23:30)',
+      '이집트 왕 느고가 하맛에서 결박하여 유다 왕이 되지 못하게 함(왕하 23:33)',
+      '은 100달란트·금 1달란트의 벌금을 유다에 부과(왕하 23:33)',
+      '이복형 여호야김(엘리아김)을 왕으로 세우고 여호아하스를 애굽으로 끌고 가 그곳에서 죽게 함(왕하 23:34)',
+      '예레미야가 "돌아오지 못하리라"고 예언, 성취됨(렘 22:11-12)'
+    ],
+    prophets:['예레미야'],
+    foreign:'이집트(바로 느고)',
+    coregency: null
+  },
+  {
+    id:'s17', name:'여호야김(엘리아김)', start:609, end:598, rating:3,
+    mother:'스비다 (루마 브다야의 딸)', age:25, duration:'11년', death:'불명(바벨론에 의해 처리, 추정)',
+    refs:['왕하 23:34-24:7','대하 36:5-8','렘 22:18-19; 36장'],
+    eval:'여호와 보시기에 악을 행하되 그의 조상들이 행한 대로 다 행하였더라(왕하 23:37)',
+    grade:'극악',
+    summary:'이집트의 꼭두각시에서 바벨론 신하로 전락. 하나님 말씀을 불태운 배역의 왕.',
+    acts:[
+      '이집트 느고에 의해 왕으로 세워짐, 이름 엘리아김에서 여호야김으로 개명(왕하 23:34)',
+      '백성에게 세금을 부과하여 이집트에 조공을 바침(왕하 23:35)',
+      '예레미야가 구술한 예언 두루마리를 시기별로 잘라내어 화로에 불태움(렘 36:23)',
+      '바벨론 느부갓네살의 1차 침공(BC 605) 시 굴복하여 3년간 섬기다 배반(왕하 24:1)',
+      '바벨론·아람·모압·암몬 도적 떼의 공격을 받으며 유다가 황폐해짐(왕하 24:2-4)',
+      '예레미야가 "나귀 같이 묻힐 것"이라 예언(렘 22:18-19) — 의식 없이 매장될 것을 암시'
+    ],
+    prophets:['예레미야','하박국'],
+    foreign:'이집트(느고), 바벨론(느부갓네살), 아람·모압·암몬',
+    coregency: null
+  },
+  {
+    id:'s18', name:'여호야긴(고니야)', start:598, end:597, rating:2,
+    mother:'느후스다 (예루살렘 엘나단의 딸)', age:18, duration:'3개월', death:'바벨론에서 복권 후 여생',
+    refs:['왕하 24:8-16','대하 36:9-10','렘 22:24-30'],
+    eval:'여호와 보시기에 악을 행하되 그의 아버지가 행한 것과 같이 하였더라(왕하 24:9)',
+    grade:'악',
+    summary:'바벨론 2차 포로의 핵심. 37년 감금 후 석방되어 바벨론 왕실에서 복권된 비극과 은혜의 왕.',
+    acts:[
+      '느부갓네살의 2차 침공 때 모친·신하·환관·귀족들과 함께 자진 항복(왕하 24:12)',
+      '왕실 귀족·장인·기술자 1만 명 이상이 바벨론으로 끌려감(왕하 24:14) — 에스겔·다니엘 등 포함',
+      '37년간 바벨론 감옥에 수감(왕하 25:27)',
+      '바벨론 왕 에윌므로닥이 즉위하여 여호야긴을 석방하고 왕들 중 높은 자리에 올려 매일 왕과 함께 식사(왕하 25:27-30)',
+      '예레미야가 "자식 없이 된 자 같이 되어 형통하지 못할 것"이라 예언(렘 22:30) — 왕위 계승은 없었음'
+    ],
+    prophets:['예레미야','에스겔'],
+    foreign:'바벨론(느부갓네살, 에윌므로닥)',
+    coregency: null
+  },
+  {
+    id:'s19', name:'시드기야(맛다니야)', start:597, end:586, rating:3,
+    mother:'하무탈 (립나 예레미야의 딸 — 여호아하스와 동모)', age:21, duration:'11년', death:'눈 뽑힌 채 바벨론 포로로 사망',
+    refs:['왕하 24:17-25:21','대하 36:11-21','렘 37-39장','겔 12:13'],
+    eval:'여호와 보시기에 악을 행하였으며 선지자 예레미야가 전하는 여호와의 말씀을 겸손히 받지 않았더라(대하 36:12)',
+    grade:'극악',
+    summary:'남유다 마지막 왕. 바벨론을 배반하다 예루살렘 함락과 성전 소각의 비극을 초래.',
+    acts:[
+      '느부갓네살이 여호야긴의 숙부 맛다니야를 왕으로 세우고 시드기야로 개명(왕하 24:17)',
+      '예레미야의 굴복 권고를 무시하고 이집트를 믿어 바벨론에 반기를 들었다가 2년간 포위당함(왕하 25:1-2)',
+      '성이 함락되기 직전 아라바 길로 도주하다 여리고 평지에서 바벨론 군에게 잡힘(왕하 25:4-5)',
+      '아들들이 눈앞에서 처형된 직후 두 눈이 뽑혀 구리 사슬로 바벨론으로 끌려감(왕하 25:7)',
+      '예루살렘 성전·왕궁·귀족 집들이 모두 불태워지고 성벽이 헐림(왕하 25:8-10)',
+      'BC 586년 — 솔로몬 성전 건축 380여년, 남유다 왕국 345년의 역사가 종막을 고함'
+    ],
+    prophets:['예레미야','에스겔'],
+    foreign:'바벨론(느부갓네살), 이집트(호브라 바로)',
+    coregency: null
+  }
+];
+
+// ── 북이스라엘 19명 ──────────────────────────────────────
+const northKings = [
+  {
+    id:'n0', name:'여로보암 1세', start:931, end:910, rating:3,
+    mother:'미상', age:null, duration:'22년', death:'하나님이 치심(추정)',
+    refs:['왕상 11:26-14:20','대하 13장'],
+    eval:'이스라엘의 범죄하게 한 느밧의 아들 여로보암의 죄를 떠나지 아니한지라(왕하 13:2 등 반복 인용)',
+    grade:'극악',
+    summary:'북이스라엘 창건자. 이후 모든 북왕국 왕들의 죄악 기준이 된 금송아지 우상 창시자.',
+    acts:[
+      '솔로몬 치하 노동 감독관 출신으로 애굽에서 돌아와 10지파를 이끌고 북이스라엘 건국(왕상 12:20)',
+      '단과 벧엘에 금송아지 두 개를 세우고 "이것이 너희를 애굽에서 인도하여 낸 신이라" 선언(왕상 12:28-30)',
+      '레위 지파 제사장을 폐하고 일반 백성 중에서 제사장 임명, 예루살렘 성전 대신 별도 절기 제정(왕상 12:31-33)',
+      '벧엘 산당에서 분향하려다 유다 선지자의 책망을 받고 뻗은 손이 마름(왕상 13:4)',
+      '아들 아비야 병환 때 아내를 변장시켜 실로의 선지자 아히야에게 보냈다가 왕조 멸절 예언 받음(왕상 14:10-14)'
+    ],
+    prophets:['아히야(실로)','이름 모를 유다 선지자'],
+    foreign:'이집트(시삭), 남유다(르호보암·아비야)',
+    coregency: null
+  },
+  {
+    id:'n1', name:'나답', start:910, end:909, rating:3,
+    mother:'미상', age:null, duration:'2년', death:'바아사에게 피살',
+    refs:['왕상 15:25-31'],
+    eval:'여호와 보시기에 악을 행하여 그의 아버지의 길로 행하며 그의 아버지가 이스라엘로 범죄하게 한 그 죄를 따라 행함(왕상 15:26)',
+    grade:'극악',
+    summary:'여로보암 왕조의 2대 왕. 아비야 사망 예언 성취로 왕조가 단절됨.',
+    acts:[
+      '여로보암의 금송아지 죄를 그대로 답습(왕상 15:26)',
+      '블레셋 성읍 깁브돈 공격 중 진중에서 바아사에게 암살당함(왕상 15:27)',
+      '바아사가 여로보암 집을 모두 죽여 선지자 아히야의 예언이 성취됨(왕상 15:29)',
+      '여로보암 왕조는 2대 22년 만에 완전히 단절됨'
+    ],
+    prophets:[],
+    foreign:'블레셋, 남유다(아사)',
+    coregency: null
+  },
+  {
+    id:'n2', name:'바아사', start:909, end:886, rating:3,
+    mother:'미상', age:null, duration:'24년', death:'자연사',
+    refs:['왕상 15:27-16:7'],
+    eval:'여호와 보시기에 악을 행하여 여로보암의 길로 행하며 그가 이스라엘로 범죄하게 한 그 죄 중에 행함(왕상 15:34)',
+    grade:'극악',
+    summary:'쿠데타로 집권했으나 여로보암과 같은 죄를 반복. 하나니에게 왕조 멸절 예언을 받음.',
+    acts:[
+      '여로보암의 집을 진멸하는 심판의 도구로 쓰임(왕상 15:29)',
+      '유다 왕 아사와 오랜 기간 전쟁 상태 지속, 라마를 건축하여 유다를 봉쇄(왕상 15:16-17)',
+      '아사가 아람 왕 벤하닷을 매수하여 공격하자 라마 건축을 포기하고 후퇴(왕상 15:20-21)',
+      '선지자 예후(하나니의 아들)를 통해 왕조 멸절 예언을 받음(왕상 16:1-4)',
+      '심판의 도구가 되었으나 여로보암보다 더 악하게 행하여 동일한 심판을 받게 됨(왕상 16:7)'
+    ],
+    prophets:['예후(하나니의 아들)'],
+    foreign:'남유다(아사), 아람(벤하닷)',
+    coregency: null
+  },
+  {
+    id:'n3', name:'엘라', start:886, end:885, rating:3,
+    mother:'미상', age:null, duration:'2년', death:'시므리에게 피살',
+    refs:['왕상 16:8-14'],
+    eval:'여로보암의 죄를 따라 행하여 이스라엘로 범죄하게 한 그 죄 중에 행함(왕상 16:13)',
+    grade:'극악',
+    summary:'바아사의 아들. 술에 취한 채 암살당하며 바아사 왕조가 단절됨.',
+    acts:[
+      '블레셋 깁브돈을 포위하는 군사 작전 중 자신은 디르사에서 신복 아르사의 집에서 술에 취함(왕상 16:9)',
+      '군지휘관 시므리에게 술 취한 상태로 암살당함(왕상 16:10)',
+      '시므리가 바아사 가문을 모두 죽여 선지자 예후의 예언이 성취됨(왕상 16:12)',
+      '바아사 왕조는 2대 26년 만에 단절됨'
+    ],
+    prophets:[],
+    foreign:'블레셋, 남유다(아사)',
+    coregency: null
+  },
+  {
+    id:'n4', name:'시므리', start:885, end:885, rating:3,
+    mother:'미상', age:null, duration:'7일(최단명)', death:'자결(왕궁 방화)',
+    refs:['왕상 16:15-20'],
+    eval:'모든 죄를 범하여 여호와 보시기에 악을 행함(왕상 16:19)',
+    grade:'극악',
+    summary:'성경 최단 통치 7일. 군중의 지지를 얻지 못하고 포위당하자 왕궁에 불을 질러 자결.',
+    acts:[
+      '깁브돈 공격 중인 군대 사령관 직에서 엘라를 암살하고 왕이 됨(왕상 16:9-10)',
+      '바아사 집안을 모두 진멸(왕상 16:11-12)',
+      '군대가 오므리를 왕으로 세우고 디르사를 포위하자 단 7일 만에 고립(왕상 16:15-17)',
+      '도망할 길이 없어지자 왕궁에 불을 지르고 그 안에서 자결(왕상 16:18)',
+      '오므리와 디브니 사이 4년간 내전이 이어짐(왕상 16:21-22)'
+    ],
+    prophets:[],
+    foreign:'(내전)',
+    coregency: null
+  },
+  {
+    id:'n5', name:'오므리', start:885, end:874, rating:3,
+    mother:'미상', age:null, duration:'12년(디브니와 내전 4년 포함)', death:'자연사',
+    refs:['왕상 16:16-28'],
+    eval:'오므리가 여호와 보시기에 악을 행하되 그 전의 모든 사람보다 더욱 심하게 행하여(왕상 16:25)',
+    grade:'극악',
+    summary:'군사 쿠데타로 이스라엘 최강 왕조인 오므리 왕조 창건. 사마리아 수도 건설.',
+    acts:[
+      '디르사를 수도로 4년간 내전 끝에 디브니를 제거하고 단독 집권(왕상 16:21-23)',
+      '세멜에게서 산 2달란트에 세멜 산을 구입하여 요새 도시 사마리아를 새 수도로 건설(왕상 16:24)',
+      '전 시대 모든 왕보다 더 악하게 행하여 여로보암의 죄를 배로 심화(왕상 16:25-26)',
+      '딸(혹은 손녀) 아달랴를 유다 왕 여호람에게 시집보내 남유다와 동맹(왕하 8:26)',
+      '앗수르 기록에 이스라엘을 수십 년간 "오므리의 집"으로 기록할 만큼 국제적 영향력 큼'
+    ],
+    prophets:[],
+    foreign:'앗수르, 남유다(동맹), 모압(메사 비문)',
+    coregency: {start:885, end:880, with:'디브니(내전)'}
+  },
+  {
+    id:'n6', name:'아합', start:874, end:853, rating:4,
+    mother:'미상', age:null, duration:'22년', death:'아람과의 라못 길르앗 전투에서 전사',
+    refs:['왕상 16:29-22:40'],
+    eval:'아합은 이스라엘의 모든 이전 왕보다 여호와를 더욱 격노하게 하였더라(왕상 16:33)',
+    grade:'극악',
+    summary:'성경이 최악으로 평가한 북이스라엘 왕. 이세벨과 함께 바알 숭배를 국교화.',
+    acts:[
+      '시돈 왕 엣바알의 딸 이세벨과 결혼하여 바알 신전과 아세라 목상을 이스라엘 전역에 세움(왕상 16:31-33)',
+      '엘리야와 대결: 갈멜산에서 바알 선지자 850명과의 대결에서 불이 내려오는 기적으로 패배(왕상 18:19-40)',
+      '나봇의 포도원을 강제로 빼앗아 이세벨의 조작으로 나봇을 죽임(왕상 21:1-16)',
+      '엘리야에게 나봇의 밭에서 개들이 피를 핥을 것이라는 심판 선포(왕상 21:19) — 정확히 성취됨(왕하 9:25-26)',
+      '아람과 세 차례 전쟁: 2번 승리(왕상 20:21-30), 3번째 라못 길르앗에서 변장하고 싸우다 우연히 쏜 화살에 맞아 전사(왕상 22:34)',
+      '사마리아 못에서 병거를 씻을 때 개들이 그 피를 핥았으니 여호와의 말씀대로 됨(왕상 22:38)'
+    ],
+    prophets:['엘리야','미가야','엘리사'],
+    foreign:'아람(벤하닷), 남유다(여호사밧), 앗수르',
+    coregency: null
+  },
+  {
+    id:'n7', name:'아하시야', start:853, end:852, rating:3,
+    mother:'이세벨', age:null, duration:'2년', death:'다락 난간 추락 후 병사',
+    refs:['왕상 22:51-왕하 1:18'],
+    eval:'여호와 보시기에 악을 행하여 그의 아버지의 길과 그의 어머니의 길과 느밧의 아들 여로보암의 길로 행하여(왕상 22:52)',
+    grade:'극악',
+    summary:'아합과 이세벨의 아들. 다락에서 떨어진 후 이방 신에게 물어 엘리야에게 죽음 예언을 받음.',
+    acts:[
+      '아버지 아합의 모든 우상 숭배를 그대로 계승(왕상 22:52-53)',
+      '다락방 난간에서 떨어져 중병에 걸리자 에그론의 신 바알스붑에게 사신을 보내 살지 여부를 물음(왕하 1:2)',
+      '엘리야가 사신들을 중간에 가로막고 "반드시 죽으리라"는 하나님의 말씀 전달(왕하 1:4)',
+      '군대 장관 두 명이 오십 명씩 이끌고 엘리야를 잡으러 갔다가 불에 타 죽음(왕하 1:10-12)',
+      '아들이 없어 동생 요람이 왕위 계승(왕하 1:17)',
+      '모압이 아합 사망 후 반기를 들었으나 진압 미수(왕하 1:1)'
+    ],
+    prophets:['엘리야'],
+    foreign:'모압(반란), 남유다(여호사밧)',
+    coregency: null
+  },
+  {
+    id:'n8', name:'요람(여호람)', start:852, end:841, rating:2,
+    mother:'이세벨', age:null, duration:'12년', death:'예후에게 피살',
+    refs:['왕하 3:1-9:26'],
+    eval:'여호와 보시기에 악을 행하나 그 아버지와 어머니같이는 아니하여 아버지가 만든 바알 주상을 제거하였으나 그러나 느밧의 아들 여로보암이 이스라엘로 범죄하게 한 그 죄에서 떠나지 아니하였더라(왕하 3:2-3)',
+    grade:'악',
+    summary:'아합의 아들 중 상대적으로 덜 악했으나 여로보암의 죄는 버리지 않음. 예후에게 암살됨.',
+    acts:[
+      '바알 주상은 제거했으나 금송아지 숭배는 유지(왕하 3:3)',
+      '모압 왕 메사가 공납 거절하자 유다·에돔과 연합하여 원정, 엘리사의 예언으로 물을 얻고 모압을 압박(왕하 3:4-27)',
+      '아람 장군 나아만의 문둥병이 엘리사를 통해 치유됨(왕하 5장)',
+      '아람 왕 벤하닷이 사마리아를 포위했을 때 엘리사의 예언으로 기적적으로 해제됨(왕하 6:24-7:20)',
+      '라못 길르앗에서 아람과 싸우다 부상, 이스르엘에서 요양 중 예후에게 피살(왕하 9:14-26)',
+      '죽어 나봇의 밭에 던져지니 엘리야의 예언이 성취됨(왕하 9:25-26)'
+    ],
+    prophets:['엘리사'],
+    foreign:'모압(메사), 아람(벤하닷), 남유다(여호사밧·여호람)',
+    coregency: null
+  },
+  {
+    id:'n9', name:'예후', start:841, end:814, rating:2,
+    mother:'미상', age:null, duration:'28년', death:'자연사',
+    refs:['왕하 9:1-10:36'],
+    eval:'여호와께서 이스라엘에서 아합의 집을 멸하는 일을 예후가 잘 실행하였으므로... 그러나 이스라엘 하나님 여호와의 율법을 지켜 행하기를 마음을 다하여 하지 아니하며 여로보암의 죄에서 떠나지 아니하였더라(왕하 10:30-31)',
+    grade:'악',
+    summary:'하나님의 명을 따라 아합 왕조를 진멸했으나 금송아지를 버리지 않아 여전히 악한 왕.',
+    acts:[
+      '선지자 엘리사의 제자에게 기름 부음을 받아 이스라엘 왕으로 세워짐(왕하 9:1-6)',
+      '요람을 나봇의 밭에서 쏘아 죽이고 유다 왕 아하시야도 추격하여 살해(왕하 9:24-27)',
+      '이세벨이 화장하고 창에서 내려다보다가 "내던지라" 명령으로 처형, 말발굽에 밟히고 들개에게 먹힘(왕하 9:30-37)',
+      '사마리아에서 아합의 아들 70명의 머리를 성문에 쌓음(왕하 10:1-11)',
+      '바알 선지자들을 모두 속여 성전에 모은 뒤 한꺼번에 학살하고 바알 당을 변소로 만듦(왕하 10:18-28)',
+      '아람 왕 하사엘에게 요단 동편 이스라엘 영토를 모두 빼앗기는 쇠퇴 시작(왕하 10:32-33)',
+      '하나님이 4대까지 왕위를 약속(왕하 10:30) — 여로보암 2세까지 성취'
+    ],
+    prophets:['엘리사'],
+    foreign:'아람(하사엘), 남유다(아하시야)', 
+    coregency: null
+  },
+  {
+    id:'n10', name:'여호아하스', start:814, end:798, rating:3,
+    mother:'미상', age:null, duration:'17년', death:'자연사',
+    refs:['왕하 13:1-9'],
+    eval:'여호와 보시기에 악을 행하되 느밧의 아들 여로보암이 이스라엘로 범죄하게 한 그 죄를 따라 행하여 거기서 떠나지 아니하였더라(왕하 13:2)',
+    grade:'극악',
+    summary:'아람 하사엘의 극심한 압제를 받으며 군사력이 거의 전멸 수준으로 약화됨.',
+    acts:[
+      '아람 왕 하사엘과 그 아들 벤하닷에게 계속 패하여 군사력이 기마 50, 병거 10, 보병 1만으로 감소(왕하 13:7)',
+      '아람의 압제로 여호와께 부르짖으니 하나님이 구원자를 보내겠다고 약속(왕하 13:4-5)',
+      '그러나 여로보암의 죄와 아세라 목상 숭배는 계속됨(왕하 13:6)',
+      '아들 요아스가 아람에게 빼앗긴 성읍들을 되찾는 기틀 마련'
+    ],
+    prophets:[],
+    foreign:'아람(하사엘·벤하닷), 남유다(요아스)', 
+    coregency: null
+  },
+  {
+    id:'n11', name:'여호아스(요아스)', start:798, end:782, rating:3,
+    mother:'미상', age:null, duration:'16년', death:'자연사',
+    refs:['왕하 13:10-25','왕하 14:8-16'],
+    eval:'여호와 보시기에 악을 행하여 이스라엘로 범죄하게 한 느밧의 아들 여로보암의 모든 죄에서 떠나지 아니하고 그 가운데서 행하였더라(왕하 13:11)',
+    grade:'극악',
+    summary:'엘리사의 유언적 예언을 제대로 받지 못해 아쉬움을 남겼으나 아람을 세 번 이기고 유다에 승리.',
+    acts:[
+      '임종 중인 엘리사를 방문하여 슬퍼하자 엘리사가 화살 예언 시행: 화살을 쏘게 하고 땅을 침(왕하 13:14-19)',
+      '땅을 세 번만 치자 엘리사가 "세 번만 이기리라" 책망 — 더 쳤으면 완전히 진멸했을 것(왕하 13:18-19)',
+      '예언대로 아람을 세 번 이겨 아버지 여호아하스가 빼앗긴 성읍들을 되찾음(왕하 13:25)',
+      '유다 왕 아마샤가 싸움을 걸어오자 벧세메스에서 크게 이기고 예루살렘 성벽 180m를 허물고 성전·왕궁 보물을 약탈(왕하 14:11-14)',
+      '엘리사의 시신이 무덤에 던져진 죽은 자를 살리는 기적(왕하 13:21)'
+    ],
+    prophets:['엘리사(임종)'],
+    foreign:'아람(벤하닷), 남유다(아마샤)',
+    coregency: null
+  },
+  {
+    id:'n12', name:'여로보암 2세', start:793, end:753, rating:3,
+    mother:'미상', age:null, duration:'41년', death:'자연사',
+    refs:['왕하 14:23-29'],
+    eval:'여호와 보시기에 악을 행하되 이스라엘로 범죄하게 한 느밧의 아들 여로보암의 모든 죄에서 떠나지 아니하였더라(왕하 14:24)',
+    grade:'극악',
+    summary:'북이스라엘 최전성기를 구현했지만 아모스·호세아가 극렬히 비판한 시대. 영적 공동화.',
+    acts:[
+      '하맛 어귀에서 아라바 바다(사해)까지 이스라엘 영토를 솔로몬 시대 수준으로 회복(왕하 14:25)',
+      '요나 선지자의 예언으로 이 역사적 회복이 이루어짐을 성경이 명시(왕하 14:25)',
+      '하나님이 이스라엘의 극한 고통을 보시고 구원자를 통해 잠시 번영을 허락(왕하 14:26-27)',
+      '선지자 아모스: 이 시대 빈부격차·부패·형식적 종교를 강력히 비판(암 2-9장)',
+      '선지자 호세아: 이 시대부터 북이스라엘 멸망까지 활동하며 영적 음행을 책망(호세아서 전체)',
+      '41년 통치 후 여로보암 2세 사망 후 불과 30년 뒤 북이스라엘 멸망(BC 722)'
+    ],
+    prophets:['요나','아모스','호세아'],
+    foreign:'아람(회복), 앗수르(부상 중)',
+    coregency: {start:793, end:782, with:'여호아스'}
+  },
+  {
+    id:'n13', name:'스가랴', start:753, end:752, rating:3,
+    mother:'미상', age:null, duration:'6개월', death:'살룸에게 공개 피살',
+    refs:['왕하 15:8-12'],
+    eval:'여호와 보시기에 악을 행하되 그의 조상들이 행한 대로 느밧의 아들 여로보암의 죄에서 떠나지 아니함(왕하 15:9)',
+    grade:'극악',
+    summary:'예후 왕조의 4대이자 마지막 왕. 하나님의 4대 약속이 성취됨으로 끝남.',
+    acts:[
+      '예후 왕조의 4대 마지막 왕으로 하나님의 약속(왕하 10:30)이 정확히 성취됨(왕하 15:12)',
+      '야베스의 아들 살룸이 공개적으로 치고 왕이 됨 — "백성 앞에서"의 공개 암살(왕하 15:10)',
+      '6개월의 짧은 통치로 예후 왕조 완전 종식',
+      '이후 북이스라엘은 불과 30년 만에 5명의 왕이 교체되는 극심한 정치적 혼란기 돌입'
+    ],
+    prophets:['아모스','호세아'],
+    foreign:'앗수르(디글랏빌레셀 3세 부상)',
+    coregency: null
+  },
+  {
+    id:'n14', name:'살룸', start:752, end:752, rating:3,
+    mother:'미상', age:null, duration:'1개월', death:'므나헴에게 피살',
+    refs:['왕하 15:13-15'],
+    eval:'여호와 보시기에 악을 행함(왕하 15:13 문맥)',
+    grade:'극악',
+    summary:'스가랴를 죽이고 왕이 됐으나 단 1개월 만에 므나헴에게 살해당함.',
+    acts:[
+      '야베스의 아들로 스가랴를 공개 암살하여 왕위 찬탈(왕하 15:10)',
+      '디르사에서 므나헴이 올라와 공격, 1개월 만에 살해당함(왕하 15:14)',
+      '므나헴이 딥사 성을 공격할 때 열지 않자 성안의 임신한 여인들을 가르는 잔학 행위를 보임으로써 권력의 잔혹성을 드러냄(왕하 15:16)'
+    ],
+    prophets:['호세아'],
+    foreign:'앗수르',
+    coregency: null
+  },
+  {
+    id:'n15', name:'므나헴', start:752, end:742, rating:3,
+    mother:'미상', age:null, duration:'10년', death:'자연사',
+    refs:['왕하 15:16-22'],
+    eval:'여호와 보시기에 악을 행하되 그의 평생에 느밧의 아들 여로보암의 죄에서 떠나지 아니함(왕하 15:18)',
+    grade:'극악',
+    summary:'잔혹한 통치와 앗수르에 대한 굴욕적 조공으로 북이스라엘 멸망을 가속화.',
+    acts:[
+      '딥사 성이 항복하지 않자 성안의 임신한 여인들을 갈라버리는 극도의 잔혹 행위(왕하 15:16)',
+      '앗수르 왕 불(디글랏빌레셀 3세)이 침공하자 은 1,000달란트를 바쳐 퇴각시킴(왕하 15:19-20)',
+      '조공 자금 마련을 위해 부자 한 명당 은 50세겔씩 전국에 부과(왕하 15:20)',
+      '앗수르의 속국이 됨으로써 북이스라엘의 독립적 국력이 사실상 무너짐',
+      '호세아 선지자가 이 시대에 계속 심판을 경고'
+    ],
+    prophets:['호세아'],
+    foreign:'앗수르(디글랏빌레셀 3세)',
+    coregency: null
+  },
+  {
+    id:'n16', name:'브가히야', start:742, end:740, rating:3,
+    mother:'미상', age:null, duration:'2년', death:'베가에게 피살',
+    refs:['왕하 15:23-26'],
+    eval:'여호와 보시기에 악을 행하여 이스라엘로 범죄하게 한 느밧의 아들 여로보암의 죄에서 떠나지 아니함(왕하 15:24)',
+    grade:'극악',
+    summary:'므나헴의 아들. 르말랴의 아들 베가에게 사마리아 왕궁에서 암살당함.',
+    acts:[
+      '므나헴의 아들로 아버지의 죄를 답습(왕하 15:24)',
+      '르말랴의 아들 베가가 길르앗인 50명을 이끌고 사마리아 왕궁에서 암살(왕하 15:25)',
+      '므나헴-브가히야 부자의 정권이 12년 만에 끝남',
+      '베가가 이미 므나헴 재위 시 길르앗에서 공동섭정 또는 대항왕으로 세력을 키웠다는 학자들의 견해가 있음'
+    ],
+    prophets:['호세아'],
+    foreign:'앗수르',
+    coregency: null
+  },
+  {
+    id:'n17', name:'베가', start:752, end:732, rating:3,
+    mother:'미상', age:null, duration:'20년(공동섭정 포함)', death:'호세아에게 피살',
+    refs:['왕하 15:27-31','사 7장'],
+    eval:'여호와 보시기에 악을 행하여 이스라엘로 범죄하게 한 느밧의 아들 여로보암의 죄에서 떠나지 아니함(왕하 15:28)',
+    grade:'극악',
+    summary:'아람과 연합하여 유다를 공격했으나 앗수르 침공으로 이스라엘 영토의 절반을 잃음.',
+    acts:[
+      '브가히야를 죽이고 왕이 됨. 성경의 통치 기간 20년은 공동섭정 포함(왕하 15:27)',
+      '아람 왕 르신과 연합하여 유다를 공격했으나(시로-에브라임 전쟁) 이사야를 통해 실패 예언을 받음(사 7:1-9)',
+      '유다 왕 아하스가 앗수르에 도움 요청, 앗수르 디글랏빌레셀 3세가 갈릴리·납달리·길르앗을 점령하고 주민을 앗수르로 이주(왕하 15:29)',
+      '르신도 앗수르에 의해 피살됨(왕하 16:9)',
+      '엘라의 아들 호세아의 쿠데타로 암살당함(왕하 15:30)',
+      '이사야의 임마누엘 예언(사 7:14)이 이 전쟁 위기를 배경으로 선포됨'
+    ],
+    prophets:['호세아','이사야','오뎃'],
+    foreign:'아람(르신), 앗수르(디글랏빌레셀 3세), 남유다(아하스)',
+    coregency: {start:752, end:740, with:'므나헴'}
+  },
+  {
+    id:'n18', name:'호세아', start:732, end:722, rating:3,
+    mother:'미상', age:null, duration:'9년', death:'앗수르 포로(사망 시기 불명)',
+    refs:['왕하 17:1-41'],
+    eval:'그가 여호와 보시기에 악을 행하였으나 그의 전 이스라엘 여러 왕들과 같지는 아니하였더라(왕하 17:2)',
+    grade:'악',
+    summary:'북이스라엘 마지막 왕. 앗수르 배반으로 3년 포위 끝에 BC 722년 사마리아 함락, 북왕국 멸망.',
+    acts:[
+      '엘라의 아들로 베가를 암살하고 앗수르의 승인 하에 왕이 됨(왕하 15:30)',
+      '앗수르 살만에셀 5세에게 조공을 바치다 이집트 왕 소에게 사신을 보내며 조공 거부(왕하 17:3-4)',
+      '살만에셀 5세가 사마리아를 3년간 포위(BC 724-722)(왕하 17:5)',
+      '사르곤 2세 즉위 후 BC 722년 사마리아 최종 함락, 이스라엘 백성 27,290명 앗수르로 이주(왕하 17:6, 앗수르 기록)',
+      '앗수르가 사마리아에 이방 민족을 이주시켜 혼합 종족인 사마리아인 출현의 배경이 됨(왕하 17:24-41)',
+      '북이스라엘 209년, 다윗 통일왕국으로부터 분리된 지 정확히 209년 만에 역사의 무대에서 사라짐'
+    ],
+    prophets:['호세아(선지자)','미가'],
+    foreign:'앗수르(살만에셀 5세·사르곤 2세), 이집트(소)',
+    coregency: null
+  }
+];
+const GC={
+  0:{c:'g0',bd:'background:#10b981;color:#fff',t:'선한 왕'},
+  1:{c:'g1',bd:'background:#38bdf8;color:#fff',t:'부분 선'},
+  2:{c:'g2',bd:'background:#fb923c;color:#fff',t:'악한 왕'},
+  3:{c:'g3',bd:'background:#f43f5e;color:#fff',t:'극악한 왕'},
+  4:{c:'g4',bd:'background:#a855f7;color:#fff',t:'극악(여왕)'},
+};
+
+function render(){
+  const cs=document.getElementById('cs'),cn=document.getElementById('cn'),ca=document.getElementById('cax');
+  cs.innerHTML='';cn.innerHTML='';ca.innerHTML='';
+  const th=(SY-560)*ppy;
+  document.getElementById('tlc').style.height=th+'px';
+  ca.style.height=th+'px';
+  for(let y=940;y>=580;y-=20){
+    const d=document.createElement('div');
+    d.className='axtk';d.style.top=((SY-y)*ppy)+'px';
+    d.innerHTML='<span>'+y+'</span>';ca.appendChild(d);
+  }
+  const draw=(kings,col,isSouth)=>{
+    kings.forEach((k,kidx)=>{
+      const top=(SY-k.start)*ppy;
+      const naturalH=(k.start-k.end)*ppy;
+      const h=Math.max(naturalH,6);  // actual bar height stays true to timeline
+      const gc=GC[k.rating]||GC[2];
+      // year label
+      const yl=document.createElement('div');
+      yl.className=isSouth?'axyr-s':'axyr-n';
+      yl.style.top=((SY-k.start)*ppy-6)+'px';
+      yl.style[isSouth?'left':'right']='1px';
+      yl.textContent=k.start;
+      ca.appendChild(yl);
+      // row
+      const row=document.createElement('div');
+      row.className='krow '+(isSouth?'s':'n');
+      row.style.top=top+'px';row.style.height=h+'px';
+      const bar=document.createElement('div');
+      const isShort = h < 14;
+      bar.className='kbar '+gc.c+(isShort?' thin':'');
+      bar.id='bar-'+k.id;
+      bar.style.height=isShort ? '5px' : (h-2)+'px';
+      if(isShort){
+        bar.style.padding='0';
+        bar.style.overflow='visible';
+        bar.style.zIndex='30';  // always on top so badge is clickable
+      }
+      // LABEL LOGIC
+      // Short king (bar too thin for name): show as colored stripe + floating name badge
+      const SHORT_H = 14;
+      if(h >= SHORT_H){
+        const nm=document.createElement('span');
+        nm.className='bname';nm.textContent=(kidx+1)+'. '+k.name;bar.appendChild(nm);
+      }
+      if(k.coregency){
+        const sp=document.createElement('div');sp.className='cosp';
+        sp.style.height=(((k.coregency.start-k.coregency.end)/(k.start-k.end))*100)+'%';
+        bar.appendChild(sp);
+      }
+      // For short kings: badge goes INSIDE bar so it's always centered on it
+      if(h < 14){
+        const badge=document.createElement('div');
+        badge.className='short-badge';
+        const bgColor  ={g0:'#d1fae5',g1:'#e0f2fe',g2:'#ffedd5',g3:'#ffe4e6',g4:'#f3e8ff'}[gc.c]||'#f1f5f9';
+        const bdrColor ={g0:'#10b981',g1:'#38bdf8',g2:'#fb923c',g3:'#f43f5e',g4:'#a855f7'}[gc.c]||'#94a3b8';
+        const txtColor ={g0:'#065f46',g1:'#0c4a6e',g2:'#7c2d12',g3:'#881337',g4:'#581c87'}[gc.c]||'#1e293b';
+        badge.style.background=bgColor;
+        badge.style.borderColor=bdrColor;
+        badge.style.color=txtColor;
+        badge.textContent=(kidx+1)+'. '+k.name;
+        bar.appendChild(badge);
+      }
+
+      bar.addEventListener('click',()=>showInfo(k,isSouth));
+      row.appendChild(bar);
+      col.appendChild(row);
+    });
+    if(!isSouth){
+      const fb=document.createElement('div');fb.className='fbdg';
+      fb.style.top=((SY-722)*ppy)+'px';fb.style.left='1px';
+      fb.textContent='722 북이스라엘 멸망';ca.appendChild(fb);
+    } else {
+      const fb=document.createElement('div');fb.className='fbdg';
+      fb.style.top=((SY-586)*ppy)+'px';fb.style.right='1px';
+      fb.textContent='586 남유다 멸망';ca.appendChild(fb);
+    }
+  };
+  draw(southKings,cs,true);draw(northKings,cn,false);
+}
+
+function showInfo(k,isSouth){
+  if(selBar)selBar.classList.remove('sel');
+  const bar=document.getElementById('bar-'+k.id);
+  if(bar){bar.classList.add('sel');selBar=bar;}
+  curK=k;curSide=isSouth;
+  const gc=GC[k.rating]||GC[2];
+  document.getElementById('pkw').textContent=isSouth?'남유다 (JUDAH)':'북이스라엘 (ISRAEL)';
+  document.getElementById('pkw').style.cssText=isSouth?'background:#2563eb;color:#fff':'background:#dc2626;color:#fff';
+  document.getElementById('pnm').textContent=k.name;
+  document.getElementById('pyr').textContent='BC '+k.start+' – '+k.end;
+  document.getElementById('pbdg').innerHTML=
+    '<span class="bdg" style="'+gc.bd+'">'+gc.t+'</span>'+
+    '<span class="bdg" style="background:#f1f5f9;color:#475569">'+k.duration+'</span>'+
+    '<span class="bdg" style="background:#f1f5f9;color:#475569">사망: '+k.death+'</span>'+
+    (k.coregency?'<span class="bdg" style="background:#fef3c7;color:#92400e">공동섭정</span>':'');
+  const acts=(k.acts||[]).map(a=>'<li>'+a+'</li>').join('');
+  const refs=(k.refs||[]).map(r=>'<span class="bdg" style="background:#fefce8;color:#92400e;border:1px solid #fde68a">'+r+'</span>').join(' ');
+  const proph=k.prophets&&k.prophets.length
+    ?k.prophets.map(p=>'<span class="bdg" style="background:#eef2ff;color:#3730a3;border:1px solid #c7d2fe">'+p+'</span>').join(' ')
+    :'<span style="font-size:11px;color:#94a3b8">해당 없음</span>';
+  const ct=k.coregency?'BC '+k.coregency.start+'–'+k.coregency.end+' ('+k.coregency.with+'와 공동통치)':'없음';
+  document.getElementById('pcont').innerHTML=
+    '<div class="ic"><div class="stt">기본 신상</div><div class="igrd">'+
+    '<div class="icell"><span>어머니</span><b>'+k.mother+'</b></div>'+
+    '<div class="icell"><span>즉위 나이</span><b>'+(k.age?k.age+'세':'미상')+'</b></div>'+
+    '<div class="icell"><span>재위 기간</span><b>'+k.duration+'</b></div>'+
+    '<div class="icell"><span>사망 원인</span><b>'+k.death+'</b></div>'+
+    '<div class="icell fu"><span>공동섭정</span><b>'+ct+'</b></div></div></div>'+
+    '<div class="ic ac"><div class="stt">성경적 평가</div><p style="font-size:11px;color:#78350f;font-style:italic;line-height:1.65">&ldquo;'+k.eval+'&rdquo;</p></div>'+
+    '<div class="ic"><div class="stt">주요 행적</div><ul class="alist">'+acts+'</ul></div>'+
+    '<div class="ic ind"><div class="stt">동시대 선지자</div><div style="display:flex;flex-wrap:wrap;gap:4px">'+proph+'</div></div>'+
+    '<div class="ic"><div class="stt">동시대 외세</div><p style="font-size:11px;color:#374151">'+(k.foreign||'—')+'</p></div>'+
+    '<div class="ic"><div class="stt">성경 참고 구절</div><div style="display:flex;flex-wrap:wrap;gap:4px">'+refs+'</div></div>';
+  document.getElementById('dpanel').classList.add('open');
+  document.getElementById('ovl').classList.add('open');
+}
+function closePanel(){
+  document.getElementById('dpanel').classList.remove('open');
+  document.getElementById('ovl').classList.remove('open');
+  if(selBar){selBar.classList.remove('sel');selBar=null;}
+}
+function navPanel(d){
+  if(!curK)return;
+  const list=curSide?southKings:northKings;
+  const idx=list.findIndex(k=>k.id===curK.id);
+  const nx=list[idx+d];if(nx)showInfo(nx,curSide);
+}
+
+window.addEventListener('load',render);
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closePanel();});
+</script>
+</body>
+</html>
