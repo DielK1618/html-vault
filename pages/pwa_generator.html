@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0f172a">
+  <meta name="description" content="웹사이트를 PWA 앱으로 변환하기">
+  <title>PWA 생성기</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #0f172a;
+      --accent: #60a5fa;
+      --accent-dark: #3b82f6;
+      --success: #10b981;
+      --error: #ef4444;
+      --text-light: #f1f5f9;
+      --text-dim: #cbd5e1;
+      --border: #1e293b;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: var(--text-light);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 600px;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 40px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      animation: slideUp 0.6s ease-out;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .header {
+      margin-bottom: 40px;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 2.5em;
+      font-weight: 700;
+      margin-bottom: 10px;
+      background: linear-gradient(135deg, var(--accent) 0%, #60a5fa 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .header p {
+      color: var(--text-dim);
+      font-size: 0.95em;
+    }
+
+    .form-group {
+      margin-bottom: 24px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: 600;
+      font-size: 0.95em;
+      color: var(--text-light);
+    }
+
+    input[type="url"],
+    input[type="text"],
+    input[type="color"] {
+      width: 100%;
+      padding: 12px 16px;
+      background: rgba(30, 41, 59, 0.6);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-light);
+      font-size: 1em;
+      transition: all 0.3s ease;
+    }
+
+    input[type="url"]:focus,
+    input[type="text"]:focus,
+    input[type="color"]:focus {
+      outline: none;
+      border-color: var(--accent);
+      background: rgba(30, 41, 59, 0.9);
+      box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
+    }
+
+    .color-input-group {
+      display: flex;
+      gap: 12px;
+    }
+
+    input[type="color"] {
+      width: 60px;
+      height: 44px;
+      padding: 4px;
+      cursor: pointer;
+    }
+
+    input[type="color"]::-webkit-color-swatch-wrapper {
+      padding: 2px;
+    }
+
+    input[type="color"]::-webkit-color-swatch {
+      border: none;
+      border-radius: 4px;
+    }
+
+    .advanced {
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+
+    .advanced h3 {
+      font-size: 0.95em;
+      color: var(--accent);
+      margin-bottom: 16px;
+      font-weight: 600;
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+      accent-color: var(--accent);
+    }
+
+    .checkbox-group label {
+      margin: 0;
+      font-weight: 400;
+      font-size: 0.9em;
+      cursor: pointer;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 12px;
+      margin-top: 32px;
+    }
+
+    button {
+      flex: 1;
+      padding: 14px 24px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-generate {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+      color: white;
+    }
+
+    .btn-generate:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px rgba(96, 165, 250, 0.3);
+    }
+
+    .btn-generate:active {
+      transform: translateY(0);
+    }
+
+    .btn-reset {
+      background: rgba(96, 165, 250, 0.1);
+      color: var(--accent);
+      border: 1px solid var(--accent);
+    }
+
+    .btn-reset:hover {
+      background: rgba(96, 165, 250, 0.2);
+    }
+
+    .result {
+      margin-top: 40px;
+      padding: 24px;
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: 8px;
+      display: none;
+      animation: fadeIn 0.4s ease-out;
+    }
+
+    .result.show {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    .result h3 {
+      color: var(--success);
+      margin-bottom: 16px;
+      font-size: 1.1em;
+    }
+
+    .result-item {
+      margin-bottom: 16px;
+      padding: 12px;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 6px;
+      font-size: 0.9em;
+      word-break: break-all;
+    }
+
+    .result-item label {
+      font-weight: 600;
+      color: var(--accent);
+      display: block;
+      margin-bottom: 6px;
+      font-size: 0.9em;
+    }
+
+    .result-code {
+      background: rgba(0, 0, 0, 0.4);
+      padding: 12px;
+      border-radius: 4px;
+      font-family: 'Monaco', 'Courier New', monospace;
+      font-size: 0.85em;
+      overflow-x: auto;
+      line-height: 1.4;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+
+    .copy-btn {
+      margin-top: 8px;
+      padding: 8px 12px;
+      font-size: 0.85em;
+      background: rgba(96, 165, 250, 0.2);
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      border-radius: 4px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .copy-btn:hover {
+      background: rgba(96, 165, 250, 0.3);
+    }
+
+    .copy-btn.copied {
+      background: rgba(16, 185, 129, 0.2);
+      color: var(--success);
+      border-color: var(--success);
+    }
+
+    .error {
+      color: var(--error);
+      font-size: 0.9em;
+      margin-top: 8px;
+    }
+
+    .info {
+      background: rgba(96, 165, 250, 0.1);
+      border: 1px solid rgba(96, 165, 250, 0.3);
+      padding: 12px;
+      border-radius: 6px;
+      font-size: 0.85em;
+      color: var(--text-dim);
+      margin-bottom: 24px;
+    }
+
+    .info strong {
+      color: var(--accent);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>📱 PWA 생성기</h1>
+      <p>웹사이트를 설치 가능한 앱으로 만들기</p>
+    </div>
+
+    <div class="info">
+      <strong>💡 팁:</strong> 삼성 인터넷에서 설치하려면, 생성된 코드를 당신의 웹사이트에 추가하세요.
+    </div>
+
+    <form id="form">
+      <div class="form-group">
+        <label for="url">웹사이트 URL *</label>
+        <input
+          type="url"
+          id="url"
+          placeholder="https://example.com"
+          required
+        >
+        <div class="error" id="urlError"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="appName">앱 이름 *</label>
+        <input
+          type="text"
+          id="appName"
+          placeholder="내 앱"
+          required
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="shortName">앱 단축명</label>
+        <input
+          type="text"
+          id="shortName"
+          placeholder="앱"
+          maxlength="12"
+        >
+        <small style="color: var(--text-dim); font-size: 0.8em;">최대 12글자</small>
+      </div>
+
+      <div class="form-group">
+        <label for="description">설명</label>
+        <input
+          type="text"
+          id="description"
+          placeholder="이 앱에 대해 설명하세요"
+        >
+      </div>
+
+      <div class="form-group">
+        <label>테마 색상</label>
+        <div class="color-input-group">
+          <div style="flex: 1;">
+            <input type="color" id="themeColor" value="#3b82f6">
+            <small style="color: var(--text-dim); display: block; margin-top: 4px;">테마 색상</small>
+          </div>
+          <div style="flex: 1;">
+            <input type="color" id="bgColor" value="#ffffff">
+            <small style="color: var(--text-dim); display: block; margin-top: 4px;">배경 색상</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="advanced">
+        <h3>고급 옵션</h3>
+        <div class="checkbox-group">
+          <input type="checkbox" id="generateSW" checked>
+          <label for="generateSW">Service Worker 생성 (오프라인 기능)</label>
+        </div>
+        <div class="checkbox-group">
+          <input type="checkbox" id="fullscreen">
+          <label for="fullscreen">전체화면 모드로 실행</label>
+        </div>
+      </div>
+
+      <div class="button-group">
+        <button type="submit" class="btn-generate">생성하기</button>
+        <button type="reset" class="btn-reset">초기화</button>
+      </div>
+    </form>
+
+    <div class="result" id="result">
+      <h3>✅ 생성 완료!</h3>
+      
+      <div class="result-item">
+        <label>1단계: manifest.json</label>
+        <div class="result-code" id="manifestCode"></div>
+        <button class="copy-btn" onclick="copyCode('manifestCode')">복사</button>
+      </div>
+
+      <div class="result-item" id="swSection" style="display: none;">
+        <label>2단계: service-worker.js</label>
+        <div class="result-code" id="swCode"></div>
+        <button class="copy-btn" onclick="copyCode('swCode')">복사</button>
+      </div>
+
+      <div class="result-item">
+        <label>3단계: HTML &lt;head&gt;에 추가</label>
+        <div class="result-code" id="htmlCode"></div>
+        <button class="copy-btn" onclick="copyCode('htmlCode')">복사</button>
+      </div>
+
+      <div class="result-item" style="background: rgba(96, 165, 250, 0.1); border-color: rgba(96, 165, 250, 0.3);">
+        <label style="color: var(--accent);">📖 설치 방법</label>
+        <div style="font-size: 0.85em; color: var(--text-dim); line-height: 1.6;">
+          <strong>삼성 인터넷에서:</strong><br>
+          1. 웹사이트 방문<br>
+          2. 우측 상단 메뉴(≡) 클릭<br>
+          3. "앱 설치" 선택<br>
+          4. 확인!
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('form');
+    const resultDiv = document.getElementById('result');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const url = document.getElementById('url').value.trim();
+      const appName = document.getElementById('appName').value.trim();
+      const shortName = document.getElementById('shortName').value.trim() || appName.substring(0, 12);
+      const description = document.getElementById('description').value.trim() || appName;
+      const themeColor = document.getElementById('themeColor').value;
+      const bgColor = document.getElementById('bgColor').value;
+      const generateSW = document.getElementById('generateSW').checked;
+      const fullscreen = document.getElementById('fullscreen').checked;
+
+      // URL 검증
+      try {
+        new URL(url);
+      } catch (e) {
+        document.getElementById('urlError').textContent = '올바른 URL을 입력하세요';
+        return;
+      }
+      document.getElementById('urlError').textContent = '';
+
+      // manifest.json 생성
+      const manifest = {
+        name: appName,
+        short_name: shortName,
+        description: description,
+        start_url: new URL(url).pathname || '/',
+        display: fullscreen ? 'fullscreen' : 'standalone',
+        background_color: bgColor,
+        theme_color: themeColor,
+        icons: [
+          {
+            src: '/icon-192.png',
+            sizes: '192x192',
+            type: 'image/png'
+          },
+          {
+            src: '/icon-512.png',
+            sizes: '512x512',
+            type: 'image/png'
+          }
+        ]
+      };
+
+      // HTML 코드 생성
+      const urlObj = new URL(url);
+      const htmlCode = `<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="${themeColor}">
+<meta name="description" content="${description}">
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" href="/icon-192.png">`;
+
+      // Service Worker 코드
+      const swCode = `const CACHE_NAME = 'pwa-cache-v1';
+const urlsToCache = [
+  '/',
+  '/index.html'
+];
+
+self.addEventListener('install', event => {
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then(cache => cache.addAll(urlsToCache))
+      .catch(err => console.log('Cache failed:', err))
+  );
+});
+
+self.addEventListener('fetch', event => {
+  event.respondWith(
+    caches.match(event.request)
+      .then(response => response || fetch(event.request))
+      .catch(() => caches.match('/index.html'))
+  );
+});`;
+
+      // 결과 표시
+      document.getElementById('manifestCode').textContent = JSON.stringify(manifest, null, 2);
+      document.getElementById('htmlCode').textContent = htmlCode;
+      
+      if (generateSW) {
+        document.getElementById('swCode').textContent = swCode;
+        document.getElementById('swSection').style.display = 'block';
+      } else {
+        document.getElementById('swSection').style.display = 'none';
+      }
+
+      resultDiv.classList.add('show');
+      resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+
+    function copyCode(elementId) {
+      const element = document.getElementById(elementId);
+      const text = element.textContent;
+      
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = event.target;
+        const originalText = btn.textContent;
+        btn.textContent = '✓ 복사됨!';
+        btn.classList.add('copied');
+        
+        setTimeout(() => {
+          btn.textContent = originalText;
+          btn.classList.remove('copied');
+        }, 2000);
+      });
+    }
+
+    // URL 입력시 앱 이름 자동 제안
+    document.getElementById('url').addEventListener('change', function() {
+      if (!document.getElementById('appName').value) {
+        try {
+          const host = new URL(this.value).hostname;
+          const name = host.split('.')[0];
+          document.getElementById('appName').value = name.charAt(0).toUpperCase() + name.slice(1);
+          document.getElementById('shortName').value = name.substring(0, 12);
+        } catch (e) {}
+      }
+    });
+  </script>
+</body>
+</html>
