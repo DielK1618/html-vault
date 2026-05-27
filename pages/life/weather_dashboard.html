@@ -257,20 +257,40 @@ async function geocode(city,country){
 async function fetchWeather(lat,lon,start,end){
   const today=todayStr();
   const archiveEnd=offsetDate(today,-6);
-  const params=`latitude=${lat}&longitude=${lon}&timezone=auto`;
   let rows=[];
+
   if(start<=archiveEnd){
-    const s=start,e=end<=archiveEnd?end:archiveEnd;
-    const r=await fetch(`${ARCHIVE}?${params}&daily=${VARS_ARCHIVE}&start_date=${s}&end_date=${e}`);
+    const s=start;
+    const e=end<=archiveEnd?end:archiveEnd;
+    const url=new URL(ARCHIVE);
+    url.searchParams.set('latitude',lat);
+    url.searchParams.set('longitude',lon);
+    url.searchParams.set('daily',VARS_ARCHIVE);
+    url.searchParams.set('timezone','auto');
+    url.searchParams.set('start_date',s);
+    url.searchParams.set('end_date',e);
+    const r=await fetch(url.toString());
     const d=await r.json();
-    if(d.daily)rows=[...rows,...parseMeteo(d.daily)];
+    if(d.error) throw new Error(d.reason||'Archive API 오류');
+    if(d.daily) rows=[...rows,...parseMeteo(d.daily)];
   }
+
   if(end>archiveEnd){
-    const s=start>archiveEnd?start:offsetDate(archiveEnd,1),e=end;
-    const r=await fetch(`${FORECAST}?${params}&daily=${VARS_FORECAST}&start_date=${s}&end_date=${e}`);
+    const s=start>archiveEnd?start:offsetDate(archiveEnd,1);
+    const e=end;
+    const url=new URL(FORECAST);
+    url.searchParams.set('latitude',lat);
+    url.searchParams.set('longitude',lon);
+    url.searchParams.set('daily',VARS_FORECAST);
+    url.searchParams.set('timezone','auto');
+    url.searchParams.set('start_date',s);
+    url.searchParams.set('end_date',e);
+    const r=await fetch(url.toString());
     const d=await r.json();
-    if(d.daily)rows=[...rows,...parseMeteo(d.daily)];
+    if(d.error) throw new Error(d.reason||'Forecast API 오류');
+    if(d.daily) rows=[...rows,...parseMeteo(d.daily)];
   }
+
   return rows;
 }
 
