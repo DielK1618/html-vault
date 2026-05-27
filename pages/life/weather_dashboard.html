@@ -77,6 +77,15 @@ thead th:first-child{z-index:20;background:#fafafa}
 .cell-ai{text-align:center;padding:18px 10px;background:#f9f7ff;font-size:11px;color:#a78bfa;min-width:140px}
 .cell-empty{text-align:center;color:#d1d1d6;font-size:11px;padding:18px 10px;background:#fafafa;min-width:118px}
 .cell-fail{text-align:center;color:#fca5a5;font-size:11px;padding:18px 10px;background:#fff5f5;min-width:118px}
+
+/* ── Chart Panel ── */
+.chart-panel{background:#fff;border-top:1px solid #e5e5ea;padding:20px 20px 8px}
+.chart-section{margin-bottom:28px}
+.chart-title{font-size:12px;font-weight:600;color:#8e8e93;letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.chart-legend{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+.cl-item{display:flex;align-items:center;gap:5px;font-size:11px;color:#636366}
+.cl-dot{width:24px;height:3px;border-radius:2px;flex-shrink:0}
+.cl-dot-dash{width:24px;height:0;border-top:2px dashed;flex-shrink:0}
 </style>
 </head>
 <body>
@@ -169,6 +178,30 @@ thead th:first-child{z-index:20;background:#fafafa}
     <tbody id="matrixBody"></tbody>
   </table>
 </div>
+
+<!-- Chart Panel -->
+<div class="chart-panel" id="chartPanel" style="display:none">
+  <div class="chart-section">
+    <div class="chart-title">기온 추이
+      <span style="font-size:11px;font-weight:400;color:#c7c7cc">— 과거 연도별 최고/최저기온 + 공식 예보</span>
+    </div>
+    <div class="chart-legend" id="tempLegend"></div>
+    <div style="position:relative;width:100%;height:260px">
+      <canvas id="tempChart" role="img" aria-label="기온 추이 차트"></canvas>
+    </div>
+  </div>
+  <div class="chart-section">
+    <div class="chart-title">강수량
+      <span style="font-size:11px;font-weight:400;color:#c7c7cc">— 일별 강수량 (mm)</span>
+    </div>
+    <div class="chart-legend" id="rainLegend"></div>
+    <div style="position:relative;width:100%;height:200px">
+      <canvas id="rainChart" role="img" aria-label="강수량 바 차트"></canvas>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 
 <script>
 const CITY_DATA={
@@ -347,7 +380,154 @@ function updateKPI(rows,city,country,s,e,years){
   ].map(k=>`<div class="kc"><div class="kc-label">${k.l}</div><div class="kc-val">${k.v}<span class="kbadge">실측</span></div></div>`).join('');
 }
 
-/* 메인 조회 — 데이터 먼저 모두 수집 후 한번에 렌더링 */
+/* ── 차트 색상 팔레트 ── */
+const PALETTE=[
+  {max:'#f97316',min:'#fed7aa',rain:'rgba(249,115,22,.7)'},
+  {max:'#8b5cf6',min:'#ddd6fe',rain:'rgba(139,92,246,.7)'},
+  {max:'#10b981',min:'#a7f3d0',rain:'rgba(16,185,129,.7)'},
+  {max:'#ef4444',min:'#fecaca',rain:'rgba(239,68,68,.7)'},
+  {max:'#0ea5e9',min:'#bae6fd',rain:'rgba(14,165,233,.7)'},
+  {max:'#f59e0b',min:'#fde68a',rain:'rgba(245,158,11,.7)'},
+  {max:'#ec4899',min:'#fbcfe8',rain:'rgba(236,72,153,.7)'},
+  {max:'#14b8a6',min:'#99f6e4',rain:'rgba(20,184,166,.7)'},
+  {max:'#6366f1',min:'#c7d2fe',rain:'rgba(99,102,241,.7)'},
+  {max:'#84cc16',min:'#d9f99d',rain:'rgba(132,204,22,.7)'},
+];
+const OFF_COLOR={max:'#1d4ed8',min:'#93c5fd',rain:'rgba(29,78,216,.85)'};
+
+let tempChartInst=null,rainChartInst=null;
+
+function renderCharts(yearList,histMap,offRows,dates){
+  const panel=document.getElementById('chartPanel');
+  panel.style.display='block';
+
+  const labels=dates.map(d=>{
+    const mm=String(d.getMonth()+1).padStart(2,'0');
+    const dd=String(d.getDate()).padStart(2,'0');
+    return`${mm}/${dd}`;
+  });
+
+  /* ── 기온 차트 데이터셋 ── */
+  const tempDatasets=[];
+  const legendItems=[];
+
+  yearList.forEach((yr,idx)=>{
+    const rows=histMap[yr]||[];
+    const p=PALETTE[idx%PALETTE.length];
+    tempDatasets.push({
+      label:`${yr}년 최고`,
+      data:rows.map(r=>r?r.tempMax:null),
+      borderColor:p.max,borderWidth:1.5,
+      pointRadius:0,tension:.3,fill:false,
+      borderDash:[],
+    });
+    tempDatasets.push({
+      label:`${yr}년 최저`,
+      data:rows.map(r=>r?r.tempMin:null),
+      borderColor:p.min,borderWidth:1.5,
+      pointRadius:0,tension:.3,fill:false,
+      borderDash:[3,3],
+    });
+    legendItems.push({label:`${yr}년`,maxColor:p.max,minColor:p.min});
+  });
+
+  if(offRows.length){
+    tempDatasets.push({
+      label:'예보 최고',
+      data:offRows.map(r=>r?r.tempMax:null),
+      borderColor:OFF_COLOR.max,borderWidth:2.5,
+      pointRadius:3,pointBackgroundColor:OFF_COLOR.max,
+      tension:.3,fill:false,borderDash:[],
+    });
+    tempDatasets.push({
+      label:'예보 최저',
+      data:offRows.map(r=>r?r.tempMin:null),
+      borderColor:OFF_COLOR.min,borderWidth:2.5,
+      pointRadius:3,pointBackgroundColor:OFF_COLOR.min,
+      tension:.3,fill:false,borderDash:[4,4],
+    });
+  }
+
+  /* ── 기온 범례 ── */
+  const tempLegEl=document.getElementById('tempLegend');
+  tempLegEl.innerHTML=legendItems.map(it=>`
+    <div class="cl-item">
+      <span class="cl-dot" style="background:${it.maxColor}"></span>
+      <span class="cl-dot-dash" style="border-color:${it.minColor}"></span>
+      <span>${it.label}</span>
+    </div>`).join('')
+    +(offRows.length?`<div class="cl-item">
+      <span class="cl-dot" style="background:${OFF_COLOR.max};height:3px"></span>
+      <span>예보 최고</span>
+    </div>
+    <div class="cl-item">
+      <span class="cl-dot-dash" style="border-color:${OFF_COLOR.min}"></span>
+      <span>예보 최저</span>
+    </div>`:'');
+
+  if(tempChartInst) tempChartInst.destroy();
+  tempChartInst=new Chart(document.getElementById('tempChart'),{
+    type:'line',
+    data:{labels,datasets:tempDatasets},
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      interaction:{mode:'index',intersect:false},
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.parsed.y}°C`}}},
+      scales:{
+        x:{ticks:{font:{size:10},maxRotation:0,autoSkip:true,maxTicksLimit:14},grid:{color:'#f0f0f5'}},
+        y:{ticks:{font:{size:10},callback:v=>`${v}°`},grid:{color:'#f0f0f5'}},
+      }
+    }
+  });
+
+  /* ── 강수량 차트 데이터셋 ── */
+  const rainDatasets=[];
+  const rainLegItems=[];
+
+  yearList.forEach((yr,idx)=>{
+    const rows=histMap[yr]||[];
+    const p=PALETTE[idx%PALETTE.length];
+    rainDatasets.push({
+      label:`${yr}년`,
+      data:rows.map(r=>r?r.amount:0),
+      backgroundColor:p.rain,
+      borderRadius:2,borderSkipped:false,
+    });
+    rainLegItems.push({label:`${yr}년`,color:p.rain});
+  });
+
+  if(offRows.length){
+    rainDatasets.push({
+      label:'예보',
+      data:offRows.map(r=>r?r.amount:0),
+      backgroundColor:OFF_COLOR.rain,
+      borderRadius:2,borderSkipped:false,
+    });
+    rainLegItems.push({label:'예보',color:OFF_COLOR.rain});
+  }
+
+  const rainLegEl=document.getElementById('rainLegend');
+  rainLegEl.innerHTML=rainLegItems.map(it=>`
+    <div class="cl-item">
+      <span class="cl-dot" style="background:${it.color};height:10px;border-radius:2px"></span>
+      <span>${it.label}</span>
+    </div>`).join('');
+
+  if(rainChartInst) rainChartInst.destroy();
+  rainChartInst=new Chart(document.getElementById('rainChart'),{
+    type:'bar',
+    data:{labels,datasets:rainDatasets},
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      interaction:{mode:'index',intersect:false},
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.parsed.y}mm`}}},
+      scales:{
+        x:{ticks:{font:{size:10},maxRotation:0,autoSkip:true,maxTicksLimit:14},grid:{display:false}},
+        y:{ticks:{font:{size:10},callback:v=>`${v}mm`},grid:{color:'#f0f0f5'},beginAtZero:true},
+      }
+    }
+  });
+}
 async function applyFilter(){
   const {country,city,coords}=getSelected();
   if(!city){alert('도시를 선택하거나 입력해 주세요.');return}
@@ -434,6 +614,10 @@ async function applyFilter(){
   }).join('');
 
   if(offRows.length)updateKPI(offRows,city,country,s,e,years);
+
+  /* ── 차트 렌더링 ── */
+  renderCharts(yearList,histMap,offRows,dates);
+
   setStatus(`조회 완료 — ${city} ${s} ~ ${e}`,'ok');
   setProgress(-1);
   btn.disabled=false;btn.textContent='조회';
