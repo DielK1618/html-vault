@@ -357,9 +357,10 @@ async function applyFilter(){
   let done=0;
   const histMap={};
   await Promise.all(yearList.map(async yr=>{
-    const delta=startYear-yr;
+    const ys=s.replace(/^\d{4}/,String(yr));
+    const ye=e.replace(/^\d{4}/,String(yr));
     try{
-      const rows=await fetchWeather(lat,lon,shiftYear(s,-delta),shiftYear(e,-delta));
+      const rows=await fetchWeather(lat,lon,ys,ye);
       histMap[yr]=rows;
     }catch{histMap[yr]=null}
     done++;
