@@ -93,7 +93,7 @@ thead th:first-child{z-index:20;background:#fafafa}
 <body>
 
 <div class="filter-panel">
-  <span class="ver-badge">v4.1</span>
+  <span class="ver-badge">v4.2</span>
   <div class="panel-title">날씨 조회 설정</div>
   <div class="filter-row">
     <div class="fg">
@@ -649,7 +649,7 @@ ${offSummary}
           'anthropic-dangerous-direct-browser-access':'true',
         },
         body: JSON.stringify({
-          model:'claude-haiku-4-5',
+          model:'claude-haiku-4-5-20251001',
           max_tokens:2000,
           messages:[{role:'user',content:prompt}]
         })
