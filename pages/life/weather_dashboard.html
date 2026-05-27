@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI 날씨 예측 대시보드</title>
+<link rel="icon" href="data:,">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -11,7 +12,8 @@ body{font-family:'Inter',system-ui,sans-serif;background:#f5f5f7;color:#1d1d1f;f
 ::-webkit-scrollbar{height:5px;width:5px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:#d1d1d6;border-radius:10px}
-.filter-panel{background:#fff;border-bottom:1px solid #e5e5ea;padding:14px 20px;position:sticky;top:0;z-index:100}
+.filter-panel{background:#fff;border-bottom:1px solid #e5e5ea;padding:14px 20px;position:sticky;top:0;z-index:100;position:relative}
+.ver-badge{position:absolute;top:10px;right:14px;font-size:10px;font-weight:600;color:#8e8e93;background:#f5f5f7;border:1px solid #e5e5ea;border-radius:5px;padding:2px 7px;letter-spacing:.03em}
 .panel-title{font-size:12px;font-weight:600;color:#8e8e93;letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px}
 .filter-row{display:flex;flex-wrap:wrap;gap:8px;align-items:flex-end}
 .fg{display:flex;flex-direction:column;gap:3px}
@@ -91,6 +93,7 @@ thead th:first-child{z-index:20;background:#fafafa}
 <body>
 
 <div class="filter-panel">
+  <span class="ver-badge">v4.0</span>
   <div class="panel-title">날씨 조회 설정</div>
   <div class="filter-row">
     <div class="fg">
@@ -141,6 +144,12 @@ thead th:first-child{z-index:20;background:#fafafa}
       <span class="flabel">&nbsp;</span>
       <button class="btn-apply" id="applyBtn" onclick="applyFilter()">조회</button>
     </div>
+  </div>
+  <div style="display:flex;align-items:center;gap:8px;margin-top:10px;padding-top:10px;border-top:1px solid #f0f0f5">
+    <span class="flabel" style="white-space:nowrap">Claude API Key</span>
+    <input type="password" id="apiKeyInput" placeholder="sk-ant-api... (입력 시 AI 예측 활성화)"
+      style="flex:1;max-width:380px;font-family:monospace;font-size:11px">
+    <span style="font-size:11px;color:#c7c7cc">미입력 시 AI 예측 컬럼 비활성</span>
   </div>
   <div class="recent-row" id="recentRow"></div>
 </div>
@@ -614,6 +623,76 @@ async function applyFilter(){
   }).join('');
 
   if(offRows.length)updateKPI(offRows,city,country,s,e,years);
+
+  /* ── Phase 4: Claude AI 예측 ── */
+  const API_KEY = document.getElementById('apiKeyInput').value.trim();
+  if(API_KEY){
+    setStatus('Claude AI 예측 생성 중...');
+    try{
+      const offSummary = offRows.filter(Boolean).map(r=>`${r.date}: ${r.cond} 최저${r.tempMin}°최고${r.tempMax}° 강수${r.prob}% ${r.amount}mm`).join('\n');
+      const prompt = `당신은 기상 전문가입니다. 아래 도시의 날씨를 예측해 주세요.
+도시: ${city}, ${country}
+예측 기간: ${s} ~ ${e}
+공식 예보 참고:
+${offSummary}
+
+반드시 JSON 배열만 출력하세요 (코드블록, 설명 없이):
+[{"date":"YYYY-MM-DD","cond":"날씨명","icon":"이모지","tempMin":숫자,"tempMax":숫자,"amount":숫자,"prob":숫자,"humidity":숫자,"wind":숫자,"confidence":숫자,"reasoning":"한문장"}]
+규칙: cond는 맑음/구름조금/구름많음/흐림/비/소나기/눈/안개 중 하나, confidence는 70~95`;
+
+      const res = await fetch('https://api.anthropic.com/v1/messages',{
+        method:'POST',
+        headers:{
+          'Content-Type':'application/json',
+          'x-api-key': API_KEY,
+          'anthropic-version':'2023-06-01',
+          'anthropic-dangerous-direct-browser-access':'true',
+        },
+        body: JSON.stringify({
+          model:'claude-sonnet-4-20250514',
+          max_tokens:1500,
+          messages:[{role:'user',content:prompt}]
+        })
+      });
+      const data = await res.json();
+      if(data.error) throw new Error(data.error.message);
+      const txt = (data.content?.find(b=>b.type==='text')?.text||'[]').replace(/```json|```/g,'').trim();
+      const aiRows = JSON.parse(txt);
+      aiRows.forEach((r,i)=>{
+        const cell = document.getElementById(`ai-${i}`);
+        if(!cell) return;
+        const rb=rainBg(r.amount), dark=rb==='#3b82f6';
+        const bg=rb||'#f7f7f8';
+        const t=dark?'color:#fff':'';
+        const cc=r.confidence>=85?'ch':r.confidence>=75?'cm':'cl';
+        cell.outerHTML=`<td class="weather-cell" style="background:${bg};${t}">
+          <span class="wicon">${r.icon||'🌡️'}</span>
+          <span class="cond-txt" style="${t}">${r.cond}</span><br>
+          <span class="tmin" style="${dark?'color:#bfdbfe':''}">${r.tempMin}°</span>
+          <span class="sep">/</span>
+          <span class="tmax" style="${dark?'color:#fecaca':''}">${r.tempMax}°</span>
+          <span class="meta" style="${t}"> 강수 ${r.prob}%</span><br>
+          <span class="meta">
+            ${r.amount>0?`<span class="rain-lbl" style="${dark?'color:#bfdbfe':''}">🌧 ${r.amount}mm</span> `:''}
+            <span class="hum" style="${dark?'color:#a5f3fc':''}">💧${r.humidity}%</span>
+            <span class="wnd" style="${dark?'color:#ddd6fe':''}"> 💨${r.wind}m/s</span>
+          </span><br>
+          <span class="conf-badge ${cc}">${r.confidence}% 신뢰</span>
+          <span class="reason" style="${t}">${r.reasoning}</span>
+        </td>`;
+      });
+    }catch(err){
+      dates.forEach((_,i)=>{
+        const cell=document.getElementById(`ai-${i}`);
+        if(cell) cell.innerHTML=`<span style="font-size:11px;color:#f87171">AI 오류: ${err.message.slice(0,30)}</span>`;
+      });
+    }
+  } else {
+    dates.forEach((_,i)=>{
+      const cell=document.getElementById(`ai-${i}`);
+      if(cell) cell.innerHTML=`<span style="font-size:11px;color:#c7c7cc">API 키 필요</span>`;
+    });
+  }
 
   /* ── 차트 렌더링 ── */
   renderCharts(yearList,histMap,offRows,dates);
