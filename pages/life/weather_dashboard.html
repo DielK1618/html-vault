@@ -643,15 +643,14 @@ ${offSummary}
       const res = await fetch('https://api.anthropic.com/v1/messages',{
         method:'POST',
         headers:{
-          'Content-Type':'application/json',
+          'content-type':'application/json',
           'x-api-key': API_KEY,
           'anthropic-version':'2023-06-01',
           'anthropic-dangerous-direct-browser-access':'true',
         },
         body: JSON.stringify({
-          model:'claude-sonnet-4-6',
-          max_tokens:1500,
-          system:'당신은 기상 전문가입니다. 요청한 JSON 형식만 반환하고 다른 텍스트는 절대 포함하지 마세요.',
+          model:'claude-haiku-4-5',
+          max_tokens:2000,
           messages:[{role:'user',content:prompt}]
         })
       });
