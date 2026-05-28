@@ -108,7 +108,7 @@ thead th:first-child{z-index:20;background:#fafafa}
 <body>
 
 <div class="filter-panel" style="position:relative">
-  <span class="ver-badge">v5.6</span>
+  <span class="ver-badge">v5.7</span>
   <div class="panel-title">날씨 조회 설정</div>
   <div class="filter-row">
     <div class="fg">
@@ -624,6 +624,15 @@ function renderCharts(yearList,histMap,offRows,dates){
   rainChart=new Chart(document.getElementById('rainChart'),{type:'bar',data:{labels:labels,datasets:rDs},options:opts('mm')});
 }
 
+/* JSON 추출 — 모델이 부가 텍스트를 붙여도 배열만 꺼냄 */
+function extractJson(txt){
+  txt=txt.replace(/```json|```/g,'').trim();
+  var start=txt.indexOf('[');
+  var end=txt.lastIndexOf(']');
+  if(start!==-1&&end!==-1&&end>start) return txt.slice(start,end+1);
+  return txt;
+}
+
 /* ── 메인 조회 ── */
 async function applyFilter(){
   var sel=getSelected();
@@ -739,7 +748,15 @@ async function applyFilter(){
         var offSum=offRows.filter(Boolean).map(function(r){
           return r.date+': '+r.cond+' 최저'+r.tempMin+'°최고'+r.tempMax+'° 강수'+r.prob+'% '+r.amount+'mm 습도'+r.humidity+'%';
         }).join('\n');
-        var prompt='기상 전문가로서 아래 도시의 날씨를 예측하세요.\n도시: '+city+', '+country+'\n예측 기간: '+s+' ~ '+e+'\n공식 예보:\n'+offSum+'\n\nJSON 배열만 출력 (코드블록 없이):\n[{"date":"YYYY-MM-DD","cond":"날씨명","icon":"이모지","tempMin":숫자,"tempMax":숫자,"amTempMax":숫자,"pmTempMax":숫자,"amCond":"날씨명","pmCond":"날씨명","amHumidity":숫자,"pmHumidity":숫자,"amRain":숫자,"pmRain":숫자,"amount":숫자,"prob":숫자,"humidity":숫자,"wind":숫자,"confidence":숫자,"reasoning":"한문장"}]\ncond: 맑음/구름조금/구름많음/흐림/비/소나기/눈/안개 중 하나, confidence: 70~95';
+        var prompt='You are a weather prediction API. Respond ONLY with a JSON array. No explanations, no text, no markdown, no code blocks. Just the raw JSON array.\n\n'+
+'City: '+city+', '+country+'\n'+
+'Predict dates: '+dates.map(function(d){return d.toISOString().slice(0,10);}).join(', ')+'\n'+
+'Official forecast reference:\n'+offSum+'\n\n'+
+'Output format (JSON array only, nothing else):\n'+
+'[{"date":"YYYY-MM-DD","cond":"날씨명","icon":"이모지","tempMin":숫자,"tempMax":숫자,"amTempMax":숫자,"pmTempMax":숫자,"amCond":"날씨명","pmCond":"날씨명","amHumidity":숫자,"pmHumidity":숫자,"amRain":숫자,"pmRain":숫자,"amount":숫자,"prob":숫자,"humidity":숫자,"wind":숫자,"confidence":숫자,"reasoning":"한문장"}]\n'+
+'cond values: 맑음/구름조금/구름많음/흐림/비/소나기/눈/안개\n'+
+'confidence: integer 70-95\n'+
+'IMPORTANT: Return ONLY the JSON array. Start your response with [ and end with ].';
         var rawTxt;
         if(provider==='gemini'){
           var gRes=await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key='+API_KEY,{
@@ -759,7 +776,7 @@ async function applyFilter(){
           if(cData.error) throw new Error(cData.error.message);
           rawTxt=cData.content.find(function(b){return b.type==='text';}).text;
         }
-        var aiRows=JSON.parse(rawTxt.replace(/```json|```/g,'').trim());
+        var aiRows=JSON.parse(extractJson(rawTxt));
         aiRows.forEach(function(r,i){
           var cell=document.getElementById('ai-'+i);
           if(cell) cell.outerHTML=makeCellHtml(r,'ai');
