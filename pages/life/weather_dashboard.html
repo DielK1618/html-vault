@@ -105,7 +105,7 @@ thead th:first-child{z-index:20;background:#fafafa}
 <body>
 
 <div class="filter-panel">
-  <span class="ver-badge">v5.0</span>
+  <span class="ver-badge">v5.1</span>
   <div class="panel-title">날씨 조회 설정</div>
   <div class="filter-row">
     <div class="fg">
@@ -158,10 +158,27 @@ thead th:first-child{z-index:20;background:#fafafa}
     </div>
   </div>
   <div class="apikey-row">
-    <span class="flabel" style="white-space:nowrap">Claude API Key</span>
-    <input type="password" id="apiKeyInput" placeholder="sk-ant-api... (입력 시 AI 예측 활성화)"
-      style="flex:1;max-width:380px;font-family:monospace;font-size:11px">
-    <span style="font-size:11px;color:#c7c7cc">미입력 시 AI 예측 비활성</span>
+    <!-- AI 예측 모드 토글 -->
+    <div style="display:flex;align-items:center;gap:10px;margin-right:16px;padding-right:16px;border-right:1px solid #e5e5ea">
+      <span class="flabel" style="white-space:nowrap">AI 예측 방식</span>
+      <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:12px;color:#1d1d1f">
+        <input type="radio" name="aiMode" id="modeStats" value="stats" checked onchange="onModeChange()" style="height:auto;width:auto;border:none;box-shadow:none;padding:0;background:none">
+        <span>📊 통계 예측</span>
+        <span style="font-size:10px;color:#8e8e93">(무료)</span>
+      </label>
+      <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:12px;color:#1d1d1f">
+        <input type="radio" name="aiMode" id="modeClaude" value="claude" onchange="onModeChange()" style="height:auto;width:auto;border:none;box-shadow:none;padding:0;background:none">
+        <span>🤖 Claude AI</span>
+        <span style="font-size:10px;color:#8e8e93">(크레딧 필요)</span>
+      </label>
+    </div>
+    <!-- API Key (Claude 선택시만 표시) -->
+    <div id="apiKeyWrap" style="display:none;align-items:center;gap:8px;flex:1">
+      <span class="flabel" style="white-space:nowrap">API Key</span>
+      <input type="password" id="apiKeyInput" placeholder="sk-ant-api..."
+        style="flex:1;max-width:340px;font-family:monospace;font-size:11px">
+    </div>
+    <span id="modeDesc" style="font-size:11px;color:#8e8e93">과거 N년 평균 + 기후 트렌드 보정으로 예측합니다</span>
   </div>
   <div class="recent-row" id="recentRow"></div>
 </div>
@@ -503,7 +520,65 @@ function renderCharts(yearList,histMap,offRows,dates){
   rainChartInst=new Chart(document.getElementById('rainChart'),{type:'bar',data:{labels,datasets:rainDs},options:chartOpts('mm')});
 }
 
-/* ── 메인 조회 ── */
+function onModeChange(){
+  const mode=document.querySelector('input[name="aiMode"]:checked').value;
+  const wrap=document.getElementById('apiKeyWrap');
+  const desc=document.getElementById('modeDesc');
+  if(mode==='claude'){
+    wrap.style.display='flex';
+    desc.textContent='Claude API 크레딧을 사용해 AI가 예측합니다';
+    desc.style.color='#5b21b6';
+  }else{
+    wrap.style.display='none';
+    desc.textContent='과거 N년 평균 + 기후 트렌드 보정으로 예측합니다';
+    desc.style.color='#8e8e93';
+  }
+}
+
+/* ── 통계 기반 예측 ── */
+function calcStatsPrediction(histMap,yearList,dates){
+  return dates.map((dt,i)=>{
+    const validRows=yearList.map(yr=>histMap[yr]?.[i]).filter(Boolean);
+    if(!validRows.length)return null;
+    const n=validRows.length;
+    const meanOf=fn=>validRows.reduce((s,r)=>s+fn(r),0)/n;
+    // 최근 연도일수록 가중치 높게 (선형)
+    const wSum=validRows.reduce((s,_,wi)=>s+(wi+1),0);
+    const wMean=fn=>validRows.reduce((s,r,wi)=>s+fn(r)*(wi+1),0)/wSum;
+
+    const tempMax=Math.round(wMean(r=>r.tempMax)+1.0); // +1°C 온난화 보정
+    const tempMin=Math.round(wMean(r=>r.tempMin)+0.6);
+    const amount=+( wMean(r=>r.amount) ).toFixed(1);
+    const prob=Math.round(wMean(r=>r.prob));
+    const humidity=Math.round(meanOf(r=>r.humidity));
+    const wind=+(meanOf(r=>r.wind)).toFixed(1);
+
+    // 오전/오후
+    const amTempMax=validRows.some(r=>r.amTempMax!=null)?Math.round(wMean(r=>r.amTempMax??r.tempMax)+1.0):null;
+    const pmTempMax=validRows.some(r=>r.pmTempMax!=null)?Math.round(wMean(r=>r.pmTempMax??r.tempMax)+1.0):null;
+    const amHumidity=validRows.some(r=>r.amHumidity!=null)?Math.round(meanOf(r=>r.amHumidity??r.humidity)):null;
+    const pmHumidity=validRows.some(r=>r.pmHumidity!=null)?Math.round(meanOf(r=>r.pmHumidity??r.humidity)):null;
+    const amRain=validRows.some(r=>r.amRain!=null)?+(wMean(r=>r.amRain??0)).toFixed(1):null;
+    const pmRain=validRows.some(r=>r.pmRain!=null)?+(wMean(r=>r.pmRain??0)).toFixed(1):null;
+    const amCond=amRain!=null?slotCond(amRain,0):null;
+    const pmCond=pmRain!=null?slotCond(pmRain,0):null;
+
+    // 날씨 상태 다수결
+    const condCounts={};
+    validRows.forEach(r=>{condCounts[r.cond]=(condCounts[r.cond]||0)+1});
+    const cond=Object.entries(condCounts).sort((a,b)=>b[1]-a[1])[0][0];
+    const icon=slotIcon(cond);
+
+    return{
+      date:dt.toISOString().slice(0,10),
+      cond,icon,tempMin,tempMax,amount,prob,humidity,wind,
+      amTempMax,pmTempMax,amHumidity,pmHumidity,amRain,pmRain,amCond,pmCond,
+      confidence:72,
+      reasoning:`과거 ${n}년 가중평균 + 온난화 보정 (+1.0°C/+0.6°C)`,
+      source:'stats'
+    };
+  });
+}
 async function applyFilter(){
   const {country,city,coords}=getSelected();
   if(!city){alert('도시를 선택하거나 입력해 주세요.');return}
@@ -582,56 +657,61 @@ async function applyFilter(){
   if(offRows.length)updateKPI(offRows,city,country,s,e,years);
   renderCharts(yearList,histMap,offRows,dates);
 
-  /* ── Claude AI 예측 ── */
-  const API_KEY=document.getElementById('apiKeyInput').value.trim();
-  if(API_KEY){
-    setStatus('Claude AI 예측 생성 중...');
-    try{
-      const offSummary=offRows.filter(Boolean).map(r=>`${r.date}: ${r.cond} 최저${r.tempMin}°최고${r.tempMax}° 오전최고${r.amTempMax??'-'}° 오후최고${r.pmTempMax??'-'}° 강수${r.prob}% ${r.amount}mm 습도${r.humidity}%`).join('\n');
-      const prompt=`기상 전문가로서 아래 도시의 날씨를 예측하세요.
+  /* ── AI 예측 (모드 분기) ── */
+  const mode=document.querySelector('input[name="aiMode"]:checked').value;
+  if(mode==='stats'){
+    setStatus('통계 기반 예측 계산 중...');
+    const statsRows=calcStatsPrediction(histMap,yearList,dates);
+    statsRows.forEach((r,i)=>{
+      const cell=document.getElementById(`ai-${i}`);
+      if(cell) cell.outerHTML=r?makeCellHtml(r,'ai'):`<td class="cell-fail">예측 불가</td>`;
+    });
+  } else {
+    const API_KEY=document.getElementById('apiKeyInput').value.trim();
+    if(API_KEY){
+      setStatus('Claude AI 예측 생성 중...');
+      try{
+        const offSummary=offRows.filter(Boolean).map(r=>`${r.date}: ${r.cond} 최저${r.tempMin}°최고${r.tempMax}° 오전${r.amTempMax??'-'}° 오후${r.pmTempMax??'-'}° 강수${r.prob}% ${r.amount}mm 습도${r.humidity}%`).join('\n');
+        const prompt=`기상 전문가로서 아래 도시의 날씨를 예측하세요.
 도시: ${city}, ${country}
 예측 기간: ${s} ~ ${e}
 공식 예보 참고:
 ${offSummary}
 
-JSON 배열만 출력하세요 (코드블록/설명 없이):
+JSON 배열만 출력 (코드블록/설명 없이):
 [{"date":"YYYY-MM-DD","cond":"날씨명","icon":"이모지","tempMin":숫자,"tempMax":숫자,"amTempMax":숫자,"pmTempMax":숫자,"amCond":"날씨명","pmCond":"날씨명","amHumidity":숫자,"pmHumidity":숫자,"amRain":숫자,"pmRain":숫자,"amount":숫자,"prob":숫자,"humidity":숫자,"wind":숫자,"confidence":숫자,"reasoning":"한문장"}]
-cond/amCond/pmCond: 맑음/구름조금/구름많음/흐림/비/소나기/눈/안개 중 하나, confidence: 70~95`;
+cond: 맑음/구름조금/구름많음/흐림/비/소나기/눈/안개 중 하나, confidence: 70~95`;
 
-      const res=await fetch('https://api.anthropic.com/v1/messages',{
-        method:'POST',
-        headers:{
-          'content-type':'application/json',
-          'x-api-key':API_KEY,
-          'anthropic-version':'2023-06-01',
-          'anthropic-dangerous-direct-browser-access':'true',
-        },
-        body:JSON.stringify({
-          model:'claude-haiku-4-5-20251001',
-          max_tokens:2000,
-          messages:[{role:'user',content:prompt}]
-        })
-      });
-      const data=await res.json();
-      if(data.error)throw new Error(data.error.message);
-      const txt=(data.content?.find(b=>b.type==='text')?.text||'[]').replace(/```json|```/g,'').trim();
-      const aiRows=JSON.parse(txt);
-      aiRows.forEach((r,i)=>{
-        const cell=document.getElementById(`ai-${i}`);
-        if(!cell)return;
-        cell.outerHTML=makeCellHtml({...r,source:'ai'},'ai');
-      });
-    }catch(err){
+        const res=await fetch('https://api.anthropic.com/v1/messages',{
+          method:'POST',
+          headers:{
+            'content-type':'application/json',
+            'x-api-key':API_KEY,
+            'anthropic-version':'2023-06-01',
+            'anthropic-dangerous-direct-browser-access':'true',
+          },
+          body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:2000,messages:[{role:'user',content:prompt}]})
+        });
+        const data=await res.json();
+        if(data.error)throw new Error(data.error.message);
+        const txt=(data.content?.find(b=>b.type==='text')?.text||'[]').replace(/```json|```/g,'').trim();
+        const aiRows=JSON.parse(txt);
+        aiRows.forEach((r,i)=>{
+          const cell=document.getElementById(`ai-${i}`);
+          if(cell) cell.outerHTML=makeCellHtml(r,'ai');
+        });
+      }catch(err){
+        dates.forEach((_,i)=>{
+          const cell=document.getElementById(`ai-${i}`);
+          if(cell) cell.innerHTML=`<span style="font-size:11px;color:#f87171">오류: ${err.message.slice(0,40)}</span>`;
+        });
+      }
+    }else{
       dates.forEach((_,i)=>{
         const cell=document.getElementById(`ai-${i}`);
-        if(cell)cell.innerHTML=`<span style="font-size:11px;color:#f87171">오류: ${err.message.slice(0,40)}</span>`;
+        if(cell) cell.innerHTML=`<span style="font-size:11px;color:#c7c7cc">API 키 필요</span>`;
       });
     }
-  }else{
-    dates.forEach((_,i)=>{
-      const cell=document.getElementById(`ai-${i}`);
-      if(cell)cell.innerHTML=`<span style="font-size:11px;color:#c7c7cc">API 키 필요</span>`;
-    });
   }
 
   setStatus(`조회 완료 — ${city} ${s} ~ ${e}`,'ok');
