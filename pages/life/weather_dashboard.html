@@ -108,7 +108,7 @@ thead th:first-child{z-index:20;background:#fafafa}
 <body>
 
 <div class="filter-panel" style="position:relative">
-  <span class="ver-badge">v5.5</span>
+  <span class="ver-badge">v5.6</span>
   <div class="panel-title">날씨 조회 설정</div>
   <div class="filter-row">
     <div class="fg">
@@ -683,8 +683,13 @@ async function applyFilter(){
 
   setStatus('공식 예보 수집 중...'); setProgress(82,'');
   var offRows=[];
-  try{offRows=await fetchWeather(lat,lon,s,e);}
-  catch(err){setStatus('예보 실패: '+err.message,'err');}
+  var forecastMax=offsetDate(todayStr(),15);
+  var offEnd=e<=forecastMax?e:forecastMax;
+  var offOutOfRange=s>forecastMax;
+  if(!offOutOfRange){
+    try{offRows=await fetchWeather(lat,lon,s,offEnd);}
+    catch(err){setStatus('예보 실패: '+err.message,'err');}
+  }
 
   setProgress(95,'렌더링 중...');
   document.getElementById('matrixBody').innerHTML=dates.map(function(dt,i){
@@ -695,7 +700,14 @@ async function applyFilter(){
       if(!rows) return'<td class="cell-fail">'+yr+'년 실패</td>';
       return makeCellHtml(rows[i]||null,'hist');
     }).join('');
-    var offCell=offRows.length?makeCellHtml(offRows[i]||null,'official'):'<td class="cell-fail">예보 실패</td>';
+          var offCell;
+      if(offOutOfRange){
+        offCell='<td class="cell-ai-wait" style="font-size:10px;color:#8e8e93">예보 범위<br>초과</td>';
+      } else if(offRows.length && offRows[i]){
+        offCell=makeCellHtml(offRows[i],'official');
+      } else {
+        offCell='<td class="cell-fail">예보 없음</td>';
+      }
     return'<tr>'+
       '<td style="background:#fff;position:sticky;left:0;z-index:5;vertical-align:middle">'+
         '<span style="font-size:12px;font-weight:600;color:'+(wknd?'#e53e3e':'#1d1d1f')+'">'+mm+'/'+dd+'</span><br>'+
