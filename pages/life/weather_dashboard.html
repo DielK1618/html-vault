@@ -105,7 +105,7 @@ thead th:first-child{z-index:20;background:#fafafa}
 <body>
 
 <div class="filter-panel">
-  <span class="ver-badge">v5.3</span>
+  <span class="ver-badge">v5.4</span>
   <div class="panel-title">날씨 조회 설정</div>
   <div class="filter-row">
     <div class="fg">
@@ -291,16 +291,25 @@ window.addEventListener('DOMContentLoaded',()=>{
   ds.value=t;ds.min=t;de.value=offsetDate(t,6);de.min=t;
   ds.addEventListener('change',function(){de.min=this.value;if(de.value<this.value)de.value=offsetDate(this.value,6)});
   document.getElementById('countrySelect').value='대한민국 🇰🇷';
-  onCountryChange();document.getElementById('citySelect').value='파주';
-  // 저장된 API 키 자동 불러오기
+  onCountryChange();
+  document.getElementById('citySelect').value='파주';
   loadSavedApiKey();
 });
+
+/* 나라 변경 시 도시 목록 즉시 반영 */
 function onCountryChange(){
   const v=document.getElementById('countrySelect').value;
   const sg=document.getElementById('citySelectGroup'),ig=document.getElementById('cityInputGroup'),cig=document.getElementById('countryInputGroup');
   const cs=document.getElementById('citySelect');
-  if(v==='기타 ✏️'){sg.style.display='none';ig.style.display='flex';cig.style.display='flex'}
-  else{cig.style.display='none';if(v&&CITY_DATA[v]){cs.innerHTML=CITY_DATA[v].cities.map(c=>`<option>${c}</option>`).join('');sg.style.display='flex';ig.style.display='none'}else{cs.innerHTML='<option>나라 먼저 선택</option>';sg.style.display='flex';ig.style.display='none'}}
+  if(v==='기타 ✏️'){
+    sg.style.display='none';ig.style.display='flex';cig.style.display='flex';
+  } else if(v&&CITY_DATA[v]){
+    cs.innerHTML=CITY_DATA[v].cities.map(c=>`<option value="${c}">${c}</option>`).join('');
+    sg.style.display='flex';ig.style.display='none';cig.style.display='none';
+  } else {
+    cs.innerHTML='<option value="">나라 먼저 선택</option>';
+    sg.style.display='flex';ig.style.display='none';cig.style.display='none';
+  }
 }
 function onCityChange(){
   const v=document.getElementById('citySelect').value;
