@@ -105,7 +105,7 @@ thead th:first-child{z-index:20;background:#fafafa}
 <body>
 
 <div class="filter-panel">
-  <span class="ver-badge">v5.1</span>
+  <span class="ver-badge">v5.3</span>
   <div class="panel-title">날씨 조회 설정</div>
   <div class="filter-row">
     <div class="fg">
@@ -173,10 +173,17 @@ thead th:first-child{z-index:20;background:#fafafa}
       </label>
     </div>
     <!-- API Key (Claude 선택시만 표시) -->
-    <div id="apiKeyWrap" style="display:none;align-items:center;gap:8px;flex:1">
-      <span class="flabel" style="white-space:nowrap">API Key</span>
-      <input type="password" id="apiKeyInput" placeholder="sk-ant-api..."
-        style="flex:1;max-width:340px;font-family:monospace;font-size:11px">
+    <div id="apiKeyWrap" style="display:none;align-items:center;gap:8px;flex:1;flex-wrap:wrap">
+      <span class="flabel" style="white-space:nowrap">API 제공사</span>
+      <select id="apiProvider" onchange="onProviderChange()" style="height:34px;width:130px">
+        <option value="claude">🤖 Claude</option>
+        <option value="gemini">✨ Gemini</option>
+      </select>
+      <input type="password" id="apiKeyInput" placeholder="API 키 입력..."
+        style="flex:1;max-width:280px;font-family:monospace;font-size:11px">
+      <button onclick="saveApiKey()" style="height:34px;padding:0 12px;background:#166534;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap">🔒 저장</button>
+      <button onclick="clearApiKey()" style="height:34px;padding:0 12px;background:#f5f5f7;color:#636366;border:1px solid #e5e5ea;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap">🗑️ 삭제</button>
+      <span id="apiSaveStatus" style="font-size:11px;color:#8e8e93"></span>
     </div>
     <span id="modeDesc" style="font-size:11px;color:#8e8e93">과거 N년 평균 + 기후 트렌드 보정으로 예측합니다</span>
   </div>
@@ -285,6 +292,8 @@ window.addEventListener('DOMContentLoaded',()=>{
   ds.addEventListener('change',function(){de.min=this.value;if(de.value<this.value)de.value=offsetDate(this.value,6)});
   document.getElementById('countrySelect').value='대한민국 🇰🇷';
   onCountryChange();document.getElementById('citySelect').value='파주';
+  // 저장된 API 키 자동 불러오기
+  loadSavedApiKey();
 });
 function onCountryChange(){
   const v=document.getElementById('countrySelect').value;
@@ -520,7 +529,90 @@ function renderCharts(yearList,histMap,offRows,dates){
   rainChartInst=new Chart(document.getElementById('rainChart'),{type:'bar',data:{labels,datasets:rainDs},options:chartOpts('mm')});
 }
 
-function onModeChange(){
+/* ── API 키 저장/불러오기 ── */
+function saveApiKey(){
+  const provider=document.getElementById('apiProvider').value;
+  const key=document.getElementById('apiKeyInput').value.trim();
+  if(!key){alert('API 키를 입력해 주세요.');return}
+  localStorage.setItem(`apiKey_${provider}`,key);
+  const st=document.getElementById('apiSaveStatus');
+  st.textContent='✅ 저장됨 (이 브라우저에서 자동 불러옴)';
+  st.style.color='#166534';
+  setTimeout(()=>{st.textContent='';},3000);
+}
+function clearApiKey(){
+  const provider=document.getElementById('apiProvider').value;
+  localStorage.removeItem(`apiKey_${provider}`);
+  document.getElementById('apiKeyInput').value='';
+  const st=document.getElementById('apiSaveStatus');
+  st.textContent='🗑️ 삭제됨';
+  st.style.color='#b91c1c';
+  setTimeout(()=>{st.textContent='';},2000);
+}
+function loadSavedApiKey(){
+  const provider=document.getElementById('apiProvider').value;
+  const saved=localStorage.getItem(`apiKey_${provider}`);
+  const input=document.getElementById('apiKeyInput');
+  const st=document.getElementById('apiSaveStatus');
+  if(saved){
+    input.value=saved;
+    st.textContent='🔒 저장된 키 자동 불러옴';
+    st.style.color='#166534';
+    setTimeout(()=>{st.textContent='';},2500);
+  }else{
+    input.value='';
+    st.textContent='';
+  }
+}
+  const p=document.getElementById('apiProvider').value;
+  const desc=document.getElementById('apiProviderDesc');
+  const key=document.getElementById('apiKeyInput');
+  if(p==='claude'){
+    key.placeholder='sk-ant-api...';
+    desc.textContent='Anthropic Console에서 발급';
+  }else{
+    key.placeholder='AIza...';
+    desc.textContent='Google AI Studio (aistudio.google.com) 에서 발급 · 무료 티어 있음';
+    desc.style.color='#166534';
+  }
+}
+
+/* ── Gemini API 호출 ── */
+async function fetchGemini(prompt, apiKey){
+  const url=`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+  const res=await fetch(url,{
+    method:'POST',
+    headers:{'content-type':'application/json'},
+    body:JSON.stringify({
+      contents:[{parts:[{text:prompt}]}],
+      generationConfig:{temperature:0.3,maxOutputTokens:2000}
+    })
+  });
+  const data=await res.json();
+  if(data.error)throw new Error(data.error.message);
+  return data.candidates?.[0]?.content?.parts?.[0]?.text||'[]';
+}
+
+/* ── Claude API 호출 ── */
+async function fetchClaude(prompt, apiKey){
+  const res=await fetch('https://api.anthropic.com/v1/messages',{
+    method:'POST',
+    headers:{
+      'content-type':'application/json',
+      'x-api-key':apiKey,
+      'anthropic-version':'2023-06-01',
+      'anthropic-dangerous-direct-browser-access':'true',
+    },
+    body:JSON.stringify({
+      model:'claude-haiku-4-5-20251001',
+      max_tokens:2000,
+      messages:[{role:'user',content:prompt}]
+    })
+  });
+  const data=await res.json();
+  if(data.error)throw new Error(data.error.message);
+  return data.content?.find(b=>b.type==='text')?.text||'[]';
+}
   const mode=document.querySelector('input[name="aiMode"]:checked').value;
   const wrap=document.getElementById('apiKeyWrap');
   const desc=document.getElementById('modeDesc');
