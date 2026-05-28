@@ -105,12 +105,12 @@ thead th:first-child{z-index:20;background:#fafafa}
 <body>
 
 <div class="filter-panel">
-  <span class="ver-badge">v5.4</span>
+  <span class="ver-badge">v5.5</span>
   <div class="panel-title">날씨 조회 설정</div>
   <div class="filter-row">
     <div class="fg">
       <span class="flabel">나라</span>
-      <select id="countrySelect" onchange="onCountryChange()">
+      <select id="countrySelect">
         <option value="">선택</option>
         <option value="대한민국 🇰🇷">대한민국 🇰🇷</option>
         <option value="일본 🇯🇵">일본 🇯🇵</option>
@@ -126,7 +126,7 @@ thead th:first-child{z-index:20;background:#fafafa}
     </div>
     <div class="fg" id="citySelectGroup">
       <span class="flabel">도시</span>
-      <select id="citySelect" onchange="onCityChange()"><option>나라 먼저 선택</option></select>
+      <select id="citySelect"></select>
     </div>
     <div class="fg" id="cityInputGroup" style="display:none">
       <span class="flabel">도시 직접 입력</span>
@@ -288,11 +288,24 @@ const sum=arr=>arr.reduce((a,b)=>a+b,0);
 /* ── UI 초기화 ── */
 window.addEventListener('DOMContentLoaded',()=>{
   const t=todayStr(),ds=document.getElementById('dateStart'),de=document.getElementById('dateEnd');
-  ds.value=t;ds.min=t;de.value=offsetDate(t,6);de.min=t;
-  ds.addEventListener('change',function(){de.min=this.value;if(de.value<this.value)de.value=offsetDate(this.value,6)});
+  ds.value=t; ds.min=t;
+  de.value=offsetDate(t,6); de.min=t;
+  ds.addEventListener('change',function(){
+    de.min=this.value;
+    if(de.value<this.value) de.value=offsetDate(this.value,6);
+  });
+
+  // 이벤트 리스너 방식으로 등록
+  document.getElementById('countrySelect').addEventListener('change', onCountryChange);
+  document.getElementById('citySelect').addEventListener('change', onCityChange);
+
+  // 기본값 설정
   document.getElementById('countrySelect').value='대한민국 🇰🇷';
   onCountryChange();
-  document.getElementById('citySelect').value='파주';
+  setTimeout(()=>{
+    document.getElementById('citySelect').value='파주';
+  }, 50);
+
   loadSavedApiKey();
 });
 
