@@ -189,12 +189,16 @@
              class="absolute bottom-0 right-0 left-0 md:bottom-4 md:right-4 md:left-auto md:w-[400px] z-[200] transform translate-y-full opacity-0 pointer-events-none"
              style="border-radius:0;background:rgba(0,0,0,0.96);backdrop-filter:blur(10px);border:1px solid #202020;">
             <!-- Card Header -->
-            <div class="flex items-start justify-between px-4 pt-4 pb-2 border-b border-charcoal">
-                <div>
-                    <h3 id="station-name-ko" class="text-base font-bold text-white leading-tight">안디옥</h3>
-                    <p id="station-name-en" class="text-[10px] text-ash mt-0.5">Antioch (Syrian Antioch)</p>
+            <div class="flex items-center gap-2 px-3 pt-3 pb-2 border-b border-charcoal">
+                <div class="flex-1 min-w-0">
+                    <h3 id="station-name-ko" class="text-base font-bold text-white leading-tight truncate">안디옥</h3>
+                    <p id="station-name-en" class="text-[10px] text-ash mt-0.5 truncate">Antioch (Syrian Antioch)</p>
                 </div>
-                <button onclick="closeInfoCard()" class="text-ash hover:text-white ml-2 p-1 flex-shrink-0 transition-colors">✕</button>
+                <div class="flex flex-shrink-0">
+                    <button id="btn-prev-station" onclick="prevStation()" class="w-7 h-7 flex items-center justify-center text-xl text-gold hover:text-white transition-colors" title="이전 지역">‹</button>
+                    <button id="btn-next-station" onclick="nextStation()" class="w-7 h-7 flex items-center justify-center text-xl text-gold hover:text-white transition-colors" title="다음 지역">›</button>
+                </div>
+                <button onclick="closeInfoCard()" class="text-ash hover:text-white p-1 flex-shrink-0 transition-colors">✕</button>
             </div>
             <!-- Card Body -->
             <div class="px-4 py-3 space-y-2.5 max-h-[55vh] md:max-h-[60vh] overflow-y-auto scrollbar-thin">
@@ -249,18 +253,18 @@
 
         const journeysData = {
             1:{
-                title:"1차 전도여행 (AD 47~49)", period:"AD 47~49", letters:"갈라디아서 집필 추정",
+                title:"1차 전도여행 (AD 47~49)", period:"AD 47~49", letters:"갈라디아서 집필 추정 (1~2차 사이)",
                 description:"수리아 안디옥 교회에서 성령의 보내심을 받아 바나바, 마가 요한과 함께 출발하여 구브로 섬을 거친 뒤, 소아시아 남부 갈라디아 지역에 교회를 개척한 최초의 선교 운동입니다.",
                 companions:["바울","바나바","마가요한"],
                 stations:[
                     {nameKo:"수리아 안디옥", nameEn:"Antioch of Syria", coords:[36.2021,36.1597], verse:"행 13:1-3", intro:"제국 내 제3대 대도시이자 최초로 '그리스도인'이라 일컬음을 받은 이방 선교의 산실입니다.", desc:"안디옥 교회에서 성령의 엄중한 부르심을 따라 교회의 안수 기도를 받았습니다. 이방 선교 역사의 시발점이자, 바울 및 바나바가 공식적인 선교사로 파송을 받아 지중해 전체를 무대로 복음 행전을 기록하는 영광스러운 출발지입니다.", companions:["바울","바나바","마가요한"]},
                     {nameKo:"실루기아", nameEn:"Seleucia", coords:[36.1281,35.9258], verse:"행 13:4", intro:"안디옥의 서쪽 약 8마일에 위치한 외항이자 지중해 해상 관문으로, 선교단의 감격 어린 첫 출항지입니다.", desc:"안디옥의 관문 항구도시로 내려와 구브로 섬으로 가기 위해 생애 최초의 선교 항해선에 오르는 역사적인 첫 출항지입니다.", companions:["바울","바나바","마가요한"]},
-                    {nameKo:"살라미", nameEn:"Salamis", coords:[35.1852,33.9042], verse:"행 13:5", intro:"바나바의 고향 구브로의 거대 상업 시장으로, 유대 회당 전도의 첫 신호탄을 쏘아 올린 포구입니다.", desc:"동역자 바나바의 실제 고향 구브로의 동편 항구에 정박했습니다. 여러 유대인 회당들을 빠짐없이 방문하며 예수의 부활 소식을 열렬히 전파하기 시작했습니다.", companions:["바울","바나바","마가요한"]},
+                    {nameKo:"살라미", nameEn:"Salamis", coords:[35.1852,33.9042], verse:"행 13:5", intro:"바나바의 고향 구브로의 거대 상업 시장으로, 유대 회당 전도의 첫 신호탄을 쏘아 올린 포구입니다.", desc:"동역자 바나바의 실제 고향 구브로의 동편 항구에 정박했습니다. 구브로가 첫 전도지로 선택된 이유는 스데반의 환난으로 흩어진 성도들이 이미 이 땅에 복음을 전하여 마음 밭이 준비되어 있었기 때문이며, 살라미는 로마 식민지 중 가장 큰 시장으로 각국 사람들이 왕래하는 복음 전파의 최적지였습니다. 여러 유대인 회당들을 빠짐없이 방문하며 예수의 부활 소식을 열렬히 전파하기 시작했습니다.", companions:["바울","바나바","마가요한"]},
                     {nameKo:"바보", nameEn:"Paphos", coords:[34.7720,32.4245], verse:"행 13:6-12", intro:"구브로 섬의 행정 수도이자 로마 총독부 소재지입니다. 바울이 대적자를 이기고 로마식 이름으로 선교를 공고화한 장소입니다.", desc:"주 총독 서기오 바울이 말씀을 귀담아듣고자 할 때 대적자 엘루마가 가로막자, 바울이 성령 충만하여 그의 눈을 어둡게 하는 권능을 나타냈습니다. 이때부터 히브리식 '사울' 대신 로마식 이름 '바울'이 전면에 등장하게 됩니다.", companions:["바울","바나바","마가요한"]},
-                    {nameKo:"버가", nameEn:"Perga", coords:[36.9537,30.8523], verse:"행 13:13", intro:"밤빌리아 도의 내륙 첫 도시입니다. 마가 요한이 사역을 포기하고 예루살렘으로 귀환한 아픔의 성읍입니다.", desc:"험난한 타우루스 산맥 돌파를 앞두고, 수종을 들던 마가 요한이 가혹한 노정을 이기지 못해 예루살렘으로 일방 복귀해 버렸습니다. 이 이탈 행위는 훗날 2차 출발 시 바울과 바나바가 결별하게 만드는 불씨가 되었습니다.", companions:["바울","바나바"]},
-                    {nameKo:"비시디아 안디옥", nameEn:"Pisidian Antioch", coords:[38.2917,31.1853], verse:"행 13:14-52", intro:"해발 1,100m의 군사 요충지입니다. 메시아 강론으로 큰 부흥을 일으켰으나 핍박받은 첫 내륙 개척지입니다.", desc:"해발 1,100m의 고지대에서 바울은 심한 안질(말라리아 추정) 속에서도 '메시아 구속사 대설교'를 단행했습니다. 수많은 이방 성도들이 환호했으나 완악한 유대 지도자들에 의해 성읍 밖으로 쫓겨났습니다.", companions:["바울","바나바"]},
+                    {nameKo:"버가", nameEn:"Perga", coords:[36.9537,30.8523], verse:"행 13:13", intro:"밤빌리아 도의 내륙 첫 도시입니다. 마가 요한이 사역을 포기하고 예루살렘으로 귀환한 아픔의 성읍입니다.", desc:"험난한 타우루스 산맥 돌파를 앞두고, 수종을 들던 마가 요한이 예루살렘으로 일방 복귀해 버렸습니다. 부유한 가정 출신의 마가는 앞에 놓인 험한 산악 행로와 바울의 눈에 띄는 육체적 연약함(안질 추정, 갈 4:13-15)을 보고 시험을 받은 것으로 학자들은 봅니다. 이 이탈은 훗날 2차 출발 시 바울과 바나바가 결별하게 만드는 불씨가 되었습니다.", companions:["바울","바나바"]},
+                    {nameKo:"비시디아 안디옥", nameEn:"Pisidian Antioch", coords:[38.2917,31.1853], verse:"행 13:14-52", intro:"해발 1,100m의 군사 요충지입니다. 메시아 강론으로 큰 부흥을 일으켰으나 핍박받은 첫 내륙 개척지입니다.", desc:"바울이 이 고산 지방을 방문하게 된 직접적 원인은 '육체의 약함'(갈 4:13)으로, 학자들은 이를 안질로 추측합니다. '너희 눈이라도 빼어 나를 주었으리라'(갈 4:15)는 고백이 그 증거이며, 람세이는 이 풍토병이 해발 1,100m 산악지대의 건조한 기후에서 호전된다고 분석합니다. 바울은 고통 중에도 메시아 구속사 대설교를 단행했으나, 완악한 유대 지도자들에 의해 성읍 밖으로 쫓겨났습니다.", companions:["바울","바나바"]},
                     {nameKo:"이고니온", nameEn:"Iconium", coords:[37.8714,32.4847], verse:"행 14:1-7", intro:"갈라디아 남부 중심 고원의 비옥한 요충지로, 부흥과 동시에 돌팔매질 음모를 피해 탈출한 격전지입니다.", desc:"오랜 기간 머물며 주의 은혜의 표적과 기사들을 행했습니다. 허다한 신자들이 영접했으나 완악한 군중들이 돌로 쳐 죽이려 음모를 구상하자 루스드라로 급박히 몸을 피했습니다.", companions:["바울","바나바"]},
-                    {nameKo:"루스드라", nameEn:"Lystra", coords:[37.5833,32.4500], verse:"행 14:8-20", intro:"로마의 군사 식민지이자 디모데의 고향입니다. 제우스와 헤르메스로 오해받았던 역사적 영적 격전지입니다.", desc:"태어나면서부터 걷지 못하던 자를 주님의 이름으로 고치자 원주민들이 신으로 경배하려 했습니다. 그러나 유대인들이 선동하자 바울을 돌로 쳐 성 밖에 버렸습니다. 제자들이 둘러섰을 때 주의 은혜로 일어나 다시 당당히 성안으로 들어갔습니다. 이곳에서 훗날 신실한 디모데가 주님을 따르게 됩니다.", companions:["바울","바나바"]},
+                    {nameKo:"루스드라", nameEn:"Lystra", coords:[37.5833,32.4500], verse:"행 14:8-20", intro:"로마의 군사 식민지이자 디모데의 고향입니다. 제우스와 헤르메스로 오해받았던 역사적 영적 격전지입니다.", desc:"태어나면서부터 걷지 못하던 자를 고치자 원주민들이 바나바를 '제우스', 바울을 '헤르메스(말의 신)'로 불렀습니다. 바울이 설교를 주도했기에 말의 신으로 여겨진 것이며, 이때까지도 바나바가 여전히 지도자로 앞서 있었음을 알 수 있습니다. 그러나 비시디아 안디옥과 이고니온에서 온 유대인들의 선동으로 군중이 바울을 돌로 쳐 성 밖에 버렸습니다. 제자들이 둘러섰을 때 주의 은혜로 일어나 다시 성안으로 들어갔으며, 이곳에서 훗날 신실한 디모데가 주님을 따르게 됩니다.", companions:["바울","바나바"]},
                     {nameKo:"더베", nameEn:"Derbe", coords:[37.3500,33.2500], verse:"행 14:21-22", intro:"갈라디아 최남단 국경 성읍으로, 고난을 극복하고 가이오 등 칭찬받는 형제들을 제자로 삼은 은혜의 땅입니다.", desc:"기적적으로 탈출해 더베에 도달, 복음을 전파해 많은 이들을 제자로 이끌었습니다. 이전에 핍박당했던 루스드라, 이고니온, 비시디아 안디옥을 목숨을 걸고 거꾸로 재차 순회하며 교회 장로들을 장립했습니다.", companions:["바울","바나바"]},
                     {nameKo:"아딸리아", nameEn:"Attalia", coords:[36.8847,30.7042], verse:"행 14:25", intro:"밤빌리아의 대무역 항구입니다. 1차 선교 사역을 매듭짓고 안디옥으로 귀향하기 위해 승선한 포구입니다.", desc:"내륙 여정을 성공적으로 종결하고 아딸리아에서 파송지 수리아 안디옥으로 복귀하는 지중해 직항 항로선에 올랐습니다.", companions:["바울","바나바"]},
                     {nameKo:"수리아 안디옥(복귀)", nameEn:"Antioch of Syria (Return)", coords:[36.2121,36.1697], verse:"행 14:26-28", intro:"이방 선교의 보고이자 '믿음의 문'이 열렸음을 보고한 감격의 전당입니다.", desc:"파송 본거지로 영광스럽게 귀국하여 대대적인 전도 보고를 펼쳤습니다. 주님께서 전도단을 기사와 표적으로 세우신 행적과 이방인들에게 '믿음의 문'을 여신 위대한 역사를 함께 기뻐했습니다.", companions:["바울","바나바"]}
@@ -276,11 +280,11 @@
                     {nameKo:"루스드라", nameEn:"Lystra", coords:[37.5833,32.4500], verse:"행 16:1-3", intro:"바울의 신실한 동역자인 디모데를 전도단에 영입하고 할례를 베푼 자리입니다.", desc:"칭찬받는 젊은 제자 디모데를 발견했습니다. 유대 사역의 장벽을 무너뜨리기 위해 이방인 부친을 둔 디모데에게 할례를 행하고 전도단에 전격 합류시켰습니다.", companions:["바울","실라","디모데"]},
                     {nameKo:"드로아", nameEn:"Troas", coords:[39.7500,26.1667], verse:"행 16:6-10", intro:"에게해의 대형 무역항입니다. 마게도냐인의 환상에 응답해 유럽 전도를 결정한 성지입니다.", desc:"성령이 아시아 방향을 막으시던 중, 드로아에서 잠들었을 때 '마게도냐 사람이 와서 우리를 도우라'는 환상을 보았습니다. 이를 하나님의 서방 파송 뜻으로 결론지었습니다. 의사 누가가 여기서부터 전도단에 합류했습니다.", companions:["바울","실라","디모데","누가"]},
                     {nameKo:"네압볼리", nameEn:"Neapolis", coords:[40.9333,24.4167], verse:"행 16:11", intro:"마게도냐 관문 항구로 유럽 땅에 복음이 처음 상륙한 역사적인 부두입니다.", desc:"에게해를 가로질러 마게도냐 관문 항구에 역사적인 첫 발을 내디뎠습니다. 유럽 대륙에 생명의 말씀이 공식 수입되는 위대한 첫 교두보입니다.", companions:["바울","실라","디모데","누가"]},
-                    {nameKo:"빌립보", nameEn:"Philippi", coords:[41.0125,24.2858], verse:"행 16:12-40", intro:"마게도냐의 로마 식민 대도시입니다. 루디아 개척 부흥과 빌립보 옥문 찬송 기적으로 간수 가문을 구원한 시발지입니다.", desc:"강가에서 자주장사 루디아를 만나 복음을 전하고 가문을 복음화했습니다. 점치는 여종을 고쳐주자 투옥되었고, 바울과 실라가 찬양할 때 대지진이 나며 착고가 풀렸고 간수 가문을 구원했습니다. 이후 로마 시민권을 제시해 공식 사과를 받으며 석방되었습니다.", companions:["바울","실라","디모데"]},
-                    {nameKo:"데살로니가", nameEn:"Thessalonica", coords:[40.6401,22.9444], verse:"행 17:1-9", intro:"마게도냐 행정 수도이자 상업 요충지입니다. 3주간의 뜨거운 회당 강론 후 폭력 소동으로 밤중에 야반도주를 겪은 격동의 일터입니다.", desc:"세 안식일 동안 예수가 메시아임을 성경으로 강론했습니다. 경건한 헬라인과 귀부인이 폭발적으로 모였으나, 유대 광신도 세력이 소동을 일으키고 야손의 집을 급습해 밤중에 급박하게 탈출을 감행했습니다.", companions:["바울","실라","디모데"]},
+                    {nameKo:"빌립보", nameEn:"Philippi", coords:[41.0125,24.2858], verse:"행 16:12-40", intro:"마게도냐의 로마 식민 대도시입니다. 루디아 개척 부흥과 빌립보 옥문 찬송 기적으로 간수 가문을 구원한 시발지입니다.", desc:"강가에서 자주장사 루디아를 만나 가문을 복음화했습니다. 루디아는 유럽 대륙에서 바울이 얻은 첫 번째 회심자이며, 빌립보 교회는 이후 바울이 어느 교회에게도 받지 않은 물질적 후원을 아끼지 않은 유일한 교회였습니다(빌 4:15). 점치는 여종을 고쳐주자 투옥되었으나, 바울과 실라가 밤중에 찬양할 때 대지진이 나며 착고가 풀리고 간수 가문을 구원했습니다. 이후 로마 시민권을 제시해 공식 사과를 받으며 석방되었습니다.", companions:["바울","실라","디모데"]},
+                    {nameKo:"데살로니가", nameEn:"Thessalonica", coords:[40.6401,22.9444], verse:"행 17:1-9", intro:"마게도냐 행정 수도이자 상업 요충지입니다. 3주간의 뜨거운 회당 강론 후 폭력 소동으로 밤중에 야반도주를 겪은 격동의 일터입니다.", desc:"세 안식일 동안 예수가 메시아임을 성경으로 강론했습니다. 학자 람세이는 회당에서의 기간은 3주이나 실제 총 체류는 6개월에 이르렀을 가능성을 주장합니다. 경건한 헬라인과 귀부인이 폭발적으로 모여 '천하를 어지럽게 하던 자들'이라는 말을 들을 만큼 그 영향력이 강렬했으나, 유대 세력이 야손의 집을 급습해 밤중에 탈출을 감행했습니다.", companions:["바울","실라","디모데"]},
                     {nameKo:"베뢰아", nameEn:"Berea", coords:[40.5218,22.2039], verse:"행 17:10-14", intro:"마게도냐 남부의 산간 성읍입니다. 신사적인 성도들이 날마다 성경을 스스로 탐구했던 깊은 부흥지입니다.", desc:"이곳 사람들은 너그럽고 신사적이어서 성경을 진지하게 상고했습니다. 유대 명사들과 헬라 귀부인들이 믿음에 동참했습니다. 그러나 원정 박해가 오자 형제들이 바울만 밤중에 아덴으로 대피시켰습니다.", companions:["바울"]},
                     {nameKo:"아덴", nameEn:"Athens", coords:[37.9838,23.7275], verse:"행 17:15-34", intro:"고대 철학과 우상숭배가 들끓던 헬라 문화의 상징 아테네입니다. 아레오바고 광장에서 정교한 부활 논증을 펼쳤습니다.", desc:"온 도시에 우상이 가득한 것을 보며 회당과 철학의 광장에서 매일 변론했습니다. 아레오바고에서 '알지 못하는 신에게'라는 제단을 메타포로 삼아 우주 만물을 지으신 참 하나님과 예수 그리스도의 부활을 선포했습니다.", companions:["바울"]},
-                    {nameKo:"고린도", nameEn:"Corinth", coords:[37.9356,22.9249], verse:"행 18:1-18", intro:"아가야 주의 거대 무역 도시입니다. 아굴라 브리스길라와 동역하며 1년 6개월간 교회를 견고히 개척했습니다.", desc:"브리스길라와 아굴라 부부를 만나 텐트 제조 생업을 같이하며 사역을 시작했습니다. 1년 6개월간 머물며 교회를 다졌고 마게도냐 성도들을 위해 '데살로니가전·후서'를 집필했습니다.", companions:["바울","실라","디모데"]},
+                    {nameKo:"고린도", nameEn:"Corinth", coords:[37.9356,22.9249], verse:"행 18:1-18", intro:"아가야 주의 거대 무역 도시입니다. 아굴라 브리스길라와 동역하며 1년 6개월간 교회를 견고히 개척했습니다.", desc:"아굴라는 글라우디오 황제의 유대인 추방령으로 로마에서 온 본도 출신 유대인이었고, 브리스길라는 로마의 저명한 브리스가 가문 출신으로 사회적 지위가 높았습니다(성경에서 남편보다 아내 이름이 먼저 나오는 이유). 같은 천막 제조업으로 생계를 함께하며 사역을 시작했고, 이후 하나님을 경외하는 디도 유스도의 집을 거점으로 1년 6개월간 교회를 다졌습니다. 이 기간 '데살로니가전·후서'를 집필했습니다.", companions:["바울","실라","디모데"]},
                     {nameKo:"에베소", nameEn:"Ephesus", coords:[37.9409,27.3413], verse:"행 18:19", intro:"아시아 선교의 전초기지입니다. 브리스길라와 아굴라를 목회 파수꾼으로 두고 예루살렘으로 향했습니다.", desc:"회당에서 잠시 토론하여 엄청난 사역적 관심을 끌었으나 예루살렘 절기가 다가와 '하나님의 뜻이면 반드시 돌아오리라' 약속을 남긴 채 브리스길라와 아굴라 부부를 상주 파수꾼으로 머물게 했습니다.", companions:["바울"]},
                     {nameKo:"가이사랴", nameEn:"Caesarea", coords:[32.5036,34.8931], verse:"행 18:22", intro:"로마 총독부가 주둔하는 군사 포구입니다. 유럽 개척 보고를 완수하고 안디옥 본부로 귀항하는 항해 관문입니다.", desc:"유대 가이사랴 해안에 착륙하여 예루살렘 모교회를 공식 방문해 감사를 표하고 파송지 안디옥으로 복귀해 2차 여행의 숨을 골랐습니다.", companions:["바울"]}
                 ]
@@ -291,12 +295,12 @@
                 companions:["바울","디모데","누가","아리스다고","디도"],
                 stations:[
                     {nameKo:"수리아 안디옥", nameEn:"Antioch of Syria", coords:[36.2021,36.1597], verse:"행 18:23", intro:"3차 사역 출범지입니다. 소아시아 내륙 지체들을 돌보고자 도보 행전을 시작한 성지입니다.", desc:"3차 여행을 시작하여 이전에 개척된 갈라디아와 브루기아 심장부들을 순방하며 제자들의 심령을 기도로 견고하게 세웠습니다.", companions:["바울","디모데"]},
-                    {nameKo:"에베소", nameEn:"Ephesus", coords:[37.9409,27.3413], verse:"행 19:1-41", intro:"아데미 신전 폭동이 일어났던 아시아의 거대 수도입니다. 두란노 서원에서 2년간 아시아 전역을 부흥시켰습니다.", desc:"3년의 금빛 전성기입니다. '두란노 서원'을 임대해 2년간 날마다 말씀을 가르치니 온 아시아가 주의 복음을 들었습니다. 마술책 오만 어치를 불태우는 대부흥 속에 은장색 데메드리오가 주도한 아데미 신전 폭동이 일어났습니다. 고린도 분열 소식을 듣고 '고린도전서'를 급히 집필해 보냈습니다.", companions:["바울","디모데","아리스다고"]},
+                    {nameKo:"에베소", nameEn:"Ephesus", coords:[37.9409,27.3413], verse:"행 19:1-41", intro:"아데미 신전 폭동이 일어났던 아시아의 거대 수도입니다. 두란노 서원에서 2년간 아시아 전역을 부흥시켰습니다.", desc:"3년의 금빛 전성기입니다. 회당에서 3개월, '두란노 서원'에서 2년간 날마다 말씀을 가르치니 온 아시아가 복음을 들었습니다(행 19:10). 학자들은 이 기간 복음이 사방으로 확산되어 요한계시록의 일곱 교회가 이때 세워졌을 가능성이 크다고 봅니다. 은장색 데메드리오의 아데미 신전 폭동은 신앙적 이유가 아닌 사업 위기감에서 비롯된 경제적 동기의 박해였습니다. 고린도 분열 소식을 듣고 '고린도전서'를 집필해 보냈습니다.", companions:["바울","디모데","아리스다고"]},
                     {nameKo:"드로아", nameEn:"Troas", coords:[39.7500,26.1667], verse:"고후 2:12", intro:"복음의 문은 열렸으나 디도의 소식을 기다리며 마음에 애달픔을 겪은 항구입니다.", desc:"복음의 문이 열렸으나 고린도 상황을 전할 동역자 디도를 만나지 못해 편치 않은 마음으로 마게도냐로 향했습니다.", companions:["바울"]},
                     {nameKo:"마게도냐 (빌립보)", nameEn:"Philippi (Macedonia)", coords:[41.0125,24.2858], verse:"고후 7:5-6", intro:"디도와의 극적 재회로 고린도의 회개 고백을 받고 감격 속에 고린도후서를 집필했습니다.", desc:"마게도냐에서 디도를 극적으로 만나 교회의 기쁜 회개 소식을 듣고 고린도후서를 집필해 보냈습니다.", companions:["바울","디모데","디도","누가"]},
                     {nameKo:"고린도 (헬라)", nameEn:"Corinth (Greece)", coords:[37.9356,22.9249], verse:"행 20:2-3", intro:"헬라 아가야 주의 심장입니다. 석 달간 유하며 불멸의 대작 '로마서'를 집필해 보냈습니다.", desc:"3달간 머물며 예루살렘을 위한 구제 모금을 마쳤고, 향후 선교 중심이 될 로마의 성도들을 위해 '로마서' 대서신을 저술했습니다.", companions:["바울","디모데","누가"]},
                     {nameKo:"드로아 (귀환길)", nameEn:"Troas (Return)", coords:[39.7500,26.1667], verse:"행 20:6-12", intro:"밤샘 집회 중 졸음사 한 청년 유두고를 바울의 안수로 다시 살려낸 기적의 현장입니다.", desc:"유대인들의 살해 음모를 피해 드로아에 이르렀습니다. 밤집회 중 3층 난간에서 추락해 즉사한 청년 유두고를 부둥켜안고 하나님의 신비한 능력으로 다시 살려내어 밤새 떡을 떼며 위로를 나눈 역사의 성읍입니다.", companions:["바울","디모데","누가","아리스다고"]},
-                    {nameKo:"밀레도", nameEn:"Miletus", coords:[37.5311,27.2764], verse:"행 20:17-38", intro:"에베소 남방의 고대 해안 항구입니다. 에베소 장로들을 불러 눈물의 고별 예배를 드렸습니다.", desc:"예루살렘으로 가는 배 시간을 위해 에베소를 지나쳐 밀레도에서 장로들을 청해 눈물 어린 영적 고별 설교와 기도를 드렸습니다.", companions:["바울","디모데","누가","아리스다고"]},
+                    {nameKo:"밀레도", nameEn:"Miletus", coords:[37.5311,27.2764], verse:"행 20:17-38", intro:"에베소 남방의 고대 해안 항구입니다. 에베소 장로들을 불러 눈물의 고별 예배를 드렸습니다.", desc:"오순절 전에 예루살렘에 도착하려는 일정 때문에 에베소를 직접 방문하지 않고 밀레도로 에베소 장로들을 청했습니다(행 20:16). '성령이 각 성에서 결박과 환란이 기다린다'고 고백하며(행 20:22-23), 눈물 어린 영적 고별 설교와 기도로 사랑하는 에베소 교회를 하나님께 부탁했습니다.", companions:["바울","디모데","누가","아리스다고"]},
                     {nameKo:"두로", nameEn:"Tyre", coords:[33.2708,35.1964], verse:"행 21:3-4", intro:"페니키아의 유서 깊은 해안 무역항입니다. 제자들의 성령 어린 통곡을 받으며 예루살렘 도정을 강행했습니다.", desc:"시리아에 도착, 제자들이 성령의 감동으로 예루살렘에 가지 말라고 강력 만류했습니다.", companions:["바울","디모데","누가","아리스다고"]},
                     {nameKo:"가이사랴", nameEn:"Caesarea", coords:[32.5036,34.8931], verse:"행 21:8-14", intro:"일곱 집사 빌립의 영적 거점 도성입니다. 아가보의 결박 예언에도 '죽을 것도 각오했다'며 사명을 천명한 곳입니다.", desc:"선지자 아가보가 바울의 띠를 가져가 결박 예언을 행하자, 성도들이 통곡했으나 바울은 죽을 각오가 되었다고 결의했습니다.", companions:["바울","디모데","누가","아리스다고"]},
                     {nameKo:"예루살렘", nameEn:"Jerusalem", coords:[31.7683,35.2137], verse:"행 21:17-36", intro:"유대교와 율법의 심장 성읍입니다. 구제 헌금 전달 직후 체포되며 3차 전도를 종결했습니다.", desc:"예루살렘 도착 후 영접을 받았으나 아시아에서 밀려든 유대 선동 세력에 의해 성전에서 부당하게 구타당하고 체포되었습니다.", companions:["바울","누가","아리스다고"]}
@@ -307,11 +311,11 @@
                 description:"예루살렘 체포 후 가이사랴 총독부에서 2년간 감금되었다가, 가이사에게 상소하여 죄수 신분으로 로마 호송선에 올랐습니다. 지중해 광풍(유라굴로) 속에서도 모두를 보존하고 로마에서 복음을 전했습니다.",
                 companions:["바울","누가","아리스다고"],
                 stations:[
-                    {nameKo:"가이사랴", nameEn:"Caesarea", coords:[32.5036,34.8931], verse:"행 27:1", intro:"2년 감금 후 백부장 율리오의 통제하에 로마군 수송선에 승선한 역사적인 압송 시발지입니다.", desc:"베스도 총독에 상소함에 따라 아구사도대의 백부장 율리오 호위하에 로마행 압송선에 승선했습니다.", companions:["바울","누가","아리스다고"]},
+                    {nameKo:"가이사랴", nameEn:"Caesarea", coords:[32.5036,34.8931], verse:"행 27:1", intro:"2년 감금 후 백부장 율리오의 통제하에 로마군 수송선에 승선한 역사적인 압송 시발지입니다.", desc:"베스도 총독에 상소함에 따라 아구사도대의 백부장 율리오 호위하에 로마행 압송선에 승선했습니다. 가이사랴는 유대지방 로마 행정 수도로, 1961년 이곳 극장 폐허에서 '유다총독 본디오 빌라도'라 씌인 금석문이 발견되어 성경 역사의 고고학적 증거가 되었습니다.", companions:["바울","누가","아리스다고"]},
                     {nameKo:"시돈", nameEn:"Sidon", coords:[33.5631,35.3689], verse:"행 27:3", intro:"해안 압송의 첫 기항지 페니키아의 시돈입니다. 백부장의 호의로 현지 형제들의 영접을 수종받았습니다.", desc:"시돈에 도달했을 때 백부장 율리오의 친절한 배려로 바울이 현지 성도들의 극진한 공궤와 대접을 누렸습니다.", companions:["바울","누가","아리스다고"]},
                     {nameKo:"무라", nameEn:"Myra in Lycia", coords:[36.2581,29.9847], verse:"행 27:5-6", intro:"루기아 지방의 대표 무역 항구입니다. 알렉산드리아 대형 곡물 수송선으로 전원 환승한 곳입니다.", desc:"루기아 무라에 다다라 로마 황제에게 올릴 곡물을 실은 이탈리아행 알렉산드리아 대형 수송선으로 갈아탔습니다.", companions:["바울","누가","아리스다고"]},
                     {nameKo:"그레데 미항", nameEn:"Fair Havens (Crete)", coords:[34.9333,24.8167], verse:"행 27:8-12", intro:"그레데 섬 남단 항구입니다. 기후 위기 경고를 무시하고 무리한 항해를 지시했다가 지옥 같은 풍랑을 부른 기로입니다.", desc:"기후가 악화되어 바울이 항해 연기를 경고했으나, 백부장이 선장과 선주의 의견을 따라 무리한 항해를 지시했습니다.", companions:["바울","누가","아리스다고"]},
-                    {nameKo:"지중해 (풍랑)", nameEn:"Adriatic Sea Storm", coords:[35.5,18.5], verse:"행 27:13-26", intro:"광풍 '유라굴로'가 요동치는 지중해 중심부입니다. 14일간 파선 직전 276인의 생명 구명을 선포한 신앙의 바다입니다.", desc:"유라굴로라 부르는 미친 광풍을 만났습니다. 14일간 소망이 완전히 사라진 바다 위에서 바울은 하나님의 사자의 위로를 받아 전 인원의 구명을 선포했습니다.", companions:["바울","누가","아리스다고"]},
+                    {nameKo:"지중해 (풍랑)", nameEn:"Adriatic Sea Storm", coords:[35.5,18.5], verse:"행 27:13-26", intro:"광풍 '유라굴로'가 요동치는 지중해 중심부입니다. 14일간 파선 직전 276인의 생명 구명을 선포한 신앙의 바다입니다.", desc:"유라굴로라 부르는 미친 광풍을 만났습니다. 짐과 배의 모든 기구를 바다에 던지며 구명에 매달렸으나 14일간 표류했습니다. 바울은 하나님의 사자의 위로를 받아 정확히 276명 전 인원의 구명을 선포했으며(행 27:37), 실제로 단 한 명의 희생도 없이 전원이 구출되었습니다.", companions:["바울","누가","아리스다고"]},
                     {nameKo:"멜리데 섬 (말타)", nameEn:"Melite (Malta)", coords:[35.8989,14.5146], verse:"행 28:1-10", intro:"파선 후 극적 구출을 누린 몰타 섬입니다. 모닥불 독사 기적과 추장 부친 치유로 석 달간 복음 열매를 맺었습니다.", desc:"호송선 파선 후 전원 극적으로 헤엄쳐 상륙했습니다. 바울이 모닥불을 피우던 중 뱀에 물렸으나 무사하여 신으로 여겨졌고 추장 보블리오 부친의 병을 치유하며 3개월간 사역했습니다.", companions:["바울","누가","아리스다고"]},
                     {nameKo:"수라구사", nameEn:"Syracuse", coords:[37.0755,15.2866], verse:"행 28:12", intro:"시칠리아 섬의 지중해 무역 거점입니다. 과동 종료 후 로마 도정 진입에 앞서 사흘간 숨을 고른 항구입니다.", desc:"멜리데를 떠나 시칠리아 섬의 수라구사에 정박해 사흘 동안 머물렀습니다.", companions:["바울","누가","아리스다고"]},
                     {nameKo:"보디올", nameEn:"Puteoli", coords:[40.8224,14.1221], verse:"행 28:13-14", intro:"나폴리 만에 인접한 로마 본토 상륙 관문 항구입니다. 기독교 제자들과 상봉하여 7일간 사랑을 나누었습니다.", desc:"이탈리아 본토 상륙지. 현지의 기독교인 형제들을 만나 그들의 청함에 따라 7일 동안 함께 머물며 위로를 나누었습니다.", companions:["바울","누가","아리스다고"]},
@@ -335,7 +339,7 @@
             }
         };
 
-        let map, currentJourneyId=1, routePolyline, markers=[];
+        let map, currentJourneyId=1, routePolyline, markers=[], currentStationIndex=-1;
         let animationTimer=null, isAnimating=false, currentAnimationStep=0;
         let regionsLayerGroup=null, drawerOpen=false;
 
@@ -370,6 +374,14 @@
         function createNormalIcon(id) {
             const c=journeyColors[id];
             return L.divIcon({className:'custom-div-icon-normal', html:`<div style="background-color:${c};" class="w-3 h-3 rounded-full border-2 border-white shadow-md cursor-pointer hover:scale-125 transition-transform duration-200"></div>`, iconSize:[12,12], iconAnchor:[6,6]});
+        }
+
+        function createStartIcon(id) {
+            return L.divIcon({className:'custom-div-icon-start',html:`<div style="background-color:#E74C3C;" class="w-3 h-3 rounded-full border-2 border-white shadow-md cursor-pointer hover:scale-125 transition-transform duration-200"></div>`,iconSize:[12,12],iconAnchor:[6,6]});
+        }
+
+        function createEndIcon(id) {
+            return L.divIcon({className:'custom-div-icon-end',html:`<div style="background-color:#3860BE;" class="w-3 h-3 rounded-full border-2 border-white shadow-md cursor-pointer hover:scale-125 transition-transform duration-200"></div>`,iconSize:[12,12],iconAnchor:[6,6]});
         }
 
         function createActiveIcon(id) {
@@ -428,7 +440,8 @@
                     </div>`;
                 tl.appendChild(item);
 
-                const marker = L.marker(s.coords, {icon:createNormalIcon(id)}).addTo(map);
+                const icon = i===0 ? createStartIcon(id) : i===j.stations.length-1 ? createEndIcon(id) : createNormalIcon(id);
+                const marker = L.marker(s.coords, {icon}).addTo(map);
                 marker.on('click', () => { stopVoyageAnimation(); focusStation(i); });
                 markers.push(marker);
             });
@@ -440,9 +453,10 @@
         function focusStation(index) {
             const s = journeysData[currentJourneyId].stations[index];
             map.setView(s.coords, 7, {animate:true, duration:1.2});
+            const lastIdx = journeysData[currentJourneyId].stations.length - 1;
             markers.forEach((m,i) => {
-                m.setIcon(i===index ? createActiveIcon(currentJourneyId) : createNormalIcon(currentJourneyId));
-                if (m.setZIndexOffset) m.setZIndexOffset(i===index ? 1000 : 0);
+                if (i===index) { m.setIcon(createActiveIcon(currentJourneyId)); if (m.setZIndexOffset) m.setZIndexOffset(1000); }
+                else { m.setIcon(i===0?createStartIcon(currentJourneyId):i===lastIdx?createEndIcon(currentJourneyId):createNormalIcon(currentJourneyId)); if (m.setZIndexOffset) m.setZIndexOffset(0); }
             });
             displayStationCard(index);
             document.querySelectorAll('#timeline-list > div').forEach((el,i) => {
@@ -463,6 +477,7 @@
         }
 
         function displayStationCard(index) {
+            currentStationIndex = index;
             const s = journeysData[currentJourneyId].stations[index];
             document.getElementById('station-name-ko').textContent = s.nameKo;
             document.getElementById('station-name-en').textContent = s.nameEn;
@@ -479,10 +494,24 @@
                 b.innerHTML = `<span>${co.icon}</span><span>${c}</span>`;
                 cc.appendChild(b);
             });
+            const total = journeysData[currentJourneyId].stations.length;
+            const prevBtn = document.getElementById('btn-prev-station');
+            const nextBtn = document.getElementById('btn-next-station');
+            if (prevBtn) { const d=index===0; prevBtn.style.opacity=d?'0.2':'1'; prevBtn.style.pointerEvents=d?'none':'auto'; prevBtn.style.cursor=d?'not-allowed':'pointer'; }
+            if (nextBtn) { const d=index===total-1; nextBtn.style.opacity=d?'0.2':'1'; nextBtn.style.pointerEvents=d?'none':'auto'; nextBtn.style.cursor=d?'not-allowed':'pointer'; }
             const card = document.getElementById('floating-info-card');
             card.style.transform = 'translateY(0)';
             card.style.opacity = '1';
             card.style.pointerEvents = 'auto';
+        }
+
+        function prevStation() {
+            if (currentStationIndex > 0) { stopVoyageAnimation(); focusStation(currentStationIndex - 1); }
+        }
+
+        function nextStation() {
+            const total = journeysData[currentJourneyId].stations.length;
+            if (currentStationIndex < total - 1) { stopVoyageAnimation(); focusStation(currentStationIndex + 1); }
         }
 
         function closeInfoCard() {
