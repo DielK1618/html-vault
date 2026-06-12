@@ -6,123 +6,96 @@
 <title>이스라엘 분열왕국 연대표</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Noto Sans KR','Apple SD Gothic Neo',sans-serif;background:#f8fafc;color:#1e293b;height:100dvh;display:flex;flex-direction:column;overflow:hidden;}
+body{font-family:'Noto Sans KR','Apple SD Gothic Neo',sans-serif;background:#000;color:#fff;height:100dvh;display:flex;flex-direction:column;overflow:hidden;}
 .ns::-webkit-scrollbar{display:none;}.ns{-ms-overflow-style:none;scrollbar-width:none;}
-.hdr{background:#fff;border-bottom:1px solid #e2e8f0;padding:10px 14px;flex-shrink:0;box-shadow:0 1px 4px rgba(0,0,0,.06);z-index:50;}
+.hdr{background:#181818;border-bottom:1px solid #202020;padding:10px 14px;flex-shrink:0;z-index:50;}
 .hdr-r1{display:flex;justify-content:space-between;align-items:center;gap:8px;}
-.htitle{font-size:clamp(13px,3.5vw,19px);font-weight:900;color:#1e293b;display:flex;align-items:center;gap:6px;}
-.home-btn{display:flex;align-items:center;gap:6px;padding:7px 14px;background:linear-gradient(135deg,#1e293b,#334155);color:#fff;border-radius:20px;text-decoration:none;font-size:12px;font-weight:700;letter-spacing:.3px;box-shadow:0 2px 8px rgba(0,0,0,.18);transition:all .18s;flex-shrink:0;}
-.home-btn:hover{background:linear-gradient(135deg,#334155,#475569);box-shadow:0 4px 14px rgba(0,0,0,.25);transform:translateY(-1px);}
-.home-btn svg{width:13px;height:13px;fill:#fff;flex-shrink:0;}
-
-.lgd{display:flex;flex-wrap:wrap;gap:4px 10px;margin-top:6px;font-size:10px;color:#64748b;}
+.htitle{font-size:clamp(13px,3.5vw,19px);font-weight:900;color:#fff;display:flex;align-items:center;gap:6px;}
+.lgd{display:flex;flex-wrap:wrap;gap:4px 10px;margin-top:6px;font-size:10px;color:#7D7D7D;}
 .ldi{display:flex;align-items:center;gap:3px;}
-.ldd{width:10px;height:10px;border-radius:2px;flex-shrink:0;}
-.lds{width:18px;height:10px;border-radius:2px;background:repeating-linear-gradient(45deg,#fca5a5,#fca5a5 3px,#fecaca 3px,#fecaca 6px);}
+.ldd{width:10px;height:10px;border-radius:0;flex-shrink:0;}
+.lds{width:18px;height:10px;border-radius:0;background:repeating-linear-gradient(45deg,#fca5a5,#fca5a5 3px,#fecaca 3px,#fecaca 6px);}
 .hkw{display:flex;justify-content:center;gap:12px;margin-top:5px;font-size:10px;font-weight:700;flex-wrap:wrap;}
 .main{flex:1;overflow:hidden;display:flex;}
-.sarea{flex:1;overflow-y:scroll;overflow-x:hidden;background:#f8fafc;}
+.sarea{flex:1;overflow-y:scroll;overflow-x:hidden;background:#000;}
 .tlc{display:flex;position:relative;max-width:900px;margin:0 auto;}
 .cs{flex:1;position:relative;min-width:0;overflow:visible;}
-.cax{width:76px;flex-shrink:0;background:#fff;border-left:1px solid #e2e8f0;border-right:1px solid #e2e8f0;position:relative;}
+.cax{width:76px;flex-shrink:0;background:#181818;border-left:1px solid #202020;border-right:1px solid #202020;position:relative;}
 .cn{flex:1;position:relative;min-width:0;overflow:visible;}
 .krow{position:absolute;left:0;right:0;padding:0 3px;overflow:visible;}
 .krow.s{display:flex;justify-content:flex-end;}
 .krow.n{display:flex;justify-content:flex-start;}
-.kbar{
-  width:calc(100% - 2px);max-width:138px;
-  border:2px solid transparent;border-radius:8px;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;
-  padding:2px 4px;position:relative;overflow:visible;
-  transition:box-shadow .18s,transform .12s;
-  box-shadow:0 1px 3px rgba(0,0,0,.08);
-}
-.kbar:hover{transform:translateY(-1px);box-shadow:0 4px 10px rgba(0,0,0,.13);z-index:15;}
-.kbar.sel{
-  transform:translateY(-1px);
-  box-shadow:0 0 0 3px rgba(245,158,11,.5),0 4px 16px rgba(245,158,11,.22),0 2px 6px rgba(0,0,0,.1);
-  z-index:20;
-}
+.kbar{width:calc(100% - 2px);max-width:138px;border:2px solid transparent;border-radius:3px;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:2px 4px;position:relative;overflow:visible;transition:box-shadow .18s,transform .12s;box-shadow:0 1px 3px rgba(0,0,0,.4);}
+.kbar:hover{transform:translateY(-1px);box-shadow:0 4px 10px rgba(0,0,0,.4);z-index:15;}
+.kbar.sel{transform:translateY(-1px);box-shadow:0 0 0 3px rgba(255,192,0,.5),0 4px 16px rgba(255,192,0,.2);z-index:20;}
 .bname{font-size:clamp(9px,1.3vw,12px);font-weight:900;text-align:center;line-height:1.2;pointer-events:none;position:relative;z-index:1;}
-.cosp{position:absolute;top:0;left:0;right:0;background:repeating-linear-gradient(45deg,rgba(255,255,255,.45),rgba(255,255,255,.45) 5px,transparent 5px,transparent 10px);pointer-events:none;border-radius:6px 6px 0 0;}
-.g0{background:#d1fae5;border-color:#10b981;color:#065f46;}
-.g1{background:#e0f2fe;border-color:#38bdf8;color:#0c4a6e;}
-.g2{background:#ffedd5;border-color:#fb923c;color:#7c2d12;}
-.g3{background:#ffe4e6;border-color:#f43f5e;color:#881337;}
-.g4{background:#f3e8ff;border-color:#a855f7;color:#581c87;}
-.axtk{position:absolute;left:0;right:0;border-top:1px dashed #e2e8f0;display:flex;align-items:center;justify-content:center;font-size:9px;color:#94a3b8;font-weight:700;pointer-events:none;}
-.axtk span{background:#fff;padding:0 2px;}
-.axyr-s{position:absolute;font-size:11px;font-weight:900;color:#2563eb;background:#fff;padding:0 3px;line-height:1;pointer-events:none;white-space:nowrap;}
-.axyr-n{position:absolute;font-size:11px;font-weight:900;color:#dc2626;background:#fff;padding:0 3px;line-height:1;pointer-events:none;white-space:nowrap;}
+.cosp{position:absolute;top:0;left:0;right:0;background:repeating-linear-gradient(45deg,rgba(255,255,255,.25),rgba(255,255,255,.25) 5px,transparent 5px,transparent 10px);pointer-events:none;border-radius:0;}
+.g0{background:#052e16;border-color:#10b981;color:#4ade80;}
+.g1{background:#0c4a6e;border-color:#38bdf8;color:#7dd3fc;}
+.g2{background:#431407;border-color:#fb923c;color:#fdba74;}
+.g3{background:#4c0519;border-color:#f43f5e;color:#fda4af;}
+.g4{background:#3b0764;border-color:#a855f7;color:#d8b4fe;}
+.axtk{position:absolute;left:0;right:0;border-top:1px dashed #202020;display:flex;align-items:center;justify-content:center;font-size:9px;color:#494949;font-weight:700;pointer-events:none;}
+.axtk span{background:#000;padding:0 2px;}
+.axyr-s{position:absolute;font-size:11px;font-weight:900;color:#93c5fd;background:#000;padding:0 3px;line-height:1;pointer-events:none;white-space:nowrap;}
+.axyr-n{position:absolute;font-size:11px;font-weight:900;color:#f87171;background:#000;padding:0 3px;line-height:1;pointer-events:none;white-space:nowrap;}
 .fbdg{position:absolute;font-size:8px;font-weight:900;color:#fff;background:#ef4444;padding:2px 4px;border-radius:3px;transform:translateY(-50%);white-space:nowrap;pointer-events:none;z-index:10;}
-.ovl{display:none;position:fixed;inset:0;background:rgba(0,0,0,.22);z-index:90;}
+.ovl{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:90;}
 .ovl.open{display:block;}
-.dpanel{position:fixed;top:0;right:0;bottom:0;width:min(440px,100vw);background:#fff;border-left:1px solid #e2e8f0;box-shadow:-4px 0 24px rgba(0,0,0,.12);transform:translateX(100%);transition:transform .28s cubic-bezier(.4,0,.2,1);z-index:100;display:flex;flex-direction:column;overflow:hidden;}
+.dpanel{position:fixed;top:0;right:0;bottom:0;width:min(440px,100vw);background:#181818;border-left:1px solid #202020;box-shadow:-4px 0 24px rgba(0,0,0,.5);transform:translateX(100%);transition:transform .28s cubic-bezier(.4,0,.2,1);z-index:100;display:flex;flex-direction:column;overflow:hidden;}
 .dpanel.open{transform:translateX(0);}
-.pstic{background:#fff;border-bottom:1px solid #f1f5f9;padding:13px 15px 9px;flex-shrink:0;}
-.pcls{background:none;border:none;width:30px;height:30px;border-radius:50%;background:#f1f5f9;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;color:#64748b;flex-shrink:0;}
-.pcls:hover{background:#e2e8f0;}
+.pstic{background:#181818;border-bottom:1px solid #202020;padding:13px 15px 9px;flex-shrink:0;}
+.pcls{background:#202020;border:none;width:30px;height:30px;border-radius:0;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;color:#7D7D7D;flex-shrink:0;}
+.pcls:hover{background:#313131;}
 .phrow{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;}
-.pkw{font-size:10px;font-weight:700;padding:2px 8px;border-radius:999px;display:inline-block;margin-bottom:5px;}
-.pnm{font-size:clamp(18px,5vw,26px);font-weight:900;line-height:1.1;}
-.pyr{font-size:14px;font-weight:700;color:#ef4444;margin-top:2px;}
+.pkw{font-size:10px;font-weight:700;padding:2px 8px;border-radius:0;display:inline-block;margin-bottom:5px;}
+.pnm{font-size:clamp(18px,5vw,26px);font-weight:900;line-height:1.1;color:#fff;}
+.pyr{font-size:14px;font-weight:700;color:#f87171;margin-top:2px;}
 .pbdg{display:flex;flex-wrap:wrap;gap:4px;margin-top:7px;}
-.bdg{display:inline-flex;align-items:center;font-size:10px;font-weight:700;padding:2px 8px;border-radius:999px;}
+.bdg{display:inline-flex;align-items:center;font-size:10px;font-weight:700;padding:2px 8px;border-radius:0;}
 .pscr{flex:1;overflow-y:auto;padding:12px 15px;}
 .pscr::-webkit-scrollbar{width:3px;}
-.pscr::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:2px;}
-.ic{border:1px solid #e2e8f0;border-radius:9px;padding:11px;margin-bottom:9px;background:#fff;}
-.ic.ac{border-left:4px solid #f59e0b;background:#fffbeb;}
-.ic.ind{background:#eef2ff;border-color:#c7d2fe;}
-.stt{font-size:9px;font-weight:900;letter-spacing:.07em;color:#94a3b8;text-transform:uppercase;margin-bottom:6px;}
+.pscr::-webkit-scrollbar-thumb{background:#313131;border-radius:0;}
+.ic{border:1px solid #313131;border-radius:0;padding:11px;margin-bottom:9px;background:#202020;}
+.ic.ac{border-left:4px solid #FFC000;background:#1a1400;}
+.ic.ind{background:#0d1b2a;border-color:#1e3a5f;}
+.stt{font-size:9px;font-weight:900;letter-spacing:.07em;color:#494949;text-transform:uppercase;margin-bottom:6px;}
 .igrd{display:grid;grid-template-columns:1fr 1fr;gap:5px 8px;}
-.icell span{font-size:9px;color:#94a3b8;display:block;}
-.icell b{font-size:11px;color:#1e293b;}
+.icell span{font-size:9px;color:#494949;display:block;}
+.icell b{font-size:11px;color:#fff;}
 .icell.fu{grid-column:1/-1;}
 .alist{list-style:disc;padding-left:15px;}
-.alist li{font-size:11px;color:#374151;line-height:1.65;margin-bottom:4px;}
-.pnav{padding:9px 15px;border-top:1px solid #f1f5f9;display:flex;gap:7px;flex-shrink:0;}
-.nvb{flex:1;padding:7px;border:1px solid #e2e8f0;background:#f8fafc;border-radius:6px;font-size:11px;cursor:pointer;font-family:inherit;font-weight:700;color:#475569;}
-.nvb:hover{background:#e2e8f0;}
-
-
-/* Very short king thin stripe */
+.alist li{font-size:11px;color:#9ca3af;line-height:1.65;margin-bottom:4px;}
+.pnav{padding:9px 15px;border-top:1px solid #202020;display:flex;gap:7px;flex-shrink:0;}
+.nvb{flex:1;padding:7px;border:1px solid #313131;background:#202020;border-radius:0;font-size:11px;cursor:pointer;font-family:inherit;font-weight:700;color:#7D7D7D;}
+.nvb:hover{background:#313131;}
 .kbar.thin{border-radius:3px;}
-
-/* Floating name badge for short kings
-   Lives INSIDE .kbar (overflow:visible), centered on the stripe.
-   bar is a flex container (align-items:center justify-content:center)
-   so position:static + auto margins work perfectly. */
-.short-badge{
-  position:relative;
-  /* No absolute needed — flex centering from parent bar handles it */
-  font-size:10px;font-weight:900;
-  white-space:nowrap;
-  padding:2px 8px;
-  border-radius:5px;
-  border:1.5px solid #94a3b8;
-  background:#fff;
-  cursor:pointer;
-  z-index:20;
-  box-shadow:0 2px 6px rgba(0,0,0,.12);
-  transition:box-shadow .15s,transform .12s;
-  pointer-events:all;
-  flex-shrink:0;
-}
-.short-badge:hover{
-  box-shadow:0 4px 12px rgba(0,0,0,.18);
-  transform:translateY(-1px);
-}
+.short-badge{position:relative;font-size:10px;font-weight:900;white-space:nowrap;padding:2px 8px;border-radius:0;border:1.5px solid #313131;background:#181818;color:#fff;cursor:pointer;z-index:20;box-shadow:0 2px 6px rgba(0,0,0,.5);transition:box-shadow .15s,transform .12s;pointer-events:all;flex-shrink:0;}
+.short-badge:hover{box-shadow:0 4px 12px rgba(0,0,0,.5);transform:translateY(-1px);}
+.vault-nav{position:relative;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:44px;background:#000;border-bottom:1px solid #202020;font-family:'Inter',Roboto,'Helvetica Neue',Arial,sans-serif;flex-shrink:0;}
+.vault-logo{font-size:15px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#fff;text-decoration:none;display:flex;align-items:center;}
+.vault-logo span{color:#FFC000}
+.vault-nav-btns{display:flex;align-items:center}
+.vbtn{padding:0 16px;height:44px;border:none;background:none;font-size:10px;font-weight:700;font-family:inherit;letter-spacing:.12em;text-transform:uppercase;color:#7D7D7D;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;transition:color .15s;}
+.vbtn:hover{color:#FFC000}
+.vsep{width:1px;height:16px;background:#202020;flex-shrink:0}
+@media(max-width:600px){.vault-nav{padding:0 20px;height:40px}.vbtn{padding:0 10px;height:40px;font-size:9px}.vault-logo{font-size:13px}.hdr{padding:8px 10px}.htitle{font-size:clamp(12px,3vw,16px)}}
 </style>
 </head>
 <body>
+<nav class="vault-nav">
+  <a class="vault-logo" href="https://dielk1618.github.io/html-vault/index.html">HTML <span>VAULT</span></a>
+  <div class="vault-nav-btns">
+    <a class="vbtn" href="https://dielk1618.github.io/html-vault/index.html">HOME</a>
+    <div class="vsep"></div>
+    <button class="vbtn" onclick="document.getElementById('sarea').scrollTo({top:0,behavior:'smooth'})">TOP</button>
+    <div class="vsep"></div>
+    <button class="vbtn" onclick="var s=document.getElementById('sarea');s.scrollTo({top:s.scrollHeight,behavior:'smooth'})">BOTTOM</button>
+  </div>
+</nav>
 <div class="hdr">
   <div class="hdr-r1">
     <div class="htitle">📜이스라엘 분열왕국 연대표</div>
-    <a class="home-btn" href="https://dielk1618.github.io/html-vault/index.html">
-      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
-      목록으로
-    </a>
   </div>
   <div class="lgd">
     <div class="ldi"><div class="ldd" style="background:#d1fae5;border:1px solid #10b981"></div>선한 왕</div>

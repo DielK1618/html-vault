@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Navbar Preview — HTML VAULT</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',Roboto,'Helvetica Neue',Arial,sans-serif;background:#000;color:#fff;font-size:13px}
+.preview-label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#494949;padding:24px 40px 12px}
+.preview-bg-dark{background:#000;padding-bottom:80px}
+.preview-bg-light{background:#f5f5f7;padding-bottom:80px}
+.mock-content{padding:40px;max-width:800px}
+.mock-title{font-size:clamp(28px,5vw,48px);font-weight:700;text-transform:uppercase;letter-spacing:-.01em;line-height:1;margin-bottom:12px}
+.mock-body{font-size:13px;color:#494949;line-height:1.6;max-width:480px}
+.mock-body-light{color:#8e8e93}
+.code-section{background:#000;border-top:1px solid #202020;padding:32px 40px}
+.code-label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#494949;margin-bottom:16px}
+.code-box{background:#181818;color:#cdd6f4;font-family:'Courier New',monospace;font-size:11px;padding:20px 24px;overflow-x:auto;white-space:pre;line-height:1.7;border-left:2px solid #FFC000}
+
+/* ================================================
+   VAULT NAV — Lamborghini Design System
+   ================================================ */
+.vault-nav{
+  position:sticky;top:0;z-index:1000;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 40px;height:44px;
+  background:#000;
+  border-bottom:1px solid #202020;
+  font-family:'Inter',Roboto,'Helvetica Neue',Arial,sans-serif;
+}
+.vault-logo{
+  font-size:15px;font-weight:700;
+  letter-spacing:.06em;text-transform:uppercase;
+  color:#fff;text-decoration:none;
+  display:flex;align-items:center;
+}
+.vault-logo span{color:#FFC000}
+.vault-nav-btns{display:flex;align-items:center}
+.vbtn{
+  padding:0 16px;height:44px;
+  border:none;background:none;
+  font-size:10px;font-weight:700;font-family:inherit;
+  letter-spacing:.12em;text-transform:uppercase;
+  color:#7D7D7D;
+  cursor:pointer;text-decoration:none;
+  display:inline-flex;align-items:center;
+  transition:color .15s;
+}
+.vbtn:hover{color:#FFC000}
+.vsep{width:1px;height:16px;background:#202020;flex-shrink:0}
+
+@media(max-width:600px){
+  .vault-nav{padding:0 20px;height:48px}
+  .vbtn{padding:0 10px;height:48px;font-size:9px}
+  .vault-logo{font-size:13px}
+  .preview-label,.mock-content,.code-section{padding-left:20px;padding-right:20px}
+}
+</style>
+</head>
+<body>
+
+<!-- ── 다크 배경 위 ── -->
+<div class="preview-bg-dark">
+  <p class="preview-label">Dark background (primary)</p>
+
+  <nav class="vault-nav">
+    <a class="vault-logo" href="https://dielk1618.github.io/html-vault/index.html">
+      HTML <span>VAULT</span>
+    </a>
+    <div class="vault-nav-btns">
+      <a class="vbtn" href="https://dielk1618.github.io/html-vault/index.html">HOME</a>
+      <div class="vsep"></div>
+      <button class="vbtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">TOP</button>
+      <div class="vsep"></div>
+      <button class="vbtn" onclick="window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'})">BOTTOM</button>
+    </div>
+  </nav>
+
+  <div class="mock-content">
+    <div class="mock-title" style="color:#fff">이스라엘 분열왕국<br><span style="color:#FFC000">연대표</span></div>
+    <p class="mock-body" style="color:#7D7D7D;margin-top:16px">dark 배경 페이지에서의 navbar 렌더링 예시입니다. 배경과 navbar 모두 #000 — 경계선 #202020 만으로 구분됩니다.</p>
+  </div>
+</div>
+
+<!-- ── 라이트 배경 위 ── -->
+<div class="preview-bg-light">
+  <p class="preview-label" style="color:#8e8e93">Light background (same navbar)</p>
+
+  <nav class="vault-nav">
+    <a class="vault-logo" href="https://dielk1618.github.io/html-vault/index.html">
+      HTML <span>VAULT</span>
+    </a>
+    <div class="vault-nav-btns">
+      <a class="vbtn" href="https://dielk1618.github.io/html-vault/index.html">HOME</a>
+      <div class="vsep"></div>
+      <button class="vbtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">TOP</button>
+      <div class="vsep"></div>
+      <button class="vbtn" onclick="window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'})">BOTTOM</button>
+    </div>
+  </nav>
+
+  <div class="mock-content">
+    <div class="mock-title" style="color:#1d1d1f">AI 날씨 예측<br><span style="color:#FFC000">대시보드</span></div>
+    <p class="mock-body-light" style="margin-top:16px">light 배경 페이지에서도 동일한 black navbar 적용 — 디자인 시스템 단일화. 강한 대비가 오히려 페이지 상단을 명확하게 정의합니다.</p>
+  </div>
+</div>
+
+<!-- ── 코드 ── -->
+<div class="code-section">
+  <p class="code-label">HTML — 모든 페이지 공통 적용</p>
+  <div class="code-box">&lt;nav class="vault-nav"&gt;
+  &lt;a class="vault-logo" href="https://dielk1618.github.io/html-vault/index.html"&gt;
+    HTML &lt;span&gt;VAULT&lt;/span&gt;
+  &lt;/a&gt;
+  &lt;div class="vault-nav-btns"&gt;
+    &lt;a class="vbtn" href="https://dielk1618.github.io/html-vault/index.html"&gt;HOME&lt;/a&gt;
+    &lt;div class="vsep"&gt;&lt;/div&gt;
+    &lt;button class="vbtn" onclick="window.scrollTo({top:0,behavior:'smooth'})"&gt;TOP&lt;/button&gt;
+    &lt;div class="vsep"&gt;&lt;/div&gt;
+    &lt;button class="vbtn" onclick="window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'})"&gt;BOTTOM&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/nav&gt;</div>
+
+  <p class="code-label" style="margin-top:32px">CSS — &lt;style&gt; 안에 삽입</p>
+  <div class="code-box">.vault-nav{position:sticky;top:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:44px;background:#000;border-bottom:1px solid #202020;font-family:'Inter',Roboto,'Helvetica Neue',Arial,sans-serif;}
+.vault-logo{font-size:15px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#fff;text-decoration:none;display:flex;align-items:center;}
+.vault-logo span{color:#FFC000}
+.vault-nav-btns{display:flex;align-items:center}
+.vbtn{padding:0 16px;height:44px;border:none;background:none;font-size:10px;font-weight:700;font-family:inherit;letter-spacing:.12em;text-transform:uppercase;color:#7D7D7D;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;transition:color .15s;}
+.vbtn:hover{color:#FFC000}
+.vsep{width:1px;height:16px;background:#202020;flex-shrink:0}
+@media(max-width:600px){.vault-nav{padding:0 20px;height:40px}.vbtn{padding:0 10px;height:40px;font-size:9px}.vault-logo{font-size:13px}}</div>
+</div>
+
+</body>
+</html>
