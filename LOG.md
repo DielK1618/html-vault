@@ -2,6 +2,37 @@
 
 ---
 
+## 2026-06-12 (9)
+
+### 사도 바울의 전도여행 대화형 지도 — 신규 제작 및 레이아웃 완성
+
+**변경 파일**
+- `pages/bible/History/Paul_Missionary_Journeys_Map.html` — 신규 생성
+
+**제작 내용**
+- Leaflet.js + CartoDB Voyager 타일 기반 인터랙티브 지도
+- DESIGN_Lamborghini.md 기준 전면 적용 (Absolute Black, Gold 액센트, zero border-radius)
+- Vault Navbar 삽입 (CLAUDE.md 규격 준수)
+- **레이아웃 — 풀스크린 맵 + 플로팅 UI (Option B)**
+  - 지도: viewport 전체 (navbar 44px 제외)
+  - 상단 툴바: 솔리드 블랙 full-width 바 (top-0, h-11) — 햄버거·로고·전도여행 탭·재생 버튼
+  - 왼쪽 드로어: 슬라이드-인 (translateX), 상단바 바로 아래에서 시작, 어두운 배경
+  - 우하단 스테이션 카드: translateY 슬라이드-업
+
+**주요 UX 개선 이력**
+- 줌 버튼 좌하단 이동 (top bar 겹침 해소)
+- 햄버거 버튼 최좌측 배치, "루트" 텍스트 제거
+- 백드롭 투명화 (지도 어두워짐 제거, 클릭-닫기는 유지)
+- 상단바 반투명 글라스 → 솔리드 블랙 (드로어와 일체감)
+- 드로어-상단바 간격 제거
+- 지역명 레이블 가시성 향상: text-[11~13px] → text-[12~16px], slate-500/70 → slate-700, 흰색 글로우 쉐도우
+
+**데이터**
+- 전도여행 5개 (1~4차 + 로마 압송), 총 50여 개 거점 스테이션
+- 거점별: 한글명·영문명·성경 구절·지역 배경·선교 내용·동행자 수록
+
+---
+
 ## 2026-06-12
 
 ### 공통 Navbar 디자인 확정
